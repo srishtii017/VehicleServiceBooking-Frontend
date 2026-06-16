@@ -1,4 +1,4 @@
-export class Login {
-    Email:String=""
-    Password:String="";
+export interface OwnerLogin {
+  Email: string;
+  Password: string;
 }

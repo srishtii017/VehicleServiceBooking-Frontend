@@ -1,6 +1,6 @@
-export class Register {
-    Name:String="";
-    Email:String=""
-    Password:String="";
-    Phone:String=""; 
+export interface OwnerRegister {
+  Name: string;
+  Email: string;
+  Password: string;
+  Phone: string;
 }

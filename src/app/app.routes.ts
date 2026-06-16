@@ -1,21 +1,27 @@
 import { Routes } from '@angular/router';
+import { RoleSelect } from './features/role-select/role-select';
 import { Login } from './features/user/login/login';
-import { Profile } from './features/user/profile/profile';
 import { Register } from './features/user/register/register';
-import { RegisterOwner } from './features/owner/register-owner/register-owner';
+import { Profile } from './features/user/profile/profile';
+import { ChangePassword } from './features/user/change-password/change-password';
 import { LoginOwner } from './features/owner/login-owner/login-owner';
-
+import { RegisterOwner } from './features/owner/register-owner/register-owner';
+import { authGuard } from './features/user/guards/auth-guard';
 
 export const routes: Routes = [
-    // { path: 'login', component: Login },
-    // { path: 'register', component: Register },
-    // { path: 'profile', component: Profile },
+  // Role selection — first screen
+  { path: '', component: RoleSelect },
 
-    // //Default redirect when app starts up
-    // { path: '', redirectTo: 'login', pathMatch: 'full' }
+  // User routes
+  { path: 'user/login', component: Login },
+  { path: 'user/register', component: Register },
+  { path: 'user/profile', component: Profile, canActivate: [authGuard] },
+  { path: 'user/change-password', component: ChangePassword, canActivate: [authGuard] },
 
-    { path: 'register', component: RegisterOwner },
-    { path: 'login', component: LoginOwner },
-    { path: '', redirectTo: '/register', pathMatch: 'full' }
+  // Owner routes
+  { path: 'owner/login', component: LoginOwner },
+  { path: 'owner/register', component: RegisterOwner },
 
+  // Unknown → home
+  { path: '**', redirectTo: '/' }
 ];
