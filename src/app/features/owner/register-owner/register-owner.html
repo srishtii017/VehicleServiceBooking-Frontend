@@ -1,0 +1,41 @@
+<div class="main-card">
+  <!-- Top Header Section -->
+  <div class="card-header">
+    <h1>Welcome to Service Portal</h1>
+    <p>Please register your details below to get started</p>
+  </div>
+
+  <div class="container">
+    <div class="register-box">
+      <h2>Owner Registration</h2>
+      <form (ngSubmit)="HandleRegister()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="Name" [(ngModel)]="reg.Name" placeholder="Enter your full name" required minlength="2" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="Email" [(ngModel)]="reg.Email" placeholder="example@mail.com" required maxlength="150">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone (10 digits)</label>
+          <input type="tel" id="phone" name="Phone" [(ngModel)]="reg.Phone" placeholder="9876543210" pattern="^\d{10}$" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="Password" [(ngModel)]="reg.Password" placeholder="Enter a strong password" required maxlength="256">
+        </div>
+        <button type="submit" >Register</button>
+      </form>
+
+      <div class="links">
+        <p>Already have an account? <a class="Link" routerLink="/login">Login</a></p>
+        <p><a class="link" href="?#">Forgot Password?</a></p>
+      </div>
+    </div>
+
+    <div class="image-box">
+      <img src="/assets/service-center.png" alt="Service Center">
+    </div>
+  </div>
+</div>
