@@ -1,0 +1,138 @@
+/* RESET */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* REMOVE GAP BELOW NAVBAR */
+.container {
+  margin: 0;
+  padding: 20px;
+}
+
+/* FULL PAGE WITH NICE GRADIENT */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+
+  /* 🔥 soft dark gradient (not full black) */
+  background: linear-gradient(
+    135deg,
+    #121212,
+    #1a1a1a,
+    #202020,
+    #2a2a2a
+  );
+
+  color: white;
+}
+
+/* IMAGE SECTION */
+.image-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-section img {
+  width: 75%;
+  max-width: 420px;
+  border-radius: 15px;
+
+  /* 🔥 soft glow */
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.2);
+}
+
+/* FORM CARD */
+.card {
+  flex: 1;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* 🔥 glass effect instead of solid black */
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(10px);
+
+  border-left: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+/* HEADING */
+.card h1 {
+  color: orange;
+  font-size: 34px;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #bbb;
+  margin-bottom: 25px;
+}
+
+/* INPUT GROUP */
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* INPUT FIELD */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+
+  border-radius: 8px;
+  border: 1px solid transparent;
+
+  background: #262626;
+  color: white;
+
+  transition: 0.3s;
+}
+
+/* ✅ INPUT FOCUS EFFECT */
+input:focus {
+  outline: none;
+  border: 1px solid orange;
+  background: #1f1f1f;
+}
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  color: white;
+  font-weight: bold;
+
+  cursor: pointer;
+  margin-top: 15px;
+
+  /* 🔥 gradient button */
+  background: linear-gradient(135deg, #ff8c00, #ff6a00);
+
+  transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+.btn:hover {
+  background: linear-gradient(135deg, #ffa733, #ff7a00);
+  transform: scale(1.02);
+}
+
+/* MESSAGE */
+.message {
+  margin-top: 10px;
+  color: #00ff88;
+}

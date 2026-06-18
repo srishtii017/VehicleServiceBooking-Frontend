@@ -1,32 +1,48 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { Register } from '../Models/register';
 import { HttpClient } from '@angular/common/http';
+import { OwnerRegister } from '../Models/register';
 
 @Component({
   selector: 'app-register-owner',
-  imports: [RouterLink,FormsModule],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './register-owner.html',
   styleUrl: './register-owner.css',
 })
 export class RegisterOwner {
-  reg:Register=new Register();
+  reg: OwnerRegister = {
+    Name: '',
+    Email: '',
+    Password: '',
+    Phone: ''
+  };
 
-  constructor(private client:HttpClient, private router:Router){}
+  isLoading = false;
+  errorMessage = '';
 
-  public HandleRegister(){
-    this.client.post("http://localhost:5000/owner/register",this.reg)
-    .subscribe({
-      next: (data) =>{
-        console.log(data);
-        alert("Registration successful!");
-        this.router.navigate(['/login']);
-      },
-      error: (error) =>{
-        alert(JSON.stringify(error));
-        console.log(error);
-      } 
-    });
+  constructor(private client: HttpClient, private router: Router) {}
+
+  goToLogin(): void {
+    this.router.navigate(['/owner/login']);
+  }
+
+  HandleRegister() {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.client.post('http://localhost:5000/owner/register', this.reg)
+      .subscribe({
+        next: (data) => {
+          this.isLoading = false;
+          alert('Registration successful!');
+          this.router.navigate(['/owner/login']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error?.message || 'Registration failed.';
+        }
+      });
   }
 }

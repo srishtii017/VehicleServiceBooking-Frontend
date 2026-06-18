@@ -1,9 +1,135 @@
-<div style="padding: 20px; border: 1px solid #dee2e6; border-radius: 8px; background-color: #fafafa;">
-<h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px;">User Profile Details</h2>
-<div style="display: grid; grid-template-columns: 150px 1fr; gap: 15px; margin-top: 20px; font-size: 16px;">
-<strong>Name:</strong> <span>Srishti Gupta</span>
-<strong>Role:</strong> <span>Project Team Lead</span>
-<strong>Domain Domain:</strong> <span>.NET & Angular Integration</span>
-<strong>Status:</strong> <span style="color: green; font-weight: bold;">Active</span>
-</div>
+<div class="main-card">
+  <div class="card-header">
+    <h1>Vehicle Service</h1>
+    <p>Manage your profile</p>
+  </div>
+
+  <div class="profile-container">
+
+    <!-- View Mode -->
+    <div [style.display]="!isEditing ? 'block' : 'none'">
+
+      <div class="btn-group">
+        <button class="btn-edit" (click)="toggleEdit()">Edit Profile</button>
+      </div>
+    </div>
+
+    <!-- Edit Mode -->
+    <div [style.display]="isEditing ? 'block' : 'none'">
+
+      <!-- Update Info Section -->
+      <div class="section-title">Update Your Info</div>
+      <div class="alert-success">{{ successMessage }}</div>
+
+      <form (ngSubmit)="onUpdate()" #updateForm="ngForm">
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name"
+            [(ngModel)]="updateData.name"
+            minlength="2" maxlength="100"
+            placeholder="Update your name" />
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone"
+            [(ngModel)]="updateData.phone"
+            minlength="10" maxlength="13"
+            placeholder="Update your phone" />
+        </div>
+
+        <!-- ✅ ADDRESS FIELDS -->
+
+        <div class="form-group">
+          <label>Flat / House No</label>
+          <input type="text" name="flatNumber"
+            [(ngModel)]="updateData.flatNumber"
+            placeholder="Flat number" />
+        </div>
+
+        <div class="form-group">
+          <label>Street</label>
+          <input type="text" name="street"
+            [(ngModel)]="updateData.street"
+            placeholder="Street" />
+        </div>
+
+        <div class="form-group">
+          <label>Landmark</label>
+          <input type="text" name="landmark"
+            [(ngModel)]="updateData.landmark"
+            placeholder="Landmark" />
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" name="city"
+            [(ngModel)]="updateData.city"
+            placeholder="City" />
+        </div>
+
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" name="state"
+            [(ngModel)]="updateData.state"
+            placeholder="State" />
+        </div>
+
+        <div class="form-group">
+          <label>Pincode</label>
+          <input type="text" name="pincode"
+            [(ngModel)]="updateData.pincode"
+            minlength="6" maxlength="6"
+            placeholder="Pincode" />
+        </div>
+
+        <button type="submit" class="btn-edit" [disabled]="isLoading">
+          {{ isLoading ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </form>
+
+      <div class="divider"></div>
+
+      <!-- Change Password Section -->
+      <div class="section-title">Change Password</div>
+      <div class="alert-success">{{ passwordSuccess }}</div>
+      <div class="alert-error">{{ passwordError }}</div>
+
+      <form (ngSubmit)="onChangePassword()" #passwordForm="ngForm">
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" name="currentPassword"
+            [(ngModel)]="passwordData.currentPassword"
+            required
+            placeholder="Enter current password" />
+        </div>
+
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" name="newPassword"
+            [(ngModel)]="passwordData.newPassword"
+            required minlength="6"
+            placeholder="Minimum 6 characters" />
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" name="confirmPassword"
+            [(ngModel)]="passwordData.confirmPassword"
+            required
+            placeholder="Re-enter new password" />
+        </div>
+
+        <button type="submit" class="btn-edit" [disabled]="isPasswordLoading">
+          {{ isPasswordLoading ? 'Changing...' : 'Change Password' }}
+        </button>
+      </form>
+
+      <div class="divider"></div>
+
+      <button class="btn-cancel" (click)="toggleEdit()">Cancel</button>
+    </div>
+
+  </div>
 </div>

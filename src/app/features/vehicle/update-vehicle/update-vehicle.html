@@ -1,0 +1,43 @@
+<div class="main-card">
+
+  <div class="card-header">
+    <h1>Update Vehicle Details</h1>
+    <p>Edit your vehicle details</p>
+  </div>
+
+  <div class="profile-container">
+
+    <form (ngSubmit)="updateVehicle()" #updateForm="ngForm">
+
+      <div class="form-group">
+        <label>Make</label>
+        <input type="text" name="make"
+          [(ngModel)]="vehicle.make" required />
+      </div>
+
+      <div class="form-group">
+        <label>Model</label>
+        <input type="text" name="model"
+          [(ngModel)]="vehicle.model" required />
+      </div>
+
+      <div class="form-group">
+        <label>Year</label>
+        <input type="number" name="year"
+          [(ngModel)]="vehicle.year" required />
+      </div>
+
+      <div class="form-group">
+        <label>Registration Number</label>
+        <input type="text" name="registrationNumber"
+          [(ngModel)]="vehicle.registrationNumber" required />
+      </div>
+
+      <button class="btn-edit" type="submit">
+        Update Vehicle
+      </button>
+
+    </form>
+
+  </div>
+</div>

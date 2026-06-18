@@ -1,0 +1,29 @@
+<div class="page">
+
+  <div class="main-wrapper">
+
+    <h2>My Vehicles</h2>
+
+    <div *ngIf="vehicles.length === 0">
+      No vehicles found
+    </div>
+
+    <div class="card-container">
+
+      <div class="card" *ngFor="let v of vehicles">
+
+        <h3>{{ v.make }} {{ v.model }}</h3>
+        <p>Year: {{ v.year }}</p>
+        <p>Reg No: {{ v.registrationNumber }}</p>
+
+        <button (click)="deleteVehicle(v.vehicleId)">
+          Delete Vehicle
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
