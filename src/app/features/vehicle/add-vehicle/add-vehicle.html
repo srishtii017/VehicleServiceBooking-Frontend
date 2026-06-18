@@ -1,0 +1,45 @@
+<div class="page-container">
+
+  <!-- Left Image Section -->
+  <div class="image-section">
+   <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=800&q=80">
+
+  </div>
+
+  <!-- Right Form Section -->
+  <div class="card">
+
+    <h1>Add Vehicle</h1>
+    <p class="subtitle">Enter your vehicle details</p>
+
+    <form (ngSubmit)="addVehicle()">
+
+      <div class="input-group">
+        <label>Make</label>
+        <input type="text" name="make" [(ngModel)]="vehicle.make" placeholder="Enter the brand of your vehicle" required>
+      </div>
+
+      <div class="input-group">
+        <label>Model</label>
+        <input type="text" name="model" [(ngModel)]="vehicle.model" placeholder="Enter the model of your vehicle" required>
+      </div>
+
+      <div class="input-group">
+        <label>Year</label>
+        <input type="number" name="year" [(ngModel)]="vehicle.year" placeholder="Enter the purchasing year of your vehicle" required>
+      </div>
+
+      <div class="input-group">
+        <label>Registration Number</label>
+        <input type="text" name="registrationNumber" [(ngModel)]="vehicle.registrationNumber" placeholder="Enter the registration number of your vehicle" required>
+      </div>
+
+      <button type="submit" class="btn">Add Vehicle</button>
+
+      <p class="message">{{ message }}</p>
+
+    </form>
+
+  </div>
+
+</div>
