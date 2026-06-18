@@ -18,16 +18,17 @@ export class Navbar implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.checkLogin();
-  }
+    // ✅ Subscribe to login state changes
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
 
-  checkLogin(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-
-    if (this.isLoggedIn) {
-      const user = this.authService.getUser();
-      this.userName = user?.name || '';
-    }
+      if (status) {
+        const user = this.authService.getUser();
+        this.userName = user?.name || '';
+      } else {
+        this.userName = '';
+      }
+    });
   }
 
   goHome(): void {
@@ -48,8 +49,6 @@ export class Navbar implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.isLoggedIn = false;
-    this.userName = '';
-    this.router.navigate(['/']);
+    this.router.navigate(['/']); // ✅ goes to owner/customer page
   }
 }

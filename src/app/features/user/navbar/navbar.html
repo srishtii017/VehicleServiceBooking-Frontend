@@ -11,10 +11,12 @@
     <a (click)="goToContact()" class="nav-link">Contact Us</a>
 
     <!-- After Login -->
-    @if (isLoggedIn) {
-      <a (click)="goToProfile()" class="nav-link">Profile</a>
-      <button class="logout-btn" (click)="logout()">Logout</button>
-    }
+    
+<ng-container *ngIf="isLoggedIn">
+  <a (click)="goToProfile()" class="nav-link">Profile</a>
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</ng-container>
+
 
   </div>
 </nav>

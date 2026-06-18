@@ -36,20 +36,34 @@ export class Login {
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
         this.isLoading = false;
+
         if (response.success && response.data) {
+
+          // ✅ Save token (this triggers navbar update)
           this.authService.saveToken(response.data.token);
+
+          // ✅ Save user details
           this.authService.saveUser(response.data);
+
+          // ✅ Optional role storage
           localStorage.setItem('role', 'user');
+
           this.successMessage = 'Login successful! Redirecting...';
-          setTimeout(() => this.router.navigate(['/main']), 1000);
+
+          // ✅ Redirect (simpler & better)
+          setTimeout(() => {
+            this.router.navigate(['/']);  // 🔥 go to home/main page
+          }, 1000);
 
         } else {
-          this.errorMessage = response.message;
+          this.errorMessage = response.message || 'Invalid login!';
         }
       },
+
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Login failed. Please try again.';
+        this.errorMessage =
+          err.error?.message || 'Login failed. Please try again.';
       }
     });
   }
