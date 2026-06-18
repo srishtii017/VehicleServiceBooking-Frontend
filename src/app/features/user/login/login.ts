@@ -41,7 +41,8 @@ export class Login {
           this.authService.saveUser(response.data);
           localStorage.setItem('role', 'user');
           this.successMessage = 'Login successful! Redirecting...';
-          setTimeout(() => this.router.navigate(['/user/profile']), 1000);
+          setTimeout(() => this.router.navigate(['/main']), 1000);
+
         } else {
           this.errorMessage = response.message;
         }

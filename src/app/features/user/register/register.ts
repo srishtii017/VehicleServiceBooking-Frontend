@@ -17,7 +17,14 @@ export class Register {
     name: '',
     email: '',
     phone: '',
-    address: '',
+
+    flatNumber: '',
+    street: '',
+    landmark: '',
+    city: '',
+    state: '',
+    pincode: '',
+
     password: ''
   };
 
@@ -48,7 +55,8 @@ export class Register {
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
+        this.errorMessage =
+          err.error?.message || 'Registration failed. Please try again.';
       }
     });
   }

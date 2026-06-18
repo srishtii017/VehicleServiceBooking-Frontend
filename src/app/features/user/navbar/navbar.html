@@ -5,11 +5,16 @@
 
   <div class="nav-links">
 
-    <span class="welcome" *ngIf="isLoggedIn">Welcome, {{ userName }}!</span>
+    <!-- Always visible -->
+    <a (click)="goHome()" class="nav-link">Home</a>
+    <a (click)="goToAbout()" class="nav-link">About Us</a>
+    <a (click)="goToContact()" class="nav-link">Contact Us</a>
 
-    <a (click)="goToProfile()" class="nav-link" *ngIf="isLoggedIn && !isOwner">Profile</a>
-    <a (click)="goToDashboard()" class="nav-link" *ngIf="isLoggedIn && isOwner">Dashboard</a>
-    <button class="logout-btn" (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+    <!-- After Login -->
+    @if (isLoggedIn) {
+      <a (click)="goToProfile()" class="nav-link">Profile</a>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    }
 
   </div>
 </nav>

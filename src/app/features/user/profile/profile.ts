@@ -22,10 +22,16 @@ export class Profile implements OnInit {
   passwordError = '';
   passwordSuccess = '';
 
+  // ✅ UPDATED STRUCTURE
   updateData: UpdateUserRequest = {
     name: '',
     phone: '',
-    address: ''
+    flatNumber: '',
+    street: '',
+    landmark: '',
+    city: '',
+    state: '',
+    pincode: ''
   };
 
   passwordData: ChangePasswordRequest = {
@@ -55,10 +61,17 @@ export class Profile implements OnInit {
         this.isLoading = false;
         if (response.success && response.data) {
           this.user = response.data;
+
+          // ✅ FIXED (removed address)
           this.updateData = {
             name: this.user.name,
             phone: this.user.phone,
-            address: this.user.address
+            flatNumber: this.user.flatNumber,
+            street: this.user.street,
+            landmark: this.user.landmark,
+            city: this.user.city,
+            state: this.user.state,
+            pincode: this.user.pincode
           };
         } else {
           this.errorMessage = response.message;
@@ -91,15 +104,23 @@ export class Profile implements OnInit {
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
-          // ← update user locally without waiting for reload
+
+          // ✅ UPDATE LOCAL USER DATA
           if (this.user) {
             this.user.name = this.updateData.name || this.user.name;
             this.user.phone = this.updateData.phone || this.user.phone;
-            this.user.address = this.updateData.address || this.user.address;
+
+            this.user.flatNumber = this.updateData.flatNumber || this.user.flatNumber;
+            this.user.street = this.updateData.street || this.user.street;
+            this.user.landmark = this.updateData.landmark || this.user.landmark;
+            this.user.city = this.updateData.city || this.user.city;
+            this.user.state = this.updateData.state || this.user.state;
+            this.user.pincode = this.updateData.pincode || this.user.pincode;
           }
+
           this.successMessage = '✅ Details changed successfully!';
-          // auto hide after 3 seconds
           setTimeout(() => this.successMessage = '', 3000);
+
         } else {
           this.errorMessage = response.message;
         }

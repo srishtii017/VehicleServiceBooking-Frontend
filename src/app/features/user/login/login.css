@@ -139,20 +139,6 @@ button:disabled {
   transform: none;
 }
 
-.alert-error {
-  color: #ff4444;
-  font-size: 13px;
-  margin-bottom: 8px;
-  min-height: 18px;
-}
-
-.alert-success {
-  color: #44bb44;
-  font-size: 13px;
-  margin-bottom: 8px;
-  min-height: 18px;
-}
-
 .links {
   text-align: center;
   margin-top: 15px;

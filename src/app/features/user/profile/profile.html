@@ -6,32 +6,8 @@
 
   <div class="profile-container">
 
-    <div class="alert-error">{{ errorMessage }}</div>
-    <div class="alert-success">{{ successMessage }}</div>
-
     <!-- View Mode -->
     <div [style.display]="!isEditing ? 'block' : 'none'">
-
-      <div class="loading">{{ isLoading ? 'Loading...' : '' }}</div>
-
-      <div class="profile-info">
-        <div class="info-row">
-          <span class="info-label">Name</span>
-          <span class="info-value">{{ user?.name }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Email</span>
-          <span class="info-value">{{ user?.email }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Phone</span>
-          <span class="info-value">{{ user?.phone }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Address</span>
-          <span class="info-value">{{ user?.address }}</span>
-        </div>
-      </div>
 
       <div class="btn-group">
         <button class="btn-edit" (click)="toggleEdit()">Edit Profile</button>
@@ -44,7 +20,9 @@
       <!-- Update Info Section -->
       <div class="section-title">Update Your Info</div>
       <div class="alert-success">{{ successMessage }}</div>
+
       <form (ngSubmit)="onUpdate()" #updateForm="ngForm">
+
         <div class="form-group">
           <label>Name</label>
           <input type="text" name="name"
@@ -52,6 +30,7 @@
             minlength="2" maxlength="100"
             placeholder="Update your name" />
         </div>
+
         <div class="form-group">
           <label>Phone</label>
           <input type="tel" name="phone"
@@ -59,14 +38,52 @@
             minlength="10" maxlength="13"
             placeholder="Update your phone" />
         </div>
+
+        <!-- ✅ ADDRESS FIELDS -->
+
         <div class="form-group">
-          <label>Address</label>
-          <textarea name="address"
-            [(ngModel)]="updateData.address"
-            maxlength="500"
-            placeholder="Update your address"
-            rows="2"></textarea>
+          <label>Flat / House No</label>
+          <input type="text" name="flatNumber"
+            [(ngModel)]="updateData.flatNumber"
+            placeholder="Flat number" />
         </div>
+
+        <div class="form-group">
+          <label>Street</label>
+          <input type="text" name="street"
+            [(ngModel)]="updateData.street"
+            placeholder="Street" />
+        </div>
+
+        <div class="form-group">
+          <label>Landmark</label>
+          <input type="text" name="landmark"
+            [(ngModel)]="updateData.landmark"
+            placeholder="Landmark" />
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" name="city"
+            [(ngModel)]="updateData.city"
+            placeholder="City" />
+        </div>
+
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" name="state"
+            [(ngModel)]="updateData.state"
+            placeholder="State" />
+        </div>
+
+        <div class="form-group">
+          <label>Pincode</label>
+          <input type="text" name="pincode"
+            [(ngModel)]="updateData.pincode"
+            minlength="6" maxlength="6"
+            placeholder="Pincode" />
+        </div>
+
         <button type="submit" class="btn-edit" [disabled]="isLoading">
           {{ isLoading ? 'Saving...' : 'Save Changes' }}
         </button>
@@ -78,6 +95,7 @@
       <div class="section-title">Change Password</div>
       <div class="alert-success">{{ passwordSuccess }}</div>
       <div class="alert-error">{{ passwordError }}</div>
+
       <form (ngSubmit)="onChangePassword()" #passwordForm="ngForm">
         <div class="form-group">
           <label>Current Password</label>
@@ -86,6 +104,7 @@
             required
             placeholder="Enter current password" />
         </div>
+
         <div class="form-group">
           <label>New Password</label>
           <input type="password" name="newPassword"
@@ -93,6 +112,7 @@
             required minlength="6"
             placeholder="Minimum 6 characters" />
         </div>
+
         <div class="form-group">
           <label>Confirm Password</label>
           <input type="password" name="confirmPassword"
@@ -100,6 +120,7 @@
             required
             placeholder="Re-enter new password" />
         </div>
+
         <button type="submit" class="btn-edit" [disabled]="isPasswordLoading">
           {{ isPasswordLoading ? 'Changing...' : 'Change Password' }}
         </button>

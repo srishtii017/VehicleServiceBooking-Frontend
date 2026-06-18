@@ -14,7 +14,6 @@ export class Navbar implements OnInit {
 
   isLoggedIn = false;
   userName = '';
-  isOwner = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -24,20 +23,31 @@ export class Navbar implements OnInit {
 
   checkLogin(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.isOwner = localStorage.getItem('role') === 'owner';
+
     if (this.isLoggedIn) {
       const user = this.authService.getUser();
       this.userName = user?.name || '';
     }
   }
 
-  goHome(): void { this.router.navigate(['/']); }
-  goToProfile(): void { this.router.navigate(['/user/profile']); }
-  goToDashboard(): void { this.router.navigate(['/owner/dashboard']); }
+  goHome(): void {
+    this.router.navigate(['/']);
+  }
+
+  goToAbout(): void {
+    this.router.navigate(['/about']);
+  }
+
+  goToContact(): void {
+    this.router.navigate(['/contact']);
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/user/profile']);
+  }
 
   logout(): void {
     this.authService.logout();
-    localStorage.removeItem('role');
     this.isLoggedIn = false;
     this.userName = '';
     this.router.navigate(['/']);
