@@ -1,0 +1,26 @@
+<div class="page-container">
+    <!-- ✅ Heading -->
+    <h1 class="page-title">Your Service Centers</h1>
+
+    <div class="cards">
+        @for (center of serviceCenters(); track center.serviceCenterID) {
+        <div class="center-card">
+            <button class="status-btn" [ngClass]="center.status === 1 ? 'active' : 'inactive'">
+                {{ center.status === 1 ? 'Active' : 'Inactive' }}
+            </button>
+
+            <h2 class="center-name">{{ center.centerName }}</h2>
+
+            <p class="center-address">📍 {{ center.fullAddress }}</p>
+            <p class="center-contact">📞 {{ center.contact }}</p>
+            <p class="center-capacity">👥 Capacity: {{ center.capacity }}</p>
+            <p class="center-date">🗓️ Created: {{ center.createdAt | date:'mediumDate' }}</p>
+            <p class="center-description">🛠️ {{ center.serviceDescription }}</p>
+
+            <button class="details-btn" (click)="viewDetails(center)">
+                View Details
+            </button>
+        </div>
+        }
+    </div>
+</div>

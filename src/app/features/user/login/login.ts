@@ -22,7 +22,7 @@ export class Login {
   errorMessage = '';
   successMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   goToRegister(): void {
     this.router.navigate(['/user/register']);
@@ -38,21 +38,12 @@ export class Login {
         this.isLoading = false;
 
         if (response.success && response.data) {
-
-          // ✅ Save token (this triggers navbar update)
           this.authService.saveToken(response.data.token);
-
-          // ✅ Save user details
           this.authService.saveUser(response.data);
-
-          // ✅ Optional role storage
           localStorage.setItem('role', 'user');
-
           this.successMessage = 'Login successful! Redirecting...';
-
-          // ✅ Redirect (simpler & better)
           setTimeout(() => {
-            this.router.navigate(['/']);  // 🔥 go to home/main page
+            this.router.navigate(['/main']);
           }, 1000);
 
         } else {

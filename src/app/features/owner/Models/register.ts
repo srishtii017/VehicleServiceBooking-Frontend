@@ -1,6 +1,6 @@
-export interface OwnerRegister {
-  Name: string;
-  Email: string;
-  Password: string;
-  Phone: string;
+export class OwnerRegister {
+  Name: string='';
+  Email: string='';
+  Password: string='';
+  Phone: string='';
 }

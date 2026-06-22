@@ -22,7 +22,7 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // ── Helper ──
   private hasToken(): boolean {
@@ -58,13 +58,13 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedIn.value; // ✅ always current value
+    return this.loggedIn.value;
   }
 
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.loggedIn.next(false); // ✅ update navbar instantly
+    this.loggedIn.next(false);
   }
 
   // ── API Calls ──

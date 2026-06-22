@@ -1,67 +1,51 @@
-/* Outer container */
-.main-container {
-  height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 body {
   margin: 0;
   padding: 0;
 }
 
-/* Card layout (IMPORTANT FIX) */
-.main-card {
-  display: flex;
-  width: 800px;   
-  height: 400px;  
-  background: #111;
-  border-radius: 15px;
-  overflow: hidden; 
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-}
-
-/* Left side */
-.left-section {
-  flex: 1;
-  padding: 30px;
-  color: white;
-}
-
-.subtitle {
-  color: #bbb;
-  margin-bottom: 20px;
-}
-
-/* Buttons */
-.btn-group {
+/* Full background image */
+.user-main-page {
+  height: 100vh;
+  background: url('/assets/UserMainPage.jpg') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-.btn-group button {
+/* Hero section (overlay for search bar) */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* ✅ search bar neeche aayega */
+  align-items: center;
+  padding-bottom: 60px; /* space from bottom */
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  width: 60%;
+  max-width: 500px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.search-bar button {
   background: #ff6a00;
   border: none;
-  padding: 10px;
+  padding: 10px 20px;
   color: white;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.btn-group button:hover {
+.search-bar button:hover {
   background: #ff8c1a;
-}
-
-/* Right side image */
-.right-section {
-  flex: 1;
-}
-
-/* VERY IMPORTANT */
-.right-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* ✅ avoids stretch */
 }

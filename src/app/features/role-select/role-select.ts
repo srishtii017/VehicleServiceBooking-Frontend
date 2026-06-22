@@ -13,7 +13,7 @@ export class RoleSelect {
 
   goToUser(): void {
     this.router.navigate(['/user/login']);
-  }
+  } 
 
   goToOwner(): void {
     this.router.navigate(['/owner/login']);

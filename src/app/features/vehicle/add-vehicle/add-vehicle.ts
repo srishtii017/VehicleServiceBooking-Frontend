@@ -53,7 +53,7 @@ export class AddVehicle {
     },
 
     error: (err) => {
-      console.log("ERROR:", err);   // ✅ DEBUG
+      console.log("ERROR:", err);
       this.isLoading = false;
       this.message = 'Failed to add vehicle ❌';
     }
