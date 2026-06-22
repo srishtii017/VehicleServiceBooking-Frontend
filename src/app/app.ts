@@ -15,11 +15,11 @@ import { RoleSelect } from './features/role-select/role-select';
 })
 
 export class App {
-  UserService:AuthService = inject(AuthService);
-  OwnerService:OwnerAuthService = inject(OwnerAuthService);
+  UserAuth:AuthService = inject(AuthService);
+  OwnerAuth:OwnerAuthService = inject(OwnerAuthService);
   ls=localStorage.getItem("token");
 
-  isLoggedIn:boolean = this.UserService.isLoggedIn() || this.OwnerService.isOwnerLoggedIn();
+  isLoggedIn:boolean = this.UserAuth.isLoggedIn() || this.OwnerAuth.isOwnerLoggedIn();
   protected readonly title = signal('frontend-main');
 
 

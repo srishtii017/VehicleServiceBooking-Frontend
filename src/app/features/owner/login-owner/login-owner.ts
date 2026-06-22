@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OwnerLogin } from '../Models/login';
 import { OwnerLoginService } from '../Services/owner-login-service';
+import { OwnerAuthService } from '../Services/owner-auth.service';
 
 @Component({
   selector: 'app-login-owner',
@@ -17,7 +18,8 @@ export class LoginOwner {
   errorMessage = '';
 
   private router = inject(Router);
-  private LoginService: OwnerLoginService = inject(OwnerLoginService);
+  private loginService = inject(OwnerLoginService);
+  private authService = inject(OwnerAuthService);
 
   goToRegister(): void {
     this.router.navigate(['/owner/register']);
@@ -27,12 +29,11 @@ export class LoginOwner {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.LoginService.LoginOwner(this.login).subscribe({
+    this.loginService.LoginOwner(this.login).subscribe({
       next: (res: any) => {
         this.isLoading = false;
-        localStorage.setItem('token', res.data);
-        localStorage.setItem('role', 'owner');
-        this.router.navigate(['serviceCenter/add']);
+        this.authService.loginOwner(res.data);
+        this.router.navigate(['/main']);
       },
       error: (error) => {
         this.isLoading = false;

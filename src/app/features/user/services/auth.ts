@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   LoginRequest,
   LoginResponse,
@@ -19,8 +19,9 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:5000/user';
 
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  isLoggedIn$ = this.loggedIn.asObservable();
+  // ✅ Signal instead of BehaviorSubject
+  isLoggedIn = signal<boolean>(this.hasToken());
+
   router = inject(Router);
 
   constructor(private http: HttpClient) { }
@@ -41,7 +42,7 @@ export class AuthService {
   // ── Token Helpers ──
   saveToken(token: string): void {
     localStorage.setItem('token', token);
-    this.loggedIn.next(true); // ✅ update navbar instantly
+    this.isLoggedIn.set(true); // ✅ signal update
   }
 
   getToken(): string | null {
@@ -57,51 +58,44 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  isLoggedIn(): boolean {
-    return this.loggedIn.value;
+  isLoggedInNow(): boolean {
+    return this.isLoggedIn(); // ✅ signal read
   }
 
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.loggedIn.next(false);
-    this.router.navigate(["/"]);
+    this.isLoggedIn.set(false); // ✅ signal update
+    this.router.navigate(['/']);
   }
 
   // ── API Calls ──
-
-  // POST /user/register
   register(data: RegisterRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(`${this.baseUrl}/register`, data);
   }
 
-  // POST /user/login
   login(data: LoginRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(`${this.baseUrl}/login`, data);
   }
 
-  // GET /user/{id}
   getUserById(id: number): Observable<ApiResponse<User>> {
     return this.http.get<ApiResponse<User>>(`${this.baseUrl}/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  // PATCH /user/{id}
   updateUser(id: number, data: UpdateUserRequest): Observable<ApiResponse<User>> {
     return this.http.patch<ApiResponse<User>>(`${this.baseUrl}/${id}`, data, {
       headers: this.getHeaders()
     });
   }
 
-  // DELETE /user/{id}
   deleteUser(id: number): Observable<ApiResponse<any>> {
     return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  // PATCH /user/{id}/change-password
   changePassword(id: number, data: ChangePasswordRequest): Observable<ApiResponse<any>> {
     return this.http.patch<ApiResponse<any>>(
       `${this.baseUrl}/${id}/change-password`,
