@@ -14,6 +14,9 @@ import { DeleteVehicle } from './features/vehicle/delete-vehicle/delete-vehicle'
 import { MyVehicles } from './features/vehicle/my-vehicles/my-vehicles';
 import { AddServiceCenter } from './features/serviceCenter/add-service-center/add-service-center';
 import { ServiceCenterCard } from './features/serviceCenter/service-center-card/service-center-card';
+import { AddBoking } from './features/booking/createbooking/createbooking';
+import { Showbookings } from './features/booking/showbookings/showbookings';
+import { Updatebooking } from './features/booking/updatebooking/updatebooking';
 
 
 export const routes: Routes = [
@@ -42,6 +45,11 @@ export const routes: Routes = [
   {path:"servicecenter/addservicecenter",component:AddServiceCenter,canActivate: [ownerGuard]},
   {path:"servicecenter/servicecentercards",component:ServiceCenterCard,canActivate: [ownerGuard]},
 
+  //booking routes
+  {path:"booking/createbooking",component:AddBoking,canActivate : [userGuard]},
+  {path:"booking/showbookings",component:Showbookings,canActivate: [userGuard]},
+  {path:"booking/updatebooking",component:Updatebooking,canActivate: [userGuard]},
+
   // Unknown → home
-  { path: '**', redirectTo: '/' }
+  { path: '**', redirectTo: '' }
 ];

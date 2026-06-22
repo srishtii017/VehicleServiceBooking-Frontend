@@ -9,7 +9,7 @@ import { RoleSelect } from './features/role-select/role-select';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Navbar, Main,RoleSelect],
+  imports: [RouterOutlet, Navbar,RoleSelect],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -17,6 +17,7 @@ import { RoleSelect } from './features/role-select/role-select';
 export class App {
   UserService:AuthService = inject(AuthService);
   OwnerService:OwnerAuthService = inject(OwnerAuthService);
+  ls=localStorage.getItem("token");
 
   isLoggedIn:boolean = this.UserService.isLoggedIn() || this.OwnerService.isOwnerLoggedIn();
   protected readonly title = signal('frontend-main');

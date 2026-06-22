@@ -7,10 +7,10 @@
     <a class="nav-link" routerLink="/main">Home</a>
     <a class="nav-link" routerLink="/add-vehicle">Add Vehicle</a>
     <a class="nav-link" routerLink="/my-vehicles">My Vehicles</a>
-    <a class="nav-link">My Bookings</a>
-    <a class="nav-link">Create Bookings</a>
-    <a class="nav-link">Profile</a>
-    <button class="logout-btn">Logout</button>
+    <a class="nav-link" routerLink="/booking/showbookings">My Bookings</a>
+    <!-- <a class="nav-link" routerLink="/booking/createbooking">Create Bookings</a> -->
+    <a class="nav-link" routerLink="/user/profile">Profile</a>
+    <button class="logout-btn" (click)="Logout()">Logout</button>
   </div>
 </nav>
 

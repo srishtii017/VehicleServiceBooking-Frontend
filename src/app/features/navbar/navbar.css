@@ -13,7 +13,7 @@
 }
 
 .main-content {
-  margin-top: 60px; /* ✅ push content below navbar */
+  /* margin-top: 60px; ✅ push content below navbar */
 }
 
 .nav-brand {

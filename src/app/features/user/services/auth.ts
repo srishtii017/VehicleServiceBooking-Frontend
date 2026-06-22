@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {
@@ -10,6 +10,7 @@ import {
   UpdateUserRequest,
   ChangePasswordRequest
 } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,9 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:5000/user';
 
-  // ✅ Reactive login state
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.loggedIn.asObservable();
+  router = inject(Router);
 
   constructor(private http: HttpClient) { }
 
@@ -29,7 +30,6 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  // ── Auth Headers ──
   private getHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders({
@@ -65,6 +65,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.loggedIn.next(false);
+    this.router.navigate(["/"]);
   }
 
   // ── API Calls ──

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../user/services/auth';
@@ -11,5 +11,9 @@ import { AuthService } from '../user/services/auth';
   styleUrl: './navbar.css',
 })
 export class Navbar{
+  UserService:AuthService= inject(AuthService);
 
+  Logout(){
+    this.UserService.logout();
+  }
 }
