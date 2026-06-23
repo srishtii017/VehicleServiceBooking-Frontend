@@ -1,7 +1,7 @@
 /* FULL PAGE */
 .page {
   min-height: 100vh;
-  padding: 30px;
+  padding: 80px;
 
   background: 
     linear-gradient(
@@ -28,9 +28,9 @@
 }
 
 /* ✅ HEADING */
-h2 {
+h1 {
   color: orange;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 /* ✅ CARDS IN CENTER */

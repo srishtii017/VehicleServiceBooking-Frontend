@@ -48,7 +48,7 @@ export class AddVehicle {
       this.vehicle = new Vehicle();
 
       setTimeout(() => {
-        this.router.navigate(['/user/main']);
+        this.router.navigate(['/main']);
       }, 1000);
     },
 
