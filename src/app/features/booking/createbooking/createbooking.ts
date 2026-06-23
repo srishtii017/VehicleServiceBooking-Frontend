@@ -13,33 +13,36 @@ import { Vehicles } from '../models/vehicles';
   styleUrl: './createbooking.css',
 })
 export class AddBoking implements OnInit {
+
   booking: Booking = new Booking();
   vehicles: Array<Vehicles> = [];
   selectedVehicle: any = undefined;
-
-  selectedDate: string = '';
-  selectedTime: string = '';
+  selectedDate: string = ''; // only date
 
   constructor(private client: HttpClient) {}
 
   token = localStorage.getItem("token");
   headers = new HttpHeaders({
-    'Authorization': `bearer ${this.token}`
+    'Authorization': `Bearer ${this.token}`
   });
 
   ngOnInit() {
     this.loadVehicles();
-    this.booking.serviceCenterId = 1; // Default/Autofetched center ID
+    if (!this.booking.serviceCenterId) {
+      this.booking.serviceCenterId = 0;
+    }
   }
 
-  loadVehicles(){
-    this.client.get<Array<Vehicles>>("http://localhost:5179/api/Vehicle/user-vehicles",{headers : this.headers}).subscribe({
-      next:(data) => {this.vehicles = data}
-    })
+  loadVehicles() {
+    this.client.get<Array<Vehicles>>(
+      "http://localhost:5179/api/Vehicle/user-vehicles",
+      { headers: this.headers }
+    ).subscribe({
+      next: (data) => { this.vehicles = data; }
+    });
   }
 
   onVehicleSelect(vehicle: any) {
-    console.log("selected vehicle:", vehicle);
     if (vehicle) {
       this.booking.vehicleNo = vehicle.registrationNumber;
       this.booking.vehicleName = vehicle.model;
@@ -51,45 +54,27 @@ export class AddBoking implements OnInit {
 
   onDateTimeChange() {
     if (this.selectedDate) {
-      const timeStr = this.selectedTime ? `T${this.selectedTime}:00` : 'T00:00:00';
-      this.booking.serviceDate = new Date(this.selectedDate + timeStr);
-    } else {
-      this.booking.serviceDate = undefined;
+      this.booking.serviceDate = new Date(this.selectedDate)
+        .toISOString()
+        .slice(0, 10);
     }
   }
 
   getFormattedAppointmentSummary(): string {
-    if (!this.selectedDate) {
-      return '';
-    }
+    if (!this.selectedDate) return '';
+
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+
     try {
-      const dateParts = this.selectedDate.split('-');
-      const year = parseInt(dateParts[0], 10);
-      const month = parseInt(dateParts[1], 10) - 1;
-      const day = parseInt(dateParts[2], 10);
-      
-      const dateObj = new Date(year, month, day);
-      if (isNaN(dateObj.getTime())) {
-        return '';
-      }
-      const dayName = days[dateObj.getDay()];
-      const monthName = months[dateObj.getMonth()];
-      const dateNum = dateObj.getDate();
-      
-      let timeStr = '';
-      if (this.selectedTime) {
-        const [hours, minutes] = this.selectedTime.split(':');
-        const h = parseInt(hours, 10);
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        const displayHr = h % 12 || 12;
-        timeStr = ` at ${displayHr}:${minutes} ${ampm}`;
-      }
-      
-      return `Scheduled on ${dayName}, ${monthName} ${dateNum}, ${year}${timeStr}`;
-    } catch (e) {
+      const [year, month, day] = this.selectedDate.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+
+      if (isNaN(dateObj.getTime())) return '';
+
+      return `Scheduled on ${days[dateObj.getDay()]}, ${months[dateObj.getMonth()]} ${dateObj.getDate()}, ${year}`;
+    } 
+    catch {
       return '';
     }
   }
@@ -97,7 +82,6 @@ export class AddBoking implements OnInit {
   isFormValid(): boolean {
     return !!(
       this.booking.customerName?.trim() &&
-      this.booking.serviceCenterId &&
       this.selectedDate &&
       this.selectedVehicle &&
       this.booking.vehicleType?.trim() &&
@@ -106,22 +90,26 @@ export class AddBoking implements OnInit {
   }
 
   createBooking() {
-    this.client.post("http://localhost:5167/api/Bookings/CreateBooking", this.booking, { headers: this.headers }).subscribe({
+    this.client.post(
+      "http://localhost:5167/api/Bookings/CreateBooking",
+      this.booking,
+      { headers: this.headers }
+    ).subscribe({
       next: () => {
-        alert("Booking created successfully");
+        alert("Booking created successfully ✅");
         this.resetForm();
       },
-      error: () => {
-        alert("Duplicate booking: Vehicle already booked on this date");
+      error: (err) => {
+        console.error(err);
+        alert("Booking failed ❌");
       }
     });
   }
 
   resetForm() {
     this.booking = new Booking();
-    this.booking.serviceCenterId = 1; // Default/Autofetched center ID
+    this.booking.serviceCenterId = 0; 
     this.selectedVehicle = undefined;
     this.selectedDate = '';
-    this.selectedTime = '';
   }
 }

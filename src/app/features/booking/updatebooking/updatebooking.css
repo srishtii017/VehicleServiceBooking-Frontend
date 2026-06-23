@@ -1,18 +1,37 @@
-/* =======================================
-   UPDATE BOOKING - DARK ORANGE THEME
-   ======================================= */
+:host {
+  display: flex;
+  justify-content: center;       
+  align-items: flex-end;         
+  min-height: 100vh;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #f3f4f6;
+  background-color: #080c18;
+
+  background-image:
+    linear-gradient(to bottom,
+      transparent 0%,
+      transparent 35%,
+      rgba(8, 12, 24, 0.6) 55%,
+      #080c18 75%
+    ),
+    url('/assets/backgroundimage.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 
 .update-page {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  width: 100%;
   max-width: 800px;
-  margin: clamp(140px, 20vw, 380px) auto 80px;
-  padding: 0 32px 70px;
-  color: #f3f4f6;
+  padding: 15px;
+  margin-bottom: 25px;           
   position: relative;
   z-index: 1;
-  min-height: calc(100vh - 140px);
   box-sizing: border-box;
-  background: url('/assets/backgroundimage.png') no-repeat center center;
+  background: rgba(8, 12, 24, 0.75);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  /* background: url('/assets/backgroundimage.png') no-repeat center center; */
 }
 
 .page-header {
