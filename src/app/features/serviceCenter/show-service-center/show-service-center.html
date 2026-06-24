@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-
+@if (!isUser){
     <div class="bookings-container">
       <div class="bookings-header">
         <h2 class="bookings-title">BOOKINGS</h2>
@@ -95,6 +95,15 @@
         </table>
       </div>
     </div>
+  }
+
+    @if (isUser) {
+      <div class="action-footer">
+        <button class="book-now-btn" (click)="bookNow()">
+          Book Appointment <span class="arrow">→</span>
+        </button>
+      </div>
+    }
 
   </div>
 }

@@ -8,7 +8,7 @@ import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-show-service-center',
-  imports:[DatePipe,NgClass],
+  imports: [DatePipe, NgClass],
   templateUrl: './show-service-center.html',
   styleUrl: './show-service-center.css',
 })
@@ -20,8 +20,7 @@ export class ShowServiceCenter {
   center = signal<ServiceCenter | null>(null);
   bookings = signal<GetBookings[]>([]);
 
-  token = localStorage.getItem("OwnerToken");
-  headers = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
+  isUser = localStorage.getItem('isUserLogged') === 'true' || !!localStorage.getItem('UserToken');
 
   ngOnInit() {
     this.ac.paramMap.subscribe(params => {
@@ -30,17 +29,26 @@ export class ShowServiceCenter {
         next: (res) => {
           if (res.status === 'Success' && res.data) {
             this.center.set(res.data);
-            this.client.get<GetBookings[]>("http://localhost:5000/Bookings/my-bookings", {headers: this.headers})
-              .subscribe({
-                next: (data) => {
-                  const filtered = (data ?? []).filter(b => b.serviceCenterId === res.data.serviceCenterID);
-                  this.bookings.set(filtered);
-                },
-                error: (err) => console.error("Error fetching bookings:", err)
-              });
+            
+            const activeToken = localStorage.getItem("OwnerToken") || localStorage.getItem("UserToken");
+
+            if (activeToken) {
+              const headers = new HttpHeaders({ 'Authorization': `Bearer ${activeToken}` });
+              this.client.get<GetBookings[]>("http://localhost:5000/Bookings/allbookings", { headers })
+                .subscribe({
+                  next: (data) => {
+                    const filtered = (data ?? []).filter(b => b.serviceCenterId === res.data.serviceCenterID);
+                    this.bookings.set(filtered);
+                  },
+                  error: (err) => console.error("Error fetching bookings:", err)
+                });
+            }
           }
         }
       });
     });
+  }
+  bookNow() {
+    console.log('Booking process started for:', this.center()?.serviceCenterID);
   }
 }
