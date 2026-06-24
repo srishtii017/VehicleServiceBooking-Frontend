@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
 
-/* Contenedor General */
 :host {
   display: block;
   background-color: #0d0d0d;
@@ -16,11 +15,10 @@
   padding: 40px 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra todo el contenido de la página */
+  align-items: center;
   box-sizing: border-box;
 }
 
-/* Header del Dashboard alineado con el bloque del 80% */
 .dashboard-header {
   width: 80%;
   margin-bottom: 32px;
@@ -48,12 +46,11 @@
   margin: 0;
 }
 
-/* Lista fijada al 80% de ancho total de la pantalla */
 .cards-list {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 80%; /* Ajustado al 80% de ancho */
+  width: 80%;
 }
 
 .center-card {
@@ -63,7 +60,7 @@
   padding: 28px;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column; /* Cambiado a columna para apilar arriba/abajo */
+  flex-direction: column;
   gap: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -76,7 +73,6 @@
 .status-active-border { border-left: 4px solid #00e676; }
 .status-inactive-border { border-left: 4px solid #555555; }
 
-/* --- SECCIÓN SUPERIOR (NUEVA ESTRUCTURA) --- */
 .card-top-row {
   display: flex;
   flex-direction: column;
@@ -132,7 +128,6 @@
   margin: 0;
 }
 
-/* --- SECCIÓN INFERIOR (DETALLES + ACCIÓN) --- */
 .card-bottom-row {
   display: flex;
   justify-content: space-between;
@@ -141,7 +136,7 @@
 }
 
 .card-details-grid {
-  flex: 1; /* Toma todo el espacio disponible de la izquierda */
+  flex: 1;
 }
 
 .info-grid {
@@ -157,7 +152,7 @@
 }
 
 .services-full-width {
-  grid-column: span 2; /* Descripción de servicios usa las dos columnas abajo */
+  grid-column: span 2;
 }
 
 .info-label {
@@ -183,7 +178,6 @@
   color: #888888;
 }
 
-/* --- ÁREA DE BOTÓN DERECHA --- */
 .card-actions-area {
   width: 180px;
   display: flex;
@@ -191,7 +185,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  align-self: center; /* Centra verticalmente el botón con respecto a los datos */
+  align-self: center;
 }
 
 .details-btn {
@@ -227,7 +221,6 @@
   padding: 40px;
 }
 
-/* Responsivo para móviles */
 @media (max-width: 768px) {
   .dashboard-header, .cards-list {
     width: 90%;

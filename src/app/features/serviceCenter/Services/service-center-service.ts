@@ -17,7 +17,7 @@ export interface ApiResponse<T> {
 export class ServiceCenterService {
   private apiUrl = 'http://localhost:5000/servicecenter';
 
-  ServiceCenters = signal<Array<ServiceCenter>>([]);
+  private ServiceCenters = signal<Array<ServiceCenter>>([]);
 
   constructor(private client: HttpClient) { }
 
@@ -29,11 +29,24 @@ export class ServiceCenterService {
   }
 
   FetchCenters(): void {
-    this.client.get<ApiResponse<ServiceCenter[]>>(this.apiUrl, { headers: this.getAuthHeaders() })
+    const isUserLogged = localStorage.getItem('isUserLogged') === 'true';
+    const isOwnerLogged = localStorage.getItem('isOwnerLogged') === 'true';
+
+    let targetUrl = this.apiUrl; 
+    let options = {};
+
+    if (isUserLogged) {
+      targetUrl = `${this.apiUrl}/get-centers`;
+    } else if (isOwnerLogged) {
+      targetUrl = this.apiUrl; 
+      options = { headers: this.getAuthHeaders() };
+    }
+
+    this.client.get<ApiResponse<ServiceCenter[]>>(targetUrl, options)
       .pipe(map(res => res.data))
       .subscribe({
         next: (centers) => this.ServiceCenters.set(centers),
-        error: (err) => console.error('Error fetching centers:', err)
+        error: (err) => console.error('Error fetching service centers:', err)
       });
   }
 
@@ -49,4 +62,7 @@ export class ServiceCenterService {
     return this.client.get<ApiResponse<ServiceCenter>>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
+  GetAllServiceCenters(): Observable<ApiResponse<ServiceCenter[]>> {
+    return this.client.get<ApiResponse<ServiceCenter[]>>(`${this.apiUrl}/get-centers`);
+  }
 }

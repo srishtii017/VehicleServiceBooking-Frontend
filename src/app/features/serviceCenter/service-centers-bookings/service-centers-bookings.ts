@@ -16,9 +16,7 @@ export class ServiceCentersBookings implements OnInit {
   private centerService = inject(ServiceCenterService);
   private client = inject(HttpClient);
 
-  // Exponer el signal del servicio de centros
   serviceCenters = this.centerService.getServiceCenters();
-  // Signal local para guardar todas las reservas
   allBookings = signal<GetBookings[]>([]);
 
   ngOnInit() {

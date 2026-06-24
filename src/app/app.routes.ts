@@ -19,6 +19,7 @@ import { Showbookings } from './features/booking/showbookings/showbookings';
 import { Updatebooking } from './features/booking/updatebooking/updatebooking';
 import { ShowServiceCenter } from './features/serviceCenter/show-service-center/show-service-center';
 import { ServiceCentersBookings } from './features/serviceCenter/service-centers-bookings/service-centers-bookings';
+import { anyRoleGuard } from './features/guards/any-role-guard';
 
 export const routes: Routes = [
   // Role selection — first screen
@@ -46,9 +47,9 @@ export const routes: Routes = [
 
   //ServiceCenter Routes
   {path:"servicecenter/addservicecenter",component:AddServiceCenter,canActivate: [ownerGuard]},
-  {path:"servicecenter/servicecentercards",component:ServiceCenterCard,canActivate: [ownerGuard]},
-  { path: 'servicecenter/:id', component: ShowServiceCenter,canActivate: [ownerGuard]}, 
-  { path: 'servicecenter/AllBookings', component: ServiceCentersBookings,canActivate: [ownerGuard]}, 
+  {path:"servicecenter/servicecentercards",component:ServiceCenterCard,canActivate: [anyRoleGuard]},
+  { path: 'servicecenter/:id', component: ShowServiceCenter,canActivate: [anyRoleGuard]}, 
+  // { path: 'servicecenter/AllBookings', component: ServiceCenterCard,canActivate: [userGuard]}, 
 
   //booking routes
   {path:"booking/createbooking",component:AddBoking,canActivate : [userGuard]},
