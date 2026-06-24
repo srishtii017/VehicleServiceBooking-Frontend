@@ -1,22 +1,6 @@
 <div class="booking-page">
 
   <div class="form-grid">
-
-    <div class="field">
-      <label>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Customer Name
-      </label>
-      <input
-        class="pill-input"
-        name="customerName"
-        type="text"
-        placeholder="Enter your full name"
-        required
-        [(ngModel)]="booking.customerName"
-      />
-    </div>
-
     <div class="field">
       <label>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2z"/><polyline points="3 9 12 15 21 9"/></svg>
@@ -28,23 +12,10 @@
         (ngModelChange)="onVehicleSelect($event)"
       >
         <option [ngValue]="undefined">— Select your vehicle —</option>
-        @for (v of vehicles; track v.vehicleId) {
+        @for (v of vehicles(); track v.vehicleId) {
           <option [ngValue]="v">{{ v.registrationNumber }}-{{ v.make }}-{{ v.model }}</option>
         }
       </select>
-    </div>
-
-    <div class="field">
-      <label>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-        Vehicle Type
-      </label>
-      <input
-        class="pill-input"
-        type="text"
-        placeholder="e.g. Sedan, SUV, Hatchback"
-        [(ngModel)]="booking.vehicleType"
-      />
     </div>
 
     <div class="field">

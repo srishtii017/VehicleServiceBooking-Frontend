@@ -4,11 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Booking {
-  customerName?: string;
   vehicleName?: string;
   vehicleNo?: string;
   vehicleType?: string;
-  serviceCenterId?: string;
+  serviceCenterId: string ='';
   serviceType?: string;
   serviceDate?: string;
 }

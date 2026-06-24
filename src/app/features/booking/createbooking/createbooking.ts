@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , signal} from '@angular/core';
 import { Booking } from '../models/booking';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Vehicles } from '../models/vehicles';
+import { Bookingservice } from '../services/bookingservice';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-boking',
@@ -15,28 +16,25 @@ import { Vehicles } from '../models/vehicles';
 export class AddBoking implements OnInit {
 
   booking: Booking = new Booking();
-  vehicles: Array<Vehicles> = [];
+  vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle: any = undefined;
   selectedDate: string = ''; // only date
 
-  constructor(private client: HttpClient) {}
-
-  token = localStorage.getItem("UserToken");
-  headers = new HttpHeaders({
-    'Authorization': `Bearer ${this.token}`
-  });
+  constructor(private bookingservice :Bookingservice,private route:ActivatedRoute) {}
 
   ngOnInit() {
     this.loadVehicles();
-    // this.booking.serviceCenterId = 1; // Default/Autofetched center ID
+    const serviceCenterId = this.route.snapshot.queryParamMap.get('serverCenterId');
+
+    if(serviceCenterId){
+      this.booking.serviceCenterId = serviceCenterId;
+    }
   }
 
   loadVehicles() {
-    this.client.get<Array<Vehicles>>(
-      "http://localhost:5179/api/Vehicle/user-vehicles",
-      { headers: this.headers }
-    ).subscribe({
-      next: (data) => { this.vehicles = data; }
+    this.bookingservice.getUserVehicles().subscribe({
+      next: (data) => { this.vehicles.set(data); },
+      error: (err) => {alert("Failed to load vehicles: "+err);}
     });
   }
 
@@ -44,9 +42,11 @@ export class AddBoking implements OnInit {
     if (vehicle) {
       this.booking.vehicleNo = vehicle.registrationNumber;
       this.booking.vehicleName = vehicle.model;
+      this.booking.vehicleType = vehicle.type;
     } else {
       this.booking.vehicleNo = undefined;
       this.booking.vehicleName = undefined;
+      this.booking.vehicleType = undefined;
     }
   }
 
@@ -79,20 +79,15 @@ export class AddBoking implements OnInit {
 
   isFormValid(): boolean {
     return !!(
-      this.booking.customerName?.trim() &&
       this.selectedDate &&
       this.selectedVehicle &&
-      this.booking.vehicleType?.trim() &&
+      // this.booking.vehicleType?.trim() &&
       this.booking.serviceType
     );
   }
 
   createBooking() {
-    this.client.post(
-      "http://localhost:5167/api/Bookings/CreateBooking",
-      this.booking,
-      { headers: this.headers }
-    ).subscribe({
+    this.bookingservice.createBooking(this.booking).subscribe({
       next: () => {
         alert("Booking created successfully ✅");
         this.resetForm();
@@ -102,6 +97,7 @@ export class AddBoking implements OnInit {
         alert("Booking failed ❌");
       }
     });
+    this.resetForm();
   }
 
   resetForm() {

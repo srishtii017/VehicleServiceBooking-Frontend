@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'
 import { GetBookings } from '../models/getbooking';
 import { RouterLink } from '@angular/router';
+import { Bookingservice } from '../services/bookingservice';
 
 @Component({
   selector: 'app-showbookings',
@@ -14,23 +14,20 @@ import { RouterLink } from '@angular/router';
 })
 export class Showbookings implements OnInit{
   
-   bookings:Array<GetBookings> = [];
+   bookings = signal<Array<GetBookings>>([]);
    bookingToCancel?: GetBookings;
    showCancelSuccess = false;
-   token = localStorage.getItem("UserToken");
-   headers = new HttpHeaders({'Authorization': `bearer ${this.token}`});
 
-  constructor(private client: HttpClient) {
-  }
+  constructor(private bookingservice: Bookingservice) {}
 
   ngOnInit(): void {
-    this.client.get<Array<GetBookings>>("http://localhost:5167/api/Bookings/my-bookings", {headers: this.headers}).subscribe({
+    this.bookingservice.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings = data ?? [];
+        this.bookings.set(data);
       },
       error: (error) => {
         console.log("Error fetching bookings:", error);
-        this.bookings = [];
+        this.bookings.set([]);
       }
     });
   }
@@ -55,13 +52,16 @@ export class Showbookings implements OnInit{
       return;
     }
 
-    this.client.delete("http://localhost:5167/api/Bookings/cancel-booking/" + bookingId, {headers: this.headers}).subscribe({
-      next: () => {
-        this.bookings = this.bookings.map((booking) =>
-          booking.bookingId === bookingId
-            ? { ...booking, status: 'Cancelled' }
-            : booking
+    this.bookingservice.cancelBooking(bookingId).subscribe({
+       next: () => {
+        this.bookings.update((oldBookings) =>
+          oldBookings.map((booking) =>
+            booking.bookingId === bookingId
+              ? { ...booking, status: 'Cancelled' }
+              : booking
+          )
         );
+
         this.bookingToCancel = undefined;
         this.showCancelSuccess = true;
         console.log("Cancel booking with ID:", bookingId);
