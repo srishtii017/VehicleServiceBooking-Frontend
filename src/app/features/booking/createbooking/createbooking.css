@@ -1,17 +1,12 @@
-/* =======================================
-   BOOK A SERVICE — DARK ORANGE PRO THEME
-   ======================================= */
-/* Root host — background applied to full page */
 :host {
   display: flex;
-  justify-content: center;       /* ✅ horizontally center */
-  align-items: flex-end;         /* ✅ bottom align */
+  justify-content: center;       
+  align-items: flex-end;         
   min-height: 100vh;
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #f3f4f6;
   background-color: #080c18;
 
-  /* Background image + gradient covering full viewport */
   background-image:
     linear-gradient(to bottom,
       transparent 0%,
@@ -25,24 +20,19 @@
   background-size: cover;
 }
 
-/* ---- PAGE WRAPPER ---- */
 .booking-page {
   width: 100%;
   max-width: 800px;
   padding: 15px;
-  margin-bottom: 40px;           /* ✅ spacing from bottom */
+  margin-bottom: 40px;           
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  /* border:2px solid red; */
-  /* Semi-transparent card effect */
   background: rgba(8, 12, 24, 0.75);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
 
-
-/* ---- GRID ---- */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -51,12 +41,10 @@
   margin-bottom: 30px;
 }
 
-/* Full-width field spanning both columns */
 .field-full {
   grid-column: 1 / -1;
 }
 
-/* ---- FIELD & LABEL ---- */
 .field {
   display: flex;
   flex-direction: column;
@@ -81,7 +69,6 @@
   flex-shrink: 0;
 }
 
-/* ---- PILL INPUT ---- */
 .pill-input {
   width: 100%;
   padding: 16px 22px;
@@ -111,7 +98,6 @@
   background: rgba(15, 20, 35, 0.9);
 }
 
-/* ---- SELECT ---- */
 .pill-select {
   cursor: pointer;
   padding-right: 48px;
@@ -128,7 +114,6 @@
   font-size: 14px;
 }
 
-/* ---- DATE INPUT ---- */
 .date-input {
   cursor: pointer;
   color-scheme: dark;
@@ -147,7 +132,6 @@
   opacity: 1;
 }
 
-/* ---- SECTION LABEL ---- */
 .section-label {
   font-size: 18px;
   font-weight: 700;
@@ -157,14 +141,12 @@
   text-shadow: 0 0 16px rgba(226, 133, 9, 0.2);
 }
 
-/* ---- FORM ACTION ---- */
 .form-action {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
 
-/* ---- CONFIRM BUTTON ---- */
 .btn-confirm {
   display: inline-flex;
   align-items: center;
@@ -200,10 +182,9 @@
   box-shadow: none;
 }
 
-/* ---- RESPONSIVE ---- */
 @media (max-width: 700px) {
   :host {
-    align-items: flex-start; /* ✅ mobile: form top se start ho */
+    align-items: flex-start;
   }
   .booking-page {
     margin: 40px 16px;

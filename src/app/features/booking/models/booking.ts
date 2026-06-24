@@ -10,5 +10,5 @@ export class Booking {
   vehicleType?: string;
   serviceCenterId?: string;
   serviceType?: string;
-  serviceDate?: Date;
+  serviceDate?: string;
 }
