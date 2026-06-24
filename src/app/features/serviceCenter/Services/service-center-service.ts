@@ -3,6 +3,7 @@ import { ServiceCenter } from '../Models/service-center';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ServiceCenterDTO } from '../Models/service-center-dto';
 
 export interface ApiResponse<T> {
   status: string;
@@ -18,10 +19,10 @@ export class ServiceCenterService {
 
   ServiceCenters = signal<Array<ServiceCenter>>([]);
 
-  constructor(private client: HttpClient) {}
+  constructor(private client: HttpClient) { }
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('OwnerToken');
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
@@ -40,7 +41,12 @@ export class ServiceCenterService {
     return this.ServiceCenters.asReadonly();
   }
 
-  AddServiceCenter(center: ServiceCenter): Observable<ApiResponse<ServiceCenter>> {
+  AddServiceCenter(center: ServiceCenterDTO): Observable<ApiResponse<ServiceCenter>> {
     return this.client.post<ApiResponse<ServiceCenter>>(this.apiUrl, center, { headers: this.getAuthHeaders() });
   }
+
+  GetServiceCenterByID(id: string): Observable<ApiResponse<ServiceCenter>> {
+    return this.client.get<ApiResponse<ServiceCenter>>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+  }
+
 }

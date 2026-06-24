@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+:host {
+  display: block;
+  background-color: #0d0d0d;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Header */
+.dashboard-header {
+  width: 80%;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.dashboard-tag {
+  font-family: 'Roboto Mono', monospace;
+  color: #f26d21;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0 4px 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #555555;
+  margin: 0;
+}
+
+/* Master Stream Container */
+.master-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 80%;
+}
+
+.center-segment-block {
+  display: flex;
+  flex-direction: column;
+  background-color: #111111;
+  border: 1px solid #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* --- CLEAN COMPACT NAME HEADER --- */
+.center-name-header {
+  background-color: #141414;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.status-active-border { border-left: 4px solid #00e676; }
+.status-inactive-border { border-left: 4px solid #555555; }
+
+.name-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.center-index {
+  font-family: 'Roboto Mono', monospace;
+  color: #444444;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.center-title-text {
+  color: #f26d21;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.status-badge.active { background-color: rgba(0, 230, 118, 0.1); color: #00e676; }
+.status-badge.inactive { background-color: rgba(255, 255, 255, 0.05); color: #888888; }
+.status-badge .dot { font-size: 8px; }
+
+/* --- BOOKINGS TABLE SECTION --- */
+.nested-bookings-container {
+  background-color: #121212;
+  border-top: 1px solid #1c1c1c;
+  padding: 20px 24px;
+}
+
+.bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.bookings-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #555555;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.records-badge {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: #444444;
+  border: 1px solid #222222;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.table-responsive { overflow-x: auto; }
+.bookings-table { width: 100%; border-collapse: collapse; text-align: left; }
+
+.bookings-table th {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: #f26d21;
+  padding: 12px 16px;
+  border-bottom: 1px solid #222222;
+}
+
+.bookings-table td {
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: #cccccc;
+  border-bottom: 1px solid #181818;
+}
+
+.bookings-table tbody tr:hover { background-color: #161616; }
+
+.booking-id-cell { color: #f26d21 !important; font-family: 'Roboto Mono', monospace; font-weight: 600; }
+.customer-cell { color: #ffffff !important; font-weight: 500; }
+.vehicle-cell { color: #888888; }
+.car-icon { margin-right: 4px; opacity: 0.5; }
+.date-cell { font-family: 'Roboto Mono', monospace; color: #999999; }
+.empty-cell { text-align: center; padding: 24px !important; color: #444444 !important; font-size: 13px; }
+
+/* Status Badges */
+.status-badge-table {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.status-badge-table .dot { font-size: 7px; }
+
+.status-badge-table.completed { background-color: rgba(0, 230, 118, 0.06); color: #00e676; }
+.status-badge-table.in-progress { background-color: rgba(255, 179, 0, 0.06); color: #ffb300; }
+.status-badge-table.pending { background-color: rgba(242, 109, 33, 0.06); color: #f26d21; }
+.status-badge-table.scheduled { background-color: rgba(0, 176, 255, 0.06); color: #00b0ff; }
+
+.no-centers { color: #444444; text-align: center; padding: 60px; font-weight: 500; }
+
+@media (max-width: 768px) {
+  .dashboard-header, .master-stream { width: 92%; }
+}

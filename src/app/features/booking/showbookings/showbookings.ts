@@ -17,7 +17,7 @@ export class Showbookings implements OnInit{
    bookings:Array<GetBookings> = [];
    bookingToCancel?: GetBookings;
    showCancelSuccess = false;
-   token = localStorage.getItem("token");
+   token = localStorage.getItem("UserToken");
    headers = new HttpHeaders({'Authorization': `bearer ${this.token}`});
 
   constructor(private client: HttpClient) {

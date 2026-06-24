@@ -21,7 +21,7 @@ export class MyVehicles implements OnInit {
 
   ngOnInit(): void {
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('UserToken');
 
     this.http.get<any[]>(
       'http://localhost:5000/vehicle/user-vehicles',

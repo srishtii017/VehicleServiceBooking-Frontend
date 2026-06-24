@@ -1,26 +1,22 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './features/navbar/navbar';
-import { Main } from './features/main/main';
+import { RoleSelect } from './features/role-select/role-select';
 import { AuthService } from './features/user/services/auth';
 import { OwnerAuthService } from './features/owner/Services/owner-auth.service';
-import { RoleSelect } from './features/role-select/role-select';
+import { Login } from './features/user/login/login';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Navbar,RoleSelect],
+  imports: [RouterOutlet, Navbar, RoleSelect],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-
 export class App {
-  UserAuth:AuthService = inject(AuthService);
-  OwnerAuth:OwnerAuthService = inject(OwnerAuthService);
-  ls=localStorage.getItem("token");
-
-  isLoggedIn:boolean = this.UserAuth.isLoggedIn() || this.OwnerAuth.isOwnerLoggedIn();
+  UserAuth = inject(AuthService);
+  OwnerAuth = inject(OwnerAuthService);
+  // isLoggedIn:boolean = this.UserAuth.isUserLoggedIn() || this.OwnerAuth.isOwnerLoggedIn();
+  ls=localStorage;
   protected readonly title = signal('frontend-main');
-
-
 }

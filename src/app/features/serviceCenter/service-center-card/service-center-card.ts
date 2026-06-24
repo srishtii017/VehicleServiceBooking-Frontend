@@ -3,6 +3,7 @@ import { ServiceCenterService } from '../Services/service-center-service';
 import { ServiceCenter } from '../Models/service-center';
 import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-service-center-card',
@@ -11,18 +12,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './service-center-card.css',
 })
 export class ServiceCenterCard {
-  CenterServices: ServiceCenterService = inject(ServiceCenterService);
-  serviceCenters: any;
+  CenterServices = inject(ServiceCenterService);
+  router = inject(Router);
 
-  constructor() {
-    this.serviceCenters = this.CenterServices.getServiceCenters();
-  }
+  serviceCenters = this.CenterServices.getServiceCenters();
 
   ngOnInit() {
     this.CenterServices.FetchCenters();
   }
 
   viewDetails(center: ServiceCenter) {
-    alert(`Viewing details for: ${center.centerName}`);
+    this.router.navigate(['/servicecenter', center.serviceCenterID]);
   }
 }

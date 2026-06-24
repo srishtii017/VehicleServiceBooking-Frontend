@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Navbar } from '../navbar/navbar';
+import { AuthService } from '../user/services/auth';
 
 @Component({
   selector: 'app-main',
@@ -12,12 +13,12 @@ import { Navbar } from '../navbar/navbar';
 export class Main {
 
   userName = '';
-
-  constructor(private router: Router) { }
-
+  UserAuth:AuthService = inject(AuthService);
+  router = inject(Router);
+  ls=localStorage;
+  UserLoginIn: boolean = false;
   ngOnInit(): void {
     this.userName = localStorage.getItem('name') || 'User';
+    this.UserLoginIn = this.UserAuth.isUserLoggedIn();
   }
-
-
 }

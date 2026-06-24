@@ -8,7 +8,7 @@ export class Booking {
   vehicleName?: string;
   vehicleNo?: string;
   vehicleType?: string;
-  serviceCenterId?: number;
+  serviceCenterId?: string;
   serviceType?: string;
   serviceDate?: Date;
 }

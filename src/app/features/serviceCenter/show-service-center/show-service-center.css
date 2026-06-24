@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+:host {
+  display: block;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0d0d0d;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.main-container {
+  max-width: 1200px; /* Un poco más ancho para albergar cómodamente la tabla */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Separación entre la sección Detalles y la sección Bookings */
+}
+
+/* --- ESTILOS DE LA TARJETA ANTERIOR --- */
+.center-card {
+  background-color: #141414;
+  border: 1px solid #262626;
+  border-radius: 8px;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: #f26d21; 
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.header-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #00e676; 
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.icon-check {
+  font-size: 12px;
+  border: 1px solid #00e676;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #262626;
+  margin-bottom: 28px;
+}
+
+.details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.row-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 600px) {
+  .row-two-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f26d21; 
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.value {
+  font-size: 15px;
+  color: #e0e0e0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.large-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.status-text.active { color: #00e676; font-weight: 600; }
+.status-text.inactive { color: #ff5252; font-weight: 600; }
+
+
+/* --- NUEVOS ESTILOS PARA LA TABLA DE BOOKINGS --- */
+.bookings-container {
+  background-color: #141414;
+  border: 1px solid #262626;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bookings-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: #f26d21;
+  margin: 0;
+}
+
+.records-badge {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  color: #888888;
+  border: 1px solid #262626;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Encabezado Tabla */
+.bookings-table th {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: #f26d21;
+  padding: 16px;
+  border-bottom: 1px solid #262626;
+  letter-spacing: 0.5px;
+}
+
+.sort-icon {
+  font-size: 9px;
+  color: #555555;
+  margin-left: 4px;
+}
+
+/* Celdas Body */
+.bookings-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: #cccccc;
+  border-bottom: 1px solid #1c1c1c;
+  vertical-align: middle;
+}
+
+.bookings-table tbody tr:hover {
+  background-color: #1a1a1a;
+}
+
+/* Tipografías específicas de celdas según la foto */
+.booking-id-cell {
+  color: #f26d21 !important;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+}
+
+.customer-cell {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.vehicle-cell {
+  color: #8c8c8c;
+}
+
+.car-icon {
+  margin-right: 6px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.date-cell {
+  font-family: 'Roboto Mono', monospace;
+  color: #aaaaaa;
+}
+
+.empty-cell {
+  text-align: center;
+  padding: 32px !important;
+  color: #666666 !important;
+}
+
+/* Badges Dinámicos de Estado basados en la clase de Angular */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge .dot {
+  font-size: 8px;
+}
+
+/* 1. Completed -> Verde */
+.status-badge.completed {
+  background-color: rgba(0, 230, 118, 0.08);
+  color: #00e676;
+}
+
+/* 2. In Progress -> Amarillo/Naranja */
+.status-badge.in-progress {
+  background-color: rgba(255, 179, 0, 0.08);
+  color: #ffb300;
+}
+
+/* 3. Pending -> Marrón/Naranja Oscuro */
+.status-badge.pending {
+  background-color: rgba(242, 109, 33, 0.08);
+  color: #f26d21;
+}
+
+/* 4. Scheduled -> Azul */
+.status-badge.scheduled {
+  background-color: rgba(0, 176, 255, 0.08);
+  color: #00b0ff;
+}

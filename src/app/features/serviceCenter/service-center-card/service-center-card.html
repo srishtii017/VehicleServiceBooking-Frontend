@@ -1,26 +1,72 @@
 <div class="page-container">
-    <!-- ✅ Heading -->
+  <div class="dashboard-header">
+    <span class="dashboard-tag">⊞ DASHBOARD</span>
     <h1 class="page-title">Your Service Centers</h1>
+    <p class="page-subtitle">
+      {{ serviceCenters().length }} of {{ serviceCenters().length }} centers · Click any card to view full details
+    </p>
+  </div>
 
-    <div class="cards">
-        @for (center of serviceCenters(); track center.serviceCenterID) {
-        <div class="center-card">
-            <button class="status-btn" [ngClass]="center.status === 1 ? 'active' : 'inactive'">
-                {{ center.status === 1 ? 'Active' : 'Inactive' }}
-            </button>
-
-            <h2 class="center-name">{{ center.centerName }}</h2>
-
-            <p class="center-address">📍 {{ center.fullAddress }}</p>
-            <p class="center-contact">📞 {{ center.contact }}</p>
-            <p class="center-capacity">👥 Capacity: {{ center.capacity }}</p>
-            <p class="center-date">🗓️ Created: {{ center.createdAt | date:'mediumDate' }}</p>
-            <p class="center-description">🛠️ {{ center.serviceDescription }}</p>
-
-            <button class="details-btn" (click)="viewDetails(center)">
-                View Details
-            </button>
+  <div class="cards-list">
+    @for (center of serviceCenters(); track center.serviceCenterID; let idx = $index) {
+      <div class="center-card" [ngClass]="center.status === 1 ? 'status-active-border' : 'status-inactive-border'">
+        
+        <div class="card-top-row">
+          <div class="id-status-row">
+            <span class="center-id">SC-00{{ idx + 1 }}</span>
+            <span class="divider-pipe">|</span>
+            <span class="status-badge" [ngClass]="center.status === 1 ? 'active' : 'inactive'">
+              <span class="dot">●</span> {{ center.status === 1 ? 'ACTIVE' : 'INACTIVE' }}
+            </span>
+          </div>
+          <h2 class="center-name">{{ center.centerName }}</h2>
         </div>
-        }
-    </div>
+
+        <div class="card-bottom-row">
+          
+          <div class="card-details-grid">
+            <div class="info-grid">
+              
+              <div class="info-group">
+                <span class="info-label">📍 ADDRESS</span>
+                <p class="info-value">{{ center.fullAddress }}</p>
+              </div>
+
+              <div class="info-group">
+                <span class="info-label">📞 CONTACT</span>
+                <p class="info-value">{{ center.contact }}</p>
+              </div>
+
+              <div class="info-group">
+                <span class="info-label">👥 CAPACITY</span>
+                <p class="info-value">{{ center.capacity }} vehicles / day</p>
+              </div>
+
+              <div class="info-group">
+                <span class="info-label">📅 CREATED</span>
+                <p class="info-value">{{ center.createdAt | date:'mediumDate' }}</p>
+              </div>
+
+              <div class="info-group services-full-width">
+                <span class="info-label">🔧 SERVICES</span>
+                <p class="info-value truncate-text">{{ center.serviceDescription }}</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-actions-area">
+            <button class="details-btn" (click)="viewDetails(center)">
+              View Details <span class="arrow">›</span>
+            </button>
+            <span class="bookings-count">8 bookings</span>
+          </div>
+
+        </div>
+
+      </div>
+    } @empty {
+      <div class="no-centers">No service centers available.</div>
+    }
+  </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ServiceCenter } from '../Models/service-center';
 import { ServiceCenterService } from '../Services/service-center-service';
 import { FormsModule } from '@angular/forms';
+import { ServiceCenterDTO } from '../Models/service-center-dto';
 
 @Component({
   selector: 'app-add-service-center',
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './add-service-center.css',
 })
 export class AddServiceCenter {
-  center: ServiceCenter = new ServiceCenter();
+  center: ServiceCenterDTO = new ServiceCenterDTO();
   isLoading = false;
   errorMessage = '';
 
@@ -28,6 +29,7 @@ export class AddServiceCenter {
       },
       error: (err) => {
         this.isLoading = false;
+        console.log(err);
         this.errorMessage = err.error?.message || 'Failed to add service center.';
       }
     });

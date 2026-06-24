@@ -33,8 +33,7 @@ export class AddVehicle {
     return;
   }
 
-  // ✅ ADD TOKEN
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('UserToken');
 
   this.http.post('http://localhost:5000/vehicle', this.vehicle, {
     headers: {

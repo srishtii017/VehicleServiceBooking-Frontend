@@ -22,14 +22,14 @@ export class AddBoking implements OnInit {
 
   constructor(private client: HttpClient) {}
 
-  token = localStorage.getItem("token");
+  token = localStorage.getItem("UserToken");
   headers = new HttpHeaders({
     'Authorization': `bearer ${this.token}`
   });
 
   ngOnInit() {
     this.loadVehicles();
-    this.booking.serviceCenterId = 1; // Default/Autofetched center ID
+    // this.booking.serviceCenterId = 1; // Default/Autofetched center ID
   }
 
   loadVehicles(){
@@ -119,7 +119,7 @@ export class AddBoking implements OnInit {
 
   resetForm() {
     this.booking = new Booking();
-    this.booking.serviceCenterId = 1; // Default/Autofetched center ID
+    // this.booking.serviceCenterId = 
     this.selectedVehicle = undefined;
     this.selectedDate = '';
     this.selectedTime = '';

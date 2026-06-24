@@ -1,169 +1,248 @@
-/* Reset margins and ensure full height */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
 
-/* Page container with background image */
-.page-container {
-  display: flex;
-  flex-direction: column;   /* ✅ stack vertically */
-  align-items: flex-start;  /* ✅ align horizontally to left */
-  justify-content: flex-start; /* ✅ align vertically to top */
-  width: 100%;
+/* Contenedor General */
+:host {
+  display: block;
+  background-color: #0d0d0d;
   min-height: 100vh;
-  background: url('/assets/availableCenters.jpg') no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
+  width: 100%;
 }
 
-/* Overlay for readability */
-.page-container::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.35);
-  z-index: 0;
-}
-
-/* Page title styling */
-.page-title {
-  font-size: 36px;
-  font-weight: 800;
-  color: white;              /* ✅ neon orange */
-  text-align: center;          /* ✅ center aligned */
-  margin: 20px 0;              /* ✅ minimal spacing */
-  position: relative;
-  z-index: 1;
-  letter-spacing: 1px;
-  font-family: 'Poppins', sans-serif; /* ✅ modern font */
-  text-shadow: 0 0 8px rgba(255,102,0,0.15); /* ✅ glowing effect */
-
-  /* Animation */
-  animation: fadeInDown 1s ease-out, glowPulse 2s infinite;
-}
-
-/* Fade-in from top */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Glow pulsing effect */
-@keyframes glowPulse {
-  0% { text-shadow: 0 0 8px rgba(255,102,0,0.7); }
-  50% { text-shadow: 0 0 16px rgba(255,102,0,1); }
-  100% { text-shadow: 0 0 8px rgba(255,102,0,0.7); }
-}
-
-/* Cards container */
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 28px;
-  justify-content: flex-start;   /* ✅ left aligned horizontally */
-  align-items: flex-start;       /* ✅ top aligned vertically */
-  padding: 20px;                 /* ✅ reduced spacing */
-  position: relative;
-  z-index: 1; /* ✅ above overlay */
-}
-
-/* Card styling */
-.center-card {
-  position: relative;
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  padding: 40px 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center; /* Centra todo el contenido de la página */
+  box-sizing: border-box;
+}
 
-  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
-  border: 1px solid #404040;
-  border-radius: 14px;
-  padding: 24px;
-  width: 340px;
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+/* Header del Dashboard alineado con el bloque del 80% */
+.dashboard-header {
+  width: 80%;
+  margin-bottom: 32px;
   text-align: left;
 }
 
-.center-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: #ff6600;
-}
-
-/* Title inside card */
-.center-name {
-  font-size: 22px;
+.dashboard-tag {
+  font-family: 'Roboto Mono', monospace;
+  color: #f26d21;
+  font-size: 11px;
   font-weight: 700;
-  margin-bottom: 12px;
-  color: #ff6600;
-  text-align: center;
+  letter-spacing: 1.5px;
 }
 
-/* Info fields */
-.center-address,
-.center-date,
-.center-contact,
-.center-capacity,
-.center-description,
-.center-owner {
+.page-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 8px 0 4px 0;
+  color: #ffffff;
+}
+
+.page-subtitle {
   font-size: 14px;
-  margin: 6px 0;
-  line-height: 1.4;
+  color: #555555;
+  margin: 0;
 }
 
-.center-contact { color: #00ff99; font-weight: 600; }
-.center-capacity { color: #66ccff; font-weight: 600; }
-.center-description { color: #ffcc00; }
-.center-owner { color: #ff99cc; }
-
-/* Status Button (Top Right) */
-.status-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  border-radius: 50px;
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: default;
+/* Lista fijada al 80% de ancho total de la pantalla */
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 80%; /* Ajustado al 80% de ancho */
 }
-.status-btn.active { background: #28a745; color: #fff; }
-.status-btn.inactive { background: #6c757d; color: #fff; }
 
-/* Button always at bottom */
-.details-btn {
-  margin-top: auto;
-  padding: 12px 16px;
-  background: #ff6600;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  width: 100%;
+.center-card {
+  background-color: #141414;
+  border: 1px solid #1f1f1f;
+  border-radius: 6px;
+  padding: 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* Cambiado a columna para apilar arriba/abajo */
+  gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.details-btn:hover {
-  background: #e65c00;
+
+.center-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* Empty state */
-.no-centers {
-  text-align: center;
-  color: #ff6600;
+.status-active-border { border-left: 4px solid #00e676; }
+.status-inactive-border { border-left: 4px solid #555555; }
+
+/* --- SECCIÓN SUPERIOR (NUEVA ESTRUCTURA) --- */
+.card-top-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid #1c1c1c;
+  padding-bottom: 16px;
+}
+
+.id-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.center-id {
+  font-family: 'Roboto Mono', monospace;
+  color: #444444;
+  font-size: 13px;
   font-weight: 600;
-  font-size: 16px;
-  margin-top: 30px;
+}
+
+.divider-pipe {
+  color: #222222;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.status-badge.active {
+  background-color: rgba(0, 230, 118, 0.1);
+  color: #00e676;
+}
+
+.status-badge.inactive {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #888888;
+}
+
+.status-badge .dot { font-size: 8px; }
+
+.center-name {
+  color: #f26d21;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --- SECCIÓN INFERIOR (DETALLES + ACCIÓN) --- */
+.card-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card-details-grid {
+  flex: 1; /* Toma todo el espacio disponible de la izquierda */
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.services-full-width {
+  grid-column: span 2; /* Descripción de servicios usa las dos columnas abajo */
+}
+
+.info-label {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f26d21;
+}
+
+.info-value {
+  margin: 0;
+  font-size: 14px;
+  color: #aaaaaa;
+  line-height: 1.5;
+}
+
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #888888;
+}
+
+/* --- ÁREA DE BOTÓN DERECHA --- */
+.card-actions-area {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: center; /* Centra verticalmente el botón con respecto a los datos */
+}
+
+.details-btn {
+  background-color: #f26d21;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.details-btn:hover {
+  background-color: #d95a16;
+}
+
+.bookings-count {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: #444444;
+}
+
+.no-centers {
+  color: #555555;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .dashboard-header, .cards-list {
+    width: 90%;
+  }
+  .card-bottom-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-full-width {
+    grid-column: span 1;
+  }
+  .card-actions-area {
+    width: 100%;
+  }
 }

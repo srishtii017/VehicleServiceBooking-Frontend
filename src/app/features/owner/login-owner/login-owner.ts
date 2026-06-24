@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OwnerLogin } from '../Models/login';
@@ -17,6 +17,7 @@ export class LoginOwner {
   isLoading = false;
   errorMessage = '';
 
+  // private cd:ChangeDetectorRef= inject(ChangeDetectorRef);
   private router = inject(Router);
   private loginService = inject(OwnerLoginService);
   private authService = inject(OwnerAuthService);
@@ -34,6 +35,8 @@ export class LoginOwner {
         this.isLoading = false;
         this.authService.loginOwner(res.data);
         this.router.navigate(['/main']);
+        // this.cd.detectChanges;
+        console.log(this.authService.isLoggedIn())
       },
       error: (error) => {
         this.isLoading = false;

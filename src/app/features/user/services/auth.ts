@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { ChangeDetectorRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -19,16 +19,14 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:5000/user';
 
-  // ✅ Signal instead of BehaviorSubject
   isLoggedIn = signal<boolean>(this.hasToken());
 
   router = inject(Router);
 
   constructor(private http: HttpClient) { }
 
-  // ── Helper ──
   private hasToken(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('UserToken');
   }
 
   private getHeaders(): HttpHeaders {
@@ -41,12 +39,12 @@ export class AuthService {
 
   // ── Token Helpers ──
   saveToken(token: string): void {
-    localStorage.setItem('token', token);
-    this.isLoggedIn.set(true); // ✅ signal update
+    localStorage.setItem('UserToken', token);
+    this.isLoggedIn.set(true);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('UserToken');
   }
 
   saveUser(user: LoginResponse): void {
@@ -58,15 +56,16 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  isLoggedInNow(): boolean {
-    return this.isLoggedIn(); // ✅ signal read
+  isUserLoggedIn(): boolean {
+    return this.isLoggedIn();
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('UserToken');
+    localStorage.removeItem('isUserLogged');
     localStorage.removeItem('user');
-    this.isLoggedIn.set(false); // ✅ signal update
-    this.router.navigate(['/']);
+    // this.isLoggedIn.set(false);
+    this.router.navigate(['']);
   }
 
   // ── API Calls ──

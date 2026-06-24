@@ -1,1 +1,100 @@
-<p>show-service-center works!</p>
+@if (center()) {
+  <div class="main-container">
+    
+    <div class="center-card">
+      <div class="card-header">
+        <h2 class="card-title">CENTER DETAILS</h2>
+        <div class="header-status-badge">
+          <span class="icon-check">✓</span> Active
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="details-body">
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-wrench">🔧</i> CENTER NAME</span>
+          <div class="value large-text">{{ center()?.centerName }}</div>
+        </div>
+
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-location">📍</i> FULL ADDRESS</span>
+          <div class="value">{{ center()?.fullAddress }}</div>
+        </div>
+
+        <div class="row-two-columns">
+          <div class="info-group">
+            <span class="label"><i class="icon-phone">📞</i> CONTACT</span>
+            <div class="value">{{ center()?.contact }}</div>
+          </div>
+          <div class="info-group">
+            <span class="label"><i class="icon-capacity">👥</i> CAPACITY</span>
+            <div class="value">{{ center()?.capacity }} vehicles / day</div>
+          </div>
+        </div>
+
+        <div class="row-two-columns">
+          <div class="info-group">
+            <span class="label"><i class="icon-calendar">📅</i> CREATED DATE</span>
+            <div class="value">{{ center()?.createdAt | date:'longDate' }}</div>
+          </div>
+          <div class="info-group">
+            <span class="label"><i class="icon-status">🕒</i> STATUS</span>
+            <div class="value status-text" [ngClass]="center()?.status === 1 ? 'active' : 'inactive'">
+              {{ center()?.status === 1 ? 'ACTIVE' : 'INACTIVE' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-description">🔧</i> SERVICE DESCRIPTION</span>
+          <div class="value description-text">{{ center()?.serviceDescription }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bookings-container">
+      <div class="bookings-header">
+        <h2 class="bookings-title">BOOKINGS</h2>
+        <div class="records-badge">{{ bookings().length }} RECORDS</div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>BOOKING ID <span class="sort-icon">▲▼</span></th>
+              <th>CUSTOMER <span class="sort-icon">▲▼</span></th>
+              <th>VEHICLE <span class="sort-icon">▲▼</span></th>
+              <th>DATE <span class="sort-icon">▲▼</span></th>
+              <th>STATUS <span class="sort-icon">▲▼</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (booking of bookings(); track booking.bookingId) {
+              <tr>
+                <td class="booking-id-cell">{{ booking.bookingId }}</td>
+                <td class="customer-cell">Customer Name</td> 
+                <td class="vehicle-cell">
+                  <span class="car-icon">🚗</span> 
+                  {{ booking.vehicleType || 'Vehicle' }} ({{ booking.vehicleNo || 'N/A' }})
+                </td>
+                <td class="date-cell">{{ booking.serviceDate | date:'mediumDate' }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
+                    <span class="dot">●</span> {{ booking.status }}
+                  </span>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="empty-cell">No bookings found for this service center.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+}

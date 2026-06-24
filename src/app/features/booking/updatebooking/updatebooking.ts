@@ -16,7 +16,7 @@ export class Updatebooking implements OnInit {
   constructor(private client:HttpClient, private route: ActivatedRoute){
 
   }
-  token = localStorage.getItem("token");
+  token = localStorage.getItem("UserToken");
 
   headers = new HttpHeaders({'Authorization': `bearer ${this.token}`});
 

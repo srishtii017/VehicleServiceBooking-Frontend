@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, inject, Injectable } from '@angular/core';
 import { OwnerLogin } from '../Models/login';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OwnerLoginService {
   private LoginUrl = 'http://localhost:5000/owner/login';
+
 
   constructor(private client: HttpClient) {}
 

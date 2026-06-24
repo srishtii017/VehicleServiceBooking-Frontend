@@ -40,12 +40,13 @@ export class Login {
         if (response.success && response.data) {
           this.authService.saveToken(response.data.token);
           this.authService.saveUser(response.data);
+          localStorage.setItem('isUserLogged','true')
           localStorage.setItem('role', 'user');
           this.successMessage = 'Login successful! Redirecting...';
           setTimeout(() => {
             this.router.navigate(['/main']);
           }, 1000);
-
+          // console.log(this.authService.isUserLoggedIn())
         } else {
           this.errorMessage = response.message || 'Invalid login!';
         }

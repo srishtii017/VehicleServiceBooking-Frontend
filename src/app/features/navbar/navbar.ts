@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Component, inject, computed } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../user/services/auth';
 import { OwnerAuthService } from '../owner/Services/owner-auth.service';
@@ -12,10 +12,18 @@ import { OwnerAuthService } from '../owner/Services/owner-auth.service';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  private UserAuth: AuthService = inject(AuthService);
-  private OwnerAuth: OwnerAuthService = inject(OwnerAuthService);
-  
+  private UserAuth = inject(AuthService);
+  private OwnerAuth = inject(OwnerAuthService);
+
+  OwnerLoginIn:boolean = this.OwnerAuth.isOwnerLoggedIn();
+  UserLoginIn:boolean = this.UserAuth.isUserLoggedIn();
+  ls=localStorage;
+
   Logout() {
-    this.UserAuth.logout();
+    if (this.ls.getItem('isOwnerLogged')==='true') {
+      this.OwnerAuth.logoutOwner();
+    } else if (this.ls.getItem('isUserLogged')==='true') {
+      this.UserAuth.logout();
+    }
   }
 }
