@@ -13,22 +13,20 @@ export class AuthTs {
 
   constructor(private http: HttpClient) {}
 
-  // Common Header (Token)
   private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || '';
+    const token = localStorage.getItem('UserToken') || '';
 
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
   }
 
-  //  GET ALL (user vehicles)
-  getUserVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(
-      `${this.baseUrl}/user-vehicles`,
-      { headers: this.getHeaders() }
-    );
-  }
+ getUserVehicles(): Observable<Vehicle[]> {
+  return this.http.get<Vehicle[]>(
+    `${this.baseUrl}/user-vehicles`,
+    { headers: this.getHeaders() }
+  );
+}
 
   //  GET BY ID
   getVehicleById(id: number): Observable<Vehicle> {

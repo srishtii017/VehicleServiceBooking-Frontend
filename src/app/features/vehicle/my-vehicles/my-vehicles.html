@@ -1,28 +1,60 @@
 <div class="page">
-  <div class="main-wrapper">
 
-    <h1>My Vehicles</h1>
- 
-    @if (vehicles.length === 0) {
-  <p>No vehicles found</p>
-}
-@else {
-  <div class="vehicle-list">
+  <div class="delete-vehicle-card">
 
-    @for (v of vehicles; track v.vehicleId) {
-      <div class="vehicle-card">
+    <!-- HEADER -->
+    <div class="card-header">
+      <h1>My Vehicles</h1>
+    </div>
 
-        <h3>{{ v.make }} {{ v.model }}</h3>
-        <p>Year: {{ v.year }}</p>
-        <p>Registration: {{ v.registrationNumber }}</p>
+    <!-- LIST -->
+    <div class="profile-container">
 
-        <button
-          [routerLink]="['/update-vehicle', v.vehicleId]">
-          Edit
-        </button>
+      @if (vehicles().length === 0) {
+        <p class="empty">No vehicles found</p>
+      }
+      @else {
 
-      </div>
-    }
+        @for (v of vehicles(); track v.vehicleId) {
+
+          <div class="info-row">
+
+            <!-- LEFT SIDE -->
+            <div class="vehicle-info">
+              <b>{{ v.make }} {{ v.model }}</b><br>
+              Year: {{ v.year }} <br>
+              {{ v.registrationNumber }}
+            </div>
+
+            <!-- RIGHT SIDE BUTTONS -->
+            <div class="action-buttons">
+
+              <button
+                type="button"
+                class="btn-edit"
+                [routerLink]="['/update-vehicle', v.vehicleId]">
+                Update
+              </button>
+
+              @if (v.vehicleId) {
+                <button
+                  type="button"
+                  class="btn-delete"
+                  (click)="deleteVehicle(v.vehicleId!)">
+                  Delete
+                </button>
+              }
+
+            </div>
+
+          </div>
+
+        }
+
+      }
+
+    </div>
 
   </div>
-}
+
+</div>
