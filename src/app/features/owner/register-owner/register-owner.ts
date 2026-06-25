@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OwnerRegister } from '../Models/register';
 import { OwnerRegisterService } from '../Services/owner-register-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-owner',
@@ -14,11 +15,11 @@ import { OwnerRegisterService } from '../Services/owner-register-service';
 export class RegisterOwner {
 
   reg: OwnerRegister = new OwnerRegister();
-  errorMessage = '';
   isLoading = false;
 
   private router = inject(Router);
-  private RegisterService: OwnerRegisterService = inject(OwnerRegisterService);
+  private RegisterService = inject(OwnerRegisterService);
+  private toastr = inject(ToastrService);
 
   goToLogin(): void {
     this.router.navigate(['/owner/login']);
@@ -26,17 +27,34 @@ export class RegisterOwner {
 
   HandleRegister() {
     this.isLoading = true;
-    this.errorMessage = '';
 
     this.RegisterService.RegisterOwner(this.reg).subscribe({
       next: () => {
         this.isLoading = false;
-        alert('Registration successful!');
+        
+        this.toastr.success('Account created successfully!', 'Success', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
+
         this.router.navigate(['/owner/login']);
       },
       error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = error.error?.message || 'Registration failed.';
+        setTimeout(() => {
+          this.isLoading = false;
+          
+          const backendErrors = error.error?.errors;
+          const msg = backendErrors 
+            ? Object.values(backendErrors).flat().join(', ') 
+            : (error.error?.message || 'Registration failed.');
+
+          this.toastr.error(msg, 'Registration Error', {
+            timeOut: 4000,
+            progressBar: true,
+            closeButton: true
+          });
+        });
       }
     });
   }

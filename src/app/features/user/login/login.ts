@@ -46,7 +46,6 @@ export class Login {
           setTimeout(() => {
             this.router.navigate(['/main']);
           }, 1000);
-          // console.log(this.authService.isUserLoggedIn())
         } else {
           this.errorMessage = response.message || 'Invalid login!';
         }

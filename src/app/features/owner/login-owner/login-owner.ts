@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { OwnerLogin } from '../Models/login';
 import { OwnerLoginService } from '../Services/owner-login-service';
 import { OwnerAuthService } from '../Services/owner-auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-owner',
@@ -15,12 +16,11 @@ import { OwnerAuthService } from '../Services/owner-auth.service';
 export class LoginOwner {
   login: OwnerLogin = new OwnerLogin();
   isLoading = false;
-  errorMessage = '';
 
-  // private cd:ChangeDetectorRef= inject(ChangeDetectorRef);
   private router = inject(Router);
   private loginService = inject(OwnerLoginService);
   private authService = inject(OwnerAuthService);
+  private toastr = inject(ToastrService);
 
   goToRegister(): void {
     this.router.navigate(['/owner/register']);
@@ -28,19 +28,30 @@ export class LoginOwner {
 
   HandleLogin() {
     this.isLoading = true;
-    this.errorMessage = '';
 
     this.loginService.LoginOwner(this.login).subscribe({
       next: (res: any) => {
         this.isLoading = false;
         this.authService.loginOwner(res.data);
+        
+        this.toastr.success('Welcome back, boss!', 'Login Successful', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
+
         this.router.navigate(['/main']);
-        // this.cd.detectChanges;
-        console.log(this.authService.isLoggedIn())
+        console.log(this.authService.isLoggedIn());
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error.error?.message || 'Login failed.';
+        const msg = error.error?.message || 'Login failed.';
+        
+        this.toastr.error(msg, 'Auth Error', {
+          timeOut: 4000,
+          progressBar: true,
+          closeButton: true
+        });
       }
     });
   }

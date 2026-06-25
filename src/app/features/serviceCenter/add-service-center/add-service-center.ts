@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ServiceCenter } from '../Models/service-center';
 import { ServiceCenterService } from '../Services/service-center-service';
 import { FormsModule } from '@angular/forms';
 import { ServiceCenterDTO } from '../Models/service-center-dto';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-service-center',
@@ -14,23 +14,37 @@ import { ServiceCenterDTO } from '../Models/service-center-dto';
 export class AddServiceCenter {
   center: ServiceCenterDTO = new ServiceCenterDTO();
   isLoading = false;
-  errorMessage = '';
 
-  private centerService: ServiceCenterService = inject(ServiceCenterService);
+  private centerService = inject(ServiceCenterService);
+  private toastr = inject(ToastrService);
 
   onSubmit() {
     this.isLoading = true;
-    this.errorMessage = '';
 
     this.centerService.AddServiceCenter(this.center).subscribe({
       next: (res) => {
         this.isLoading = false;
-        alert('Service Center added successfully!');
+
+        this.toastr.success('Service Center added successfully!', 'Success', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
+
+        this.center = new ServiceCenterDTO();
       },
       error: (err) => {
         this.isLoading = false;
-        console.log(err);
-        this.errorMessage = err.error?.message || 'Failed to add service center.';
+        const backendErrors = err.error?.errors;
+        const msg = backendErrors
+          ? Object.values(backendErrors).flat().join(', ')
+          : (err.error?.message || 'Failed to add service center.');
+
+        this.toastr.error(msg, 'Validation Error', {
+          timeOut: 4000,
+          progressBar: true,
+          closeButton: true
+        });
       }
     });
   }
