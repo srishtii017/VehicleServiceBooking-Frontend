@@ -1,42 +1,42 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { ServiceCenterService } from '../Services/service-center-service';
-import { ServiceCenter } from '../Models/service-center';
 import { GetBookings } from '../Models/get-bookings';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DatePipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
+import { Bookingservice } from '../../booking/services/bookingservice';
+import { BookingTableComponent } from '../booking-table-component/booking-table-component';
 
 @Component({
   selector: 'app-service-centers-bookings',
-  standalone: true,
-  imports: [DatePipe, NgClass],
+  imports: [NgClass, BookingTableComponent],
   templateUrl: './service-centers-bookings.html',
   styleUrl: './service-centers-bookings.css',
 })
 export class ServiceCentersBookings implements OnInit {
   private centerService = inject(ServiceCenterService);
-  private client = inject(HttpClient);
+  private bookingService = inject(Bookingservice);
 
   serviceCenters = this.centerService.getServiceCenters();
-  allBookings = signal<GetBookings[]>([]);
+  allBookings = signal<any[]>([]);
 
   ngOnInit() {
     this.centerService.FetchCenters();
-    const token = localStorage.getItem("OwnerToken");
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.client.get<GetBookings[]>("http://localhost:5000/Bookings/my-bookings", { headers })
-      .subscribe({
-        next: (data) => {
-          this.allBookings.set(data ?? []);
-        },
-        error: (err) => console.error("Error fetching all bookings:", err)
-      });
+    this.bookingService.getAllBookings().subscribe({
+      next: (data) => {
+        this.allBookings.set(data ?? []);
+        console.log("Bookings Data Dynamic: ", data);
+      },
+      error: (err) => console.error("Error fetching all bookings:", err)
+    });
   }
 
-  /**
-   * Método optimizado para filtrar las reservas pertenecientes a un centro específico
-   */
-  getBookingsForCenter(centerId: string): GetBookings[] {
+  getBookingsForCenter(centerId: string): any[] {
     return this.allBookings().filter(b => b.serviceCenterId === centerId);
+  }
+
+  onTableStatusChange(event: { bookingId: string; newStatus: string }) {
+    this.allBookings.update(allBookings => 
+      allBookings.map(b => b.bookingId === event.bookingId ? { ...b, status: event.newStatus } : b)
+    );
   }
 }

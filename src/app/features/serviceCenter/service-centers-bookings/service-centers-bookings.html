@@ -27,41 +27,10 @@
             <div class="records-badge">{{ getBookingsForCenter(center.serviceCenterID).length }} RECORDS</div>
           </div>
 
-          <div class="table-responsive">
-            <table class="bookings-table">
-              <thead>
-                <tr>
-                  <th>BOOKING ID</th>
-                  <th>CUSTOMER</th>
-                  <th>VEHICLE</th>
-                  <th>DATE</th>
-                  <th>STATUS</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (booking of getBookingsForCenter(center.serviceCenterID); track booking.bookingId) {
-                  <tr>
-                    <td class="booking-id-cell">{{ booking.bookingId }}</td>
-                    <td class="customer-cell">Client Registered</td>
-                    <td class="vehicle-cell">
-                      <span class="car-icon">🚗</span> 
-                      {{ booking.vehicleType || 'Vehicle' }} ({{ booking.vehicleNo || 'N/A' }})
-                    </td>
-                    <td class="date-cell">{{ booking.serviceDate | date:'mediumDate' }}</td>
-                    <td>
-                      <span class="status-badge-table" [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
-                        <span class="dot">●</span> {{ booking.status }}
-                      </span>
-                    </td>
-                  </tr>
-                } @empty {
-                  <tr>
-                    <td colspan="5" class="empty-cell">No localized booking logs found for this station.</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+          <app-booking-table 
+            [bookings]="getBookingsForCenter(center.serviceCenterID)"
+            (statusChanged)="onTableStatusChange($event)">
+          </app-booking-table>
         </div>
 
       </div>
