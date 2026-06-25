@@ -1,26 +1,35 @@
 <div class="page">
-
   <div class="main-wrapper">
 
     <h1>My Vehicles</h1>
-
-    <div *ngIf="vehicles.length === 0">
-      No vehicles found
-    </div>
+ 
+    @if (vehicles().length === 0) {
+      <div>No vehicles found</div>
+    }
 
     <div class="card-container">
+    
+      @for (v of vehicles(); track v.vehicleId) {
 
-      <div class="card" *ngFor="let v of vehicles">
+        <div class="card">
 
-        <h3>{{ v.make }} {{ v.model }}</h3>
-        <p>Year: {{ v.year }}</p>
-        <p>Reg No: {{ v.registrationNumber }}</p>
+          <h3>{{ v.make }} {{ v.model }}</h3>
+          <p>Year: {{ v.year }}</p>
+          <p>Reg No: {{ v.registrationNumber }}</p>
 
-        <button (click)="deleteVehicle(v.vehicleId)">
-          Delete Vehicle
-        </button>
+          <button 
+            [routerLink]="['/update-vehicle', v.vehicleId]" 
+            class="btn-edit">
+            Update Vehicle
+          </button>
 
-      </div>
+          <button (click)="deleteVehicle(v.vehicleId)">
+            Delete Vehicle
+          </button>
+
+        </div>
+
+      }
 
     </div>
 
