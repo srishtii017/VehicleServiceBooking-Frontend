@@ -1,10 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Booking } from '../models/booking';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Vehicles } from '../models/vehicles';
 import { Bookingservice } from '../services/bookingservice';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-boking',
@@ -14,13 +15,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './createbooking.css',
 })
 export class AddBoking implements OnInit {
-
+  minServiceDate: string = '';
   booking: Booking = new Booking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle: any = undefined;
   selectedDate: string = ''; // only date
+  private toastr = inject(ToastrService);
 
-  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { }
+  todayDate: string = new Date().toISOString().split('T')[0];
+
+  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { 
+    this.calculateTomorrowDate();
+  }
 
   ngOnInit() {
     this.loadVehicles();
@@ -29,6 +35,13 @@ export class AddBoking implements OnInit {
     if (serviceCenterId) {
       this.booking.serviceCenterId = serviceCenterId;
     }
+  }
+
+  calculateTomorrowDate() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
   loadVehicles() {
@@ -87,12 +100,19 @@ export class AddBoking implements OnInit {
   createBooking() {
     this.bookingservice.createBooking(this.booking).subscribe({
       next: () => {
-        alert("Booking created successfully ✅");
+        this.toastr.success('Booking Created Succesfully', 'success', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
         this.resetForm();
       },
-      error: (err) => {
-        console.error(err);
-        alert("Booking failed ❌");
+      error: () => {
+        this.toastr.error('Duplicate booking or booking cannot be in the past', 'Error', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
       }
     });
     this.resetForm();
