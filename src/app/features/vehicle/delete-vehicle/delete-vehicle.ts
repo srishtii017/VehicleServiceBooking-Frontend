@@ -1,57 +1,67 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Vehicle } from '../models/vehicle';
+import { AuthTs } from '../services/auth';
 
 @Component({
   selector: 'app-delete-vehicle',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './delete-vehicle.html', 
+  templateUrl: './delete-vehicle.html',
   styleUrls: ['./delete-vehicle.css']
 })
 export class DeleteVehicle implements OnInit {
 
-  vehicles: Vehicle[] = [];
+  vehicles = signal<Vehicle[]>([]);
 
   constructor(
-    private http: HttpClient,
+    private authService: AuthTs,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getVehicles();
+    this.getUserVehicles();
   }
 
-  // ✅ LOAD LIST
-  getVehicles() {
-    this.http.get<Vehicle[]>('http://localhost:5000/api/vehicle')
+
+  getUserVehicles() {
+    this.authService.getUserVehicles()
       .subscribe({
-        next: (res) => this.vehicles = res,
-        error: () => console.error('Error loading vehicles')
+        next: (res) => {
+          console.log("Vehicles:", res);
+          this.vehicles.set(res); 
+        },
+        error: (err) => {
+          console.log("Error loading vehicles:", err);
+        }
       });
   }
 
-  // ✅ DELETE
   deleteVehicle(id: number | undefined) {
-    if (!id) return;
+    if (!id) {
+      console.log("Invalid ID:", id); 
+      return;
+    }
 
     if (confirm('Delete this vehicle?')) {
-      this.http.delete(`http://localhost:5000/api/vehicle/${id}`)
+      console.log("Deleting ID:", id); 
+
+      this.authService.deleteVehicle(id)
         .subscribe({
           next: () => {
             alert('Deleted successfully');
-            this.getVehicles(); 
+
+            // update UI manually using signal
+            const updated = this.vehicles().filter(v => v.vehicleId !== id);
+            this.vehicles.set(updated);
           },
-          error: () => alert('Delete failed. Please try again.')
+          error: (err) => {
+            console.log("Delete error:", err); // 
+            alert('Delete failed. Please try again.');
+          }
         });
     }
   }
 
-  // Edit vehicle
-  editVehicle(id: number | undefined) {
-    if (!id) return;
-    this.router.navigate(['/vehicle/update', id]);
-  }
 }

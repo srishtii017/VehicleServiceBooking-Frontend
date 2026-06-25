@@ -40,7 +40,7 @@ export const routes: Routes = [
   { path: 'owner/register', component: RegisterOwner },
 
   // Vehicle routes
-  { path: 'vehicle/update/:id', component: UpdateVehicle },
+  { path: 'update-vehicle/:vehicleId', component: UpdateVehicle, canActivate : [userGuard] },
   { path: 'add-vehicle', component: AddVehicle, canActivate: [userGuard] },
   { path: 'delete-vehicle', component: DeleteVehicle, canActivate: [userGuard] },
   { path: 'my-vehicles', component: MyVehicles, canActivate: [userGuard] },

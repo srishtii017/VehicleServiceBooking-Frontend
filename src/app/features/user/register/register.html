@@ -10,51 +10,108 @@
     <div class="register-box">
       <h2>Customer Register</h2>
 
-      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+      <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm">
 
         <div class="grid">
+
+          <!-- NAME -->
           <div class="form-group">
             <label>Full Name</label>
             <input type="text" name="name"
               [(ngModel)]="registerData.name"
+              #name="ngModel"
               placeholder="Full name" required>
+
+            <div *ngIf="name.invalid && (name.touched || name.dirty)">
+              <small style="color:red;" *ngIf="name.errors?.['required']">
+                Name is required
+              </small>
+            </div>
           </div>
 
+          <!-- EMAIL -->
           <div class="form-group">
             <label>Email</label>
             <input type="email" name="email"
               [(ngModel)]="registerData.email"
-              placeholder="Email" required>
+              #email="ngModel"
+              placeholder="Email" required email>
+
+            <div *ngIf="email.invalid && (email.touched || email.dirty)">
+              <small style="color:red;" *ngIf="email.errors?.['required']">
+                Email is required
+              </small>
+              <small style="color:red;" *ngIf="email.errors?.['email']">
+                Invalid email format
+              </small>
+            </div>
           </div>
 
+          <!-- PHONE -->
           <div class="form-group">
             <label>Phone</label>
             <input type="tel" name="phone"
               [(ngModel)]="registerData.phone"
-              placeholder="Phone">
+              #phone="ngModel"
+              placeholder="Phone"
+              required minlength="10">
+
+            <div *ngIf="phone.invalid && (phone.touched || phone.dirty)">
+              <small style="color:red;" *ngIf="phone.errors?.['required']">
+                Phone is required
+              </small>
+              <small style="color:red;" *ngIf="phone.errors?.['minlength']">
+                Enter valid phone number
+              </small>
+            </div>
           </div>
 
+          <!-- PASSWORD -->
           <div class="form-group">
             <label>Password</label>
             <input type="password" name="password"
               [(ngModel)]="registerData.password"
-              placeholder="Password">
+              #password="ngModel"
+              placeholder="Password"
+              required minlength="6">
+
+            <div *ngIf="password.invalid && (password.touched || password.dirty)">
+              <small style="color:red;" *ngIf="password.errors?.['required']">
+                Password is required
+              </small>
+              <small style="color:red;" *ngIf="password.errors?.['minlength']">
+                Minimum 6 characters required
+              </small>
+            </div>
           </div>
 
+          <!-- FLAT -->
           <div class="form-group">
             <label>Flat / House No</label>
             <input type="text" name="flatNumber"
               [(ngModel)]="registerData.flatNumber"
-              placeholder="Flat">
+              #flat="ngModel"
+              placeholder="Flat" required>
+
+            <div *ngIf="flat.invalid && (flat.touched || flat.dirty)">
+              <small style="color:red;">Flat is required</small>
+            </div>
           </div>
 
+          <!-- STREET -->
           <div class="form-group">
             <label>Street</label>
             <input type="text" name="street"
               [(ngModel)]="registerData.street"
-              placeholder="Street">
+              #street="ngModel"
+              placeholder="Street" required>
+
+            <div *ngIf="street.invalid && (street.touched || street.dirty)">
+              <small style="color:red;">Street is required</small>
+            </div>
           </div>
 
+          <!-- LANDMARK (optional – no validation added) -->
           <div class="form-group">
             <label>Landmark</label>
             <input type="text" name="landmark"
@@ -62,30 +119,67 @@
               placeholder="Optional">
           </div>
 
+          <!-- CITY -->
           <div class="form-group">
             <label>City</label>
             <input type="text" name="city"
               [(ngModel)]="registerData.city"
-              placeholder="City">
+              #city="ngModel"
+              placeholder="City" required>
+
+            <div *ngIf="city.invalid && (city.touched || city.dirty)">
+              <small style="color:red;">City is required</small>
+            </div>
           </div>
 
+          <!-- STATE -->
           <div class="form-group">
             <label>State</label>
             <input type="text" name="state"
               [(ngModel)]="registerData.state"
-              placeholder="State">
+              #state="ngModel"
+              placeholder="State" required>
+
+            <div *ngIf="state.invalid && (state.touched || state.dirty)">
+              <small style="color:red;">State is required</small>
+            </div>
           </div>
 
+          <!-- PINCODE -->
           <div class="form-group">
             <label>Pincode</label>
             <input type="text" name="pincode"
               [(ngModel)]="registerData.pincode"
-              placeholder="Pincode">
+              #pincode="ngModel"
+              placeholder="Pincode"
+              required minlength="6">
+
+            <div *ngIf="pincode.invalid && (pincode.touched || pincode.dirty)">
+              <small style="color:red;" *ngIf="pincode.errors?.['required']">
+                Pincode is required
+              </small>
+              <small style="color:red;" *ngIf="pincode.errors?.['minlength']">
+                Enter valid pincode
+              </small>
+            </div>
           </div>
+
         </div>
 
-        <button type="submit">Register</button>
+        <!-- BUTTON -->
+        <button type="submit" [disabled]="registerForm.invalid || isLoading">
+          {{ isLoading ? 'Registering...' : 'Register' }}
+        </button>
       </form>
+
+      <!-- MESSAGES (UNCHANGED) -->
+      <div *ngIf="successMessage" style="color:green;">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="errorMessage" style="color:red;">
+        {{ errorMessage }}
+      </div>
 
       <div class="links">
         <p>Already have an account?
@@ -94,7 +188,7 @@
       </div>
     </div>
 
-    <!-- RIGHT IMAGE -->
+    <!-- IMAGE (UNCHANGED) -->
     <div class="image-box">
       <img src="assets/service-center.png" alt="service">
     </div>

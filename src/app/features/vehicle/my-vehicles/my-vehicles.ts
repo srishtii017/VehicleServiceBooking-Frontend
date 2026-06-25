@@ -1,73 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Vehicle } from '../models/vehicle';
+import { AuthTs } from '../services/auth';
 
 @Component({
   selector: 'app-my-vehicles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './my-vehicles.html',
   styleUrls: ['./my-vehicles.css']
 })
 export class MyVehicles implements OnInit {
 
-  vehicles: any[] = [];
+  vehicles = signal<Vehicle[]>([]);
 
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private authService: AuthTs) {}
 
   ngOnInit(): void {
+    this.loadVehicles();
+  }
 
-    const token = localStorage.getItem('UserToken');
-
-    this.http.get<any[]>(
-      'http://localhost:5000/vehicle/user-vehicles',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    ).subscribe({
-      next: (data) => {
-        console.log("Vehicles:", data);
-
-        this.vehicles = data;
-
-        // ✅ FORCE UI UPDATE (important fix)
-        this.cd.detectChanges();
+  loadVehicles() {
+    this.authService.getUserVehicles().subscribe({
+      next: (res) => {
+        this.vehicles.set(res);
+    
       },
       error: (err) => {
-        console.log("Error fetching vehicles:", err);
+        console.log("Error:", err);
       }
     });
   }
 
+  /* ✅ DELETE VEHICLE */
   deleteVehicle(id: number) {
+    if (!id) return;
 
-    const token = localStorage.getItem('token');
+    if (confirm("Delete this vehicle?")) {
+      this.authService.deleteVehicle(id).subscribe({
+        next: () => {
 
-    this.http.delete(
-      `http://localhost:5000/vehicle/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+          // ✅ UPDATE UI instantly using signal
+          this.vehicles.update(list =>
+            list.filter(v => v.vehicleId !== id)
+          );
+
+        },
+        error: (err) => {
+          console.log("Delete failed", err);
         }
-      }
-    ).subscribe({
-      next: () => {
-
-        // ✅ remove from UI
-        this.vehicles = this.vehicles.filter(v => v.vehicleId !== id);
-
-        alert("Vehicle deleted ✅");
-      },
-      error: (err) => {
-        console.log("Delete error:", err);
-        alert("Delete failed ❌");
-      }
-    });
+      });
+    }
   }
+
 }

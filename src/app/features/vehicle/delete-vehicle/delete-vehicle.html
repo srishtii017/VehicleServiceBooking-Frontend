@@ -7,24 +7,23 @@
 
   <div class="profile-container">
 
-    <div *ngFor="let v of vehicles" class="info-row">
+    @for (v of vehicles(); track v.vehicleId) {
+      <div class="info-row">
+        <div>
+          <b>{{ v.make }} {{ v.model }}</b><br>
+          {{ v.registrationNumber }}
+        </div>
 
-      <div>
-        <b>{{ v.make }} {{ v.model }}</b><br>
-        {{ v.registrationNumber }}
+        <div>
+          <button class="btn-cancel" (click)="deleteVehicle(v.vehicleId)">
+            Delete
+          </button>
+        </div>
+
       </div>
 
-      <div>
-        <button class="btn-edit" (click)="editVehicle(v.vehicleId)">
-          Edit
-        </button>
-
-        <button class="btn-cancel" (click)="deleteVehicle(v.vehicleId)">
-          Delete
-        </button>
-      </div>
-
-    </div>
+    }
 
   </div>
+
 </div>
