@@ -55,6 +55,7 @@ export const routes: Routes = [
   {path:"booking/createbooking",component:AddBoking,canActivate : [userGuard]},
   {path:"booking/showbookings",component:Showbookings,canActivate: [userGuard]},
   {path:"booking/updatebooking",component:Updatebooking,canActivate: [userGuard]},
+  {path:"booking/createbooking/:id",component:AddBoking,canActivate : [userGuard]},
 
   // Unknown → home
   { path: '**', redirectTo: '' }

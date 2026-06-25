@@ -24,7 +24,7 @@ export class AddBoking implements OnInit {
 
   ngOnInit() {
     this.loadVehicles();
-    const serviceCenterId = this.route.snapshot.queryParamMap.get('serverCenterId');
+    const serviceCenterId = this.route.snapshot.queryParamMap.get('id');
 
     if(serviceCenterId){
       this.booking.serviceCenterId = serviceCenterId;

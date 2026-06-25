@@ -51,6 +51,6 @@ export class ShowServiceCenter {
     });
   }
   bookNow() {
-    this.router.navigate(["booking/createbooking"]);
+    this.router.navigate(["booking/createbooking",this.center()?.serviceCenterID]);
   }
 }
