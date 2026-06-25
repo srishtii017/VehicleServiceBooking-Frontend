@@ -19,7 +19,6 @@ export class ServiceCenterCard {
 
   ngOnInit() {
     this.CenterServices.FetchCenters();
-    console.log(this.serviceCenters())
   }
 
   viewDetails(center: ServiceCenter) {

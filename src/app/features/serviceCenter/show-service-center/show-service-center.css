@@ -193,3 +193,59 @@
 .book-now-btn:hover .arrow {
   transform: translateX(4px);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keeps items aligned horizontally and restricts child scaling */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px; 
+}
+
+/* Updated Rounded Capsule Delete Button */
+.delete-pill-btn {
+  background-color: transparent;
+  color: #ff5252;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #ff5252;
+  border-radius: 50px; 
+  padding: 6px 16px;       /* Compact spacing inside the button */
+  width: fit-content;      /* 👈 CRUCIAL: Stops it from taking 100% width */
+  min-width: unset;        /* Reset any inherited grid/flex full sizing */
+  cursor: pointer;
+  display: inline-flex;    /* Inline layout so it wraps content nicely */
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.delete-pill-btn:hover {
+  background-color: #ff5252;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+  transform: translateY(-1px);
+}
+
+.delete-pill-btn:active {
+  transform: translateY(0);
+}
+
+.icon-trash {
+  font-size: 14px;
+}

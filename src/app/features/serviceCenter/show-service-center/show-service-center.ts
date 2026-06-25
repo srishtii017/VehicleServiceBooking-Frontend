@@ -27,12 +27,12 @@ export class ShowServiceCenter implements OnInit {
   ngOnInit() {
     this.ac.paramMap.subscribe(params => {
       const id = params.get('id')!;
-      
+
       this.CenterService.GetServiceCenterByID(id).subscribe({
         next: (res) => {
           if (res.status === 'Success' && res.data) {
             this.center.set(res.data);
-            
+
             if (!this.isUser) {
               this.bookingService.getAllBookings().subscribe({
                 next: (data) => {
@@ -47,6 +47,28 @@ export class ShowServiceCenter implements OnInit {
         }
       });
     });
+  }
+
+  deleteCenter() {
+    const id = this.center()?.serviceCenterID; // Make sure this matches your model property name
+    if (!id) return;
+
+    if (confirm('Are you sure you want to delete this service center?')) {
+      this.CenterService.DeleteServiceCenter(id).subscribe({
+        next: (res) => {
+          if (res.status === 'Success') {
+            alert('Service center deleted successfully!');
+            this.router.navigate(['/servicecenter/servicecentercards']); // Redirect to your list view after deletion
+          } else {
+            alert('Failed to delete: ' + res.message);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          alert('A server error occurred. Could not delete.');
+        }
+      });
+    }
   }
 
   bookNow() {

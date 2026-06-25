@@ -4,8 +4,17 @@
     <div class="center-card">
       <div class="card-header">
         <h2 class="card-title">CENTER DETAILS</h2>
-        <div class="header-status-badge">
-          <span class="icon-check">✓</span> Active
+        
+        <div class="header-actions">
+          <div class="header-status-badge">
+            <span class="icon-check">✓</span> Active
+          </div>
+
+          @if (!isUser) {
+            <button class="delete-pill-btn" (click)="deleteCenter()">
+              <span class="icon-trash">🗑️</span> Delete
+            </button>
+          }
         </div>
       </div>
 
