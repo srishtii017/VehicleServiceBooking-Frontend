@@ -53,49 +53,66 @@
       </div>
     </div>
 @if (!isUser){
-    <div class="bookings-container">
-      <div class="bookings-header">
-        <h2 class="bookings-title">BOOKINGS</h2>
-        <div class="records-badge">{{ bookings().length }} RECORDS</div>
-      </div>
+      <div class="bookings-container">
+        <div class="bookings-header">
+          <h2 class="bookings-title">BOOKINGS</h2>
+          <div class="records-badge">{{ bookings().length }} RECORDS</div>
+        </div>
 
-      <div class="table-responsive">
-        <table class="bookings-table">
-          <thead>
-            <tr>
-              <th>BOOKING ID <span class="sort-icon">▲▼</span></th>
-              <th>CUSTOMER <span class="sort-icon">▲▼</span></th>
-              <th>VEHICLE <span class="sort-icon">▲▼</span></th>
-              <th>DATE <span class="sort-icon">▲▼</span></th>
-              <th>STATUS <span class="sort-icon">▲▼</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (booking of bookings(); track booking.bookingId) {
+        <div class="table-responsive">
+          <table class="bookings-table">
+            <thead>
               <tr>
-                <td class="booking-id-cell">{{ booking.bookingId }}</td>
-                <td class="customer-cell">Customer Name</td> 
-                <td class="vehicle-cell">
-                  <span class="car-icon">🚗</span> 
-                  {{ booking.vehicleType || 'Vehicle' }} ({{ booking.vehicleNo || 'N/A' }})
-                </td>
-                <td class="date-cell">{{ booking.serviceDate | date:'mediumDate' }}</td>
-                <td>
-                  <span class="status-badge" [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
-                    <span class="dot">●</span> {{ booking.status }}
-                  </span>
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="5" class="empty-cell">No bookings found for this service center.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
+                <th>BOOKING ID</th>
+                <th>CUSTOMER</th>
+                <th>VEHICLE</th>
+                <th>DATE</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th> </tr>
+            </thead>
+            <tbody>
+              @for (booking of bookings(); track booking.bookingId) {
+                <tr>
+                  <td class="booking-id-cell">{{ booking.bookingId }}</td>
+                  
+                  <td class="customer-cell">{{ booking.customerName }}</td> 
+                  
+                  <td class="vehicle-cell">
+                    <span class="car-icon">🚗</span> 
+                    {{ booking.vehicleName || 'Vehicle' }} ({{ booking.vehicleNo || 'N/A' }})
+                  </td>
+                  
+                  <td class="date-cell">{{ booking.serviceDate | date:'mediumDate' }}</td>
+                  
+                  <td>
+                    <select 
+                      [value]="booking.status" 
+                      (change)="onStatusChange(booking.bookingId, $event)"
+                      class="status-dropdown"
+                      [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
+                      <option value="Pending">🕒 Pending</option>
+                      <option value="Confirmed">✅ Confirmed</option>
+                      <option value="Completed">🟢 Completed</option>
+                      <option value="Cancelled">❌ Cancelled</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <button class="view-btn" (click)="viewBooking(booking.bookingId)">
+                      👁️ View
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="empty-cell">No bookings found for this service center.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  }
+    }
 
     @if (isUser) {
       <div class="action-footer">

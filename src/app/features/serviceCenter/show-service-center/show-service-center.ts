@@ -19,7 +19,7 @@ export class ShowServiceCenter {
   private router = inject(Router);
 
   center = signal<ServiceCenter | null>(null);
-  bookings = signal<GetBookings[]>([]);
+  bookings = signal<any[]>([]);
 
   isUser = localStorage.getItem('isUserLogged') === 'true' || !!localStorage.getItem('UserToken');
 
@@ -34,16 +34,42 @@ export class ShowServiceCenter {
             
             this.bookingService.getAllBookings().subscribe({
               next: (data) => {
-                console.log(data);
                 const filtered = (data ?? []).filter(b => b.serviceCenterId === res.data.serviceCenterID);
                 this.bookings.set(filtered);
-                console.log(filtered);
               },
               error: (err) => console.error(err)
             });
           }
         }
       });
+    });
+  }
+
+  viewBooking(bookingId: string | undefined) {
+    if (!bookingId) {
+      alert("Booking ID is missing!");
+      return;
+    }
+    this.router.navigate(['booking/details', bookingId]);
+  }
+
+  onStatusChange(bookingId: string | undefined, event: Event) {
+    if (!bookingId) return;
+
+    const selectElement = event.target as HTMLSelectElement;
+    const newStatus = selectElement.value;
+
+    this.bookingService.updateBookingStatus(bookingId, newStatus).subscribe({
+      next: (response) => {
+        alert(`Status updated to ${newStatus} successfully!`);
+        this.bookings.update(allBookings => 
+          allBookings.map(b => b.bookingId === bookingId ? { ...b, status: newStatus } : b)
+        );
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Failed to update status on the backend!");
+      }
     });
   }
 

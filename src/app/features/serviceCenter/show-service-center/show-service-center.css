@@ -308,3 +308,48 @@
 .book-now-btn:hover .arrow {
   transform: translateX(4px); /* Hover par arrow thoda right khiskega */
 }
+
+/* --- DROPDOWN STYLES --- */
+.status-dropdown {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #333333;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.status-dropdown:focus {
+  border-color: #f26d21;
+}
+
+/* Dynamic border colors based on status classes */
+.status-dropdown.pending { border-left: 4px solid #f26d21; color: #f26d21; }
+.status-dropdown.confirmed { border-left: 4px solid #00b0ff; color: #00b0ff; }
+.status-dropdown.completed { border-left: 4px solid #00e676; color: #00e676; }
+.status-dropdown.cancelled { border-left: 4px solid #ff5252; color: #ff5252; }
+
+/* --- VIEW BUTTON STYLES --- */
+.view-btn {
+  background-color: transparent;
+  color: #f26d21;
+  border: 1px solid #f26d21;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.view-btn:hover {
+  background-color: #f26d21;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(242, 109, 33, 0.3);
+}
