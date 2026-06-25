@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ServiceCenterService } from '../Services/service-center-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceCenter } from '../Models/service-center';
 import { GetBookings } from '../Models/get-bookings';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,6 +16,8 @@ export class ShowServiceCenter {
   CenterService = inject(ServiceCenterService);
   ac = inject(ActivatedRoute);
   client = inject(HttpClient);
+
+  private router = inject(Router);
 
   center = signal<ServiceCenter | null>(null);
   bookings = signal<GetBookings[]>([]);
@@ -49,6 +51,6 @@ export class ShowServiceCenter {
     });
   }
   bookNow() {
-    console.log('Booking process started for:', this.center()?.serviceCenterID);
+    this.router.navigate(["booking/createbooking"]);
   }
 }
