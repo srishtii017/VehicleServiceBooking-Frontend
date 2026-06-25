@@ -14,31 +14,26 @@
   background-position: center;
 
   color: white;
-
-  /* ✅ CENTER EVERYTHING */
   display: flex;
   justify-content: center;
 }
 
-/* ✅ WRAPPER CENTER */
 .main-wrapper {
   width: 100%;
   max-width: 900px;
   text-align: center;
 }
 
-/* ✅ HEADING */
 h1 {
   color: orange;
   margin-bottom: 40px;
 }
 
-/* ✅ CARDS IN CENTER */
 .card-container {
   display: flex;
   flex-wrap: wrap;
 
-  justify-content: center;   /* 🔥 IMPORTANT LINE */
+  justify-content: center;  
 
   gap: 25px;
 }
