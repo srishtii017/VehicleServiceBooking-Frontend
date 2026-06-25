@@ -29,8 +29,17 @@
         type="date"
         required
         [(ngModel)]="selectedDate"
+        #sDate="ngModel"
         (ngModelChange)="onDateTimeChange()"
+        [min]="minServiceDate"
       />
+      @if (sDate.invalid && sDate.touched) {
+          <small style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: block;">
+            @if (sDate.errors?.['required']) {
+              Service date is required.
+            }
+          </small>
+      }
     </div>
 
     <div class="field field-full">

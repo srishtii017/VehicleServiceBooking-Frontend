@@ -14,13 +14,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './createbooking.css',
 })
 export class AddBoking implements OnInit {
-
+  minServiceDate: string = '';
   booking: Booking = new Booking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle: any = undefined;
   selectedDate: string = ''; // only date
 
-  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { }
+  todayDate: string = new Date().toISOString().split('T')[0];
+
+  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { 
+    this.calculateTomorrowDate();
+  }
 
   ngOnInit() {
     this.loadVehicles();
@@ -29,6 +33,13 @@ export class AddBoking implements OnInit {
     if (serviceCenterId) {
       this.booking.serviceCenterId = serviceCenterId;
     }
+  }
+
+  calculateTomorrowDate() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
   loadVehicles() {
@@ -92,7 +103,7 @@ export class AddBoking implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        alert("Booking failed ❌");
+        alert("Duplicate or Booking cannot be in past");
       }
     });
     this.resetForm();

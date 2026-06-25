@@ -48,8 +48,17 @@
           name="serviceDate"
           type="date"
           required
+          #sDate="ngModel"
           [(ngModel)]="update.serviceDate"
+          [min]="minServiceDate"
         />
+        @if (sDate.invalid && sDate.touched) {
+          <small style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: block;">
+            @if (sDate.errors?.['required']) {
+              Service date is required.
+            }
+          </small>
+        }
       </div>
     </div>
 

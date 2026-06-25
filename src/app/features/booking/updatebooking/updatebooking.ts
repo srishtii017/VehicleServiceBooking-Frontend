@@ -12,12 +12,13 @@ import { Vehicles } from '../models/vehicles';
   styleUrl: './updatebooking.css',
 })
 export class Updatebooking implements OnInit {
+  minServiceDate: string = '';
   update:UpdatedBooking=new UpdatedBooking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle:any ='';
 
   constructor(private route: ActivatedRoute,private bookingservice:Bookingservice) {
-
+    this.calculateTomorrowDate();
   }
 
   ngOnInit(): void {
@@ -27,6 +28,13 @@ export class Updatebooking implements OnInit {
     if (bookingId) {
       this.update.bookingId = bookingId;
     }
+  }
+
+  calculateTomorrowDate() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
   loadVehicles(){
