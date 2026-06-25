@@ -22,6 +22,7 @@ export class Updatebooking implements OnInit {
 
   ngOnInit(): void {
     const bookingId = this.route.snapshot.queryParamMap.get('bookingId');
+    this.loadVehicles();
 
     if (bookingId) {
       this.update.bookingId = bookingId;
@@ -30,7 +31,8 @@ export class Updatebooking implements OnInit {
 
   loadVehicles(){
     this.bookingservice.getUserVehicles().subscribe({
-      next: (data) => {this.vehicles.set(data);},
+      next: (data) => {this.vehicles.set(data);
+      },
       error:(err) => {alert("Failed to load vehicles: "+err)}
     })
   }

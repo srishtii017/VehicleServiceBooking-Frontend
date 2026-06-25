@@ -15,7 +15,7 @@
           class="pill-input pill-select"
           [(ngModel)]="selectedVehicle"
           (ngModelChange)="onVehicleSelect($event)"
-        >
+          name="vehicle">
           <option [ngValue]="undefined">— Select your vehicle —</option>
           @for (v of vehicles(); track v.vehicleId) {
             <option [ngValue]="v">{{ v.registrationNumber }}-{{ v.make }}-{{ v.model }}</option>
