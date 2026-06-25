@@ -1,9 +1,10 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import{ UpdatedBooking } from '../models/updatebooking';
 import { ActivatedRoute } from '@angular/router';
 import { Bookingservice } from '../services/bookingservice';
 import { Vehicles } from '../models/vehicles';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-updatebooking',
@@ -16,6 +17,7 @@ export class Updatebooking implements OnInit {
   update:UpdatedBooking=new UpdatedBooking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle:any ='';
+  private toastr = inject(ToastrService);
 
   constructor(private route: ActivatedRoute,private bookingservice:Bookingservice) {
     this.calculateTomorrowDate();
@@ -62,8 +64,20 @@ export class Updatebooking implements OnInit {
     }
 
     this.bookingservice.updateBooking(this.update).subscribe({
-      next:() => {alert("Booking updated Successfully")},
-      error:() => {alert("Booking not found or Duplicate ")}
+      next:() => {
+        this.toastr.success('Booking Updated Successfully', 'success', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
+      },
+      error:() => {
+        this.toastr.error('Duplicate booking or booking cannot be in the past', 'Error', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
+      }
     });
     console.log(this.update.serviceDate);
     this.update = new UpdatedBooking();
