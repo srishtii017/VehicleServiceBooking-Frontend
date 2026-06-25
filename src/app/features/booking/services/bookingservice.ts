@@ -16,12 +16,12 @@ export class Bookingservice {
   constructor(private client: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
-  const isUser = localStorage.getItem('isUserLogged') === 'true';
-  const token = isUser ? localStorage.getItem('UserToken') : localStorage.getItem('OwnerToken');
-  return new HttpHeaders({
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-  });
-}
+    const isUser = localStorage.getItem('isUserLogged') === 'true';
+    const token = isUser ? localStorage.getItem('UserToken') : localStorage.getItem('OwnerToken');
+    return new HttpHeaders({
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+    });
+  }
 
   getUserVehicles(): Observable<Array<Vehicles>> {
     return this.client.get<Array<Vehicles>>(this.vehicleUrl, { headers: this.getHeaders() });
@@ -44,6 +44,11 @@ export class Bookingservice {
   }
 
   getAllBookings(): Observable<Array<any>> {
-    return this.client.get<Array<GetBookings>>(`${this.bookingUrl}/allbookings`, { headers: this.getHeaders() });
+    return this.client.get<Array<any>>(`${this.bookingUrl}/allbookings`, { headers: this.getHeaders() });
+  }
+
+  updateBookingStatus(bookingId: string, status: string): Observable<any> {
+    const body = { bookingId: bookingId, status: status };
+    return this.client.patch(`${this.bookingUrl}/update-status`, body, { headers: this.getHeaders() });
   }
 }
