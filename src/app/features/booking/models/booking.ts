@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 export class Booking {
   vehicleName?: string;
   vehicleNo?: string;
-  vehicleType?: string;
   serviceCenterId: string ='';
   serviceType?: string;
   serviceDate?: string;

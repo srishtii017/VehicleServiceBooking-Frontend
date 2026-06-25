@@ -35,8 +35,6 @@ export class AddServiceCenter {
       },
       error: (err) => {
         this.isLoading = false;
-        
-        // Purani fetch/flat error logic hata kar simple error message rakha hai
         const msg = err.error?.message || 'Failed to add service center.';
 
         this.toastr.error(msg, 'Error', {

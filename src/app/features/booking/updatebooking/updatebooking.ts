@@ -41,11 +41,9 @@ export class Updatebooking implements OnInit {
     if (vehicle) {
       this.update.vehicleNo = vehicle.registrationNumber;
       this.update.vehicleName = vehicle.model;
-      this.update.vehicleType = vehicle.type;
     } else {
       this.update.vehicleNo = undefined;
       this.update.vehicleName = undefined;
-      this.update.vehicleType = undefined;
     }
   }
 

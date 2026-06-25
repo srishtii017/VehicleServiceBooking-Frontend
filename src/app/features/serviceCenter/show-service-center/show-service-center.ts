@@ -3,8 +3,8 @@ import { ServiceCenterService } from '../Services/service-center-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceCenter } from '../Models/service-center';
 import { GetBookings } from '../Models/get-bookings';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe, NgClass } from '@angular/common';
+import { Bookingservice } from '../../booking/services/bookingservice';
 
 @Component({
   selector: 'app-show-service-center',
@@ -14,9 +14,8 @@ import { DatePipe, NgClass } from '@angular/common';
 })
 export class ShowServiceCenter {
   CenterService = inject(ServiceCenterService);
+  bookingService = inject(Bookingservice);
   ac = inject(ActivatedRoute);
-  client = inject(HttpClient);
-
   private router = inject(Router);
 
   center = signal<ServiceCenter | null>(null);
@@ -27,30 +26,28 @@ export class ShowServiceCenter {
   ngOnInit() {
     this.ac.paramMap.subscribe(params => {
       const id = params.get('id')!;
+      
       this.CenterService.GetServiceCenterByID(id).subscribe({
         next: (res) => {
           if (res.status === 'Success' && res.data) {
             this.center.set(res.data);
             
-            const activeToken = localStorage.getItem("OwnerToken") || localStorage.getItem("UserToken");
-
-            if (activeToken) {
-              const headers = new HttpHeaders({ 'Authorization': `Bearer ${activeToken}` });
-              this.client.get<GetBookings[]>("http://localhost:5000/Bookings/allbookings", { headers })
-                .subscribe({
-                  next: (data) => {
-                    const filtered = (data ?? []).filter(b => b.serviceCenterId === res.data.serviceCenterID);
-                    this.bookings.set(filtered);
-                  },
-                  error: (err) => console.error("Error fetching bookings:", err)
-                });
-            }
+            this.bookingService.getAllBookings().subscribe({
+              next: (data) => {
+                console.log(data);
+                const filtered = (data ?? []).filter(b => b.serviceCenterId === res.data.serviceCenterID);
+                this.bookings.set(filtered);
+                console.log(filtered);
+              },
+              error: (err) => console.error(err)
+            });
           }
         }
       });
     });
   }
+
   bookNow() {
-    this.router.navigate(["booking/createbooking",this.center()?.serviceCenterID]);
+    this.router.navigate(["booking/createbooking", this.center()?.serviceCenterID]);
   }
 }

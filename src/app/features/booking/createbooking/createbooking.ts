@@ -1,4 +1,4 @@
-import { Component, OnInit , signal} from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Booking } from '../models/booking';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,13 +20,13 @@ export class AddBoking implements OnInit {
   selectedVehicle: any = undefined;
   selectedDate: string = ''; // only date
 
-  constructor(private bookingservice :Bookingservice,private route:ActivatedRoute) {}
+  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadVehicles();
-    const serviceCenterId = this.route.snapshot.queryParamMap.get('id');
+    const serviceCenterId = this.route.snapshot.paramMap.get('id');
 
-    if(serviceCenterId){
+    if (serviceCenterId) {
       this.booking.serviceCenterId = serviceCenterId;
     }
   }
@@ -34,7 +34,7 @@ export class AddBoking implements OnInit {
   loadVehicles() {
     this.bookingservice.getUserVehicles().subscribe({
       next: (data) => { this.vehicles.set(data); },
-      error: (err) => {alert("Failed to load vehicles: "+err);}
+      error: (err) => { alert("Failed to load vehicles: " + err); }
     });
   }
 
@@ -42,11 +42,9 @@ export class AddBoking implements OnInit {
     if (vehicle) {
       this.booking.vehicleNo = vehicle.registrationNumber;
       this.booking.vehicleName = vehicle.model;
-      this.booking.vehicleType = vehicle.type;
     } else {
       this.booking.vehicleNo = undefined;
       this.booking.vehicleName = undefined;
-      this.booking.vehicleType = undefined;
     }
   }
 
@@ -71,7 +69,7 @@ export class AddBoking implements OnInit {
       if (isNaN(dateObj.getTime())) return '';
 
       return `Scheduled on ${days[dateObj.getDay()]}, ${months[dateObj.getMonth()]} ${dateObj.getDate()}, ${year}`;
-    } 
+    }
     catch {
       return '';
     }
