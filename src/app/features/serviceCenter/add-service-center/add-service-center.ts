@@ -35,12 +35,11 @@ export class AddServiceCenter {
       },
       error: (err) => {
         this.isLoading = false;
-        const backendErrors = err.error?.errors;
-        const msg = backendErrors
-          ? Object.values(backendErrors).flat().join(', ')
-          : (err.error?.message || 'Failed to add service center.');
+        
+        // Purani fetch/flat error logic hata kar simple error message rakha hai
+        const msg = err.error?.message || 'Failed to add service center.';
 
-        this.toastr.error(msg, 'Validation Error', {
+        this.toastr.error(msg, 'Error', {
           timeOut: 4000,
           progressBar: true,
           closeButton: true

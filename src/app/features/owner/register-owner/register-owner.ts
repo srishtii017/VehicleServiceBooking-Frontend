@@ -40,16 +40,11 @@ export class RegisterOwner {
 
         this.router.navigate(['/owner/login']);
       },
-      error: (error) => {
+      error: () => {
         setTimeout(() => {
           this.isLoading = false;
           
-          const backendErrors = error.error?.errors;
-          const msg = backendErrors 
-            ? Object.values(backendErrors).flat().join(', ') 
-            : (error.error?.message || 'Registration failed.');
-
-          this.toastr.error(msg, 'Registration Error', {
+          this.toastr.error('Please check your details.', 'Registration Failed', {
             timeOut: 4000,
             progressBar: true,
             closeButton: true
