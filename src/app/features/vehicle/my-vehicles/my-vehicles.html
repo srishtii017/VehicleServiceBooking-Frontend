@@ -3,36 +3,26 @@
 
     <h1>My Vehicles</h1>
  
-    @if (vehicles().length === 0) {
-      <div>No vehicles found</div>
+    @if (vehicles.length === 0) {
+  <p>No vehicles found</p>
+}
+@else {
+  <div class="vehicle-list">
+
+    @for (v of vehicles; track v.vehicleId) {
+      <div class="vehicle-card">
+
+        <h3>{{ v.make }} {{ v.model }}</h3>
+        <p>Year: {{ v.year }}</p>
+        <p>Registration: {{ v.registrationNumber }}</p>
+
+        <button
+          [routerLink]="['/update-vehicle', v.vehicleId]">
+          Edit
+        </button>
+
+      </div>
     }
 
-    <div class="card-container">
-    
-      @for (v of vehicles(); track v.vehicleId) {
-
-        <div class="card">
-
-          <h3>{{ v.make }} {{ v.model }}</h3>
-          <p>Year: {{ v.year }}</p>
-          <p>Reg No: {{ v.registrationNumber }}</p>
-
-          <button 
-            [routerLink]="['/update-vehicle', v.vehicleId]" 
-            class="btn-edit">
-            Update Vehicle
-          </button>
-
-          <button (click)="deleteVehicle(v.vehicleId)">
-            Delete Vehicle
-          </button>
-
-        </div>
-
-      }
-
-    </div>
-
   </div>
-
-</div>
+}
