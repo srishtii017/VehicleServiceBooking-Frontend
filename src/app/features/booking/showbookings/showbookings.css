@@ -485,3 +485,40 @@
 .btn-back svg {
   transition: transform 0.2s ease;
 }
+
+/* Service Name aur Eye button ko ek line me lane ke liye */
+.service-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Isse button right side chala jayega jahan yellow circle hai */
+  margin-bottom: 15px; /* Niche ki fields se thoda gap */
+  width: 100%;
+}
+
+/* Eye Icon Button Styling */
+.btn-eye-view {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px;
+  border-radius: 50%; /* Pure Circle */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Glow Effect */
+.btn-eye-view:hover {
+  background: rgba(255, 152, 0, 0.15); /* Soft orange transparent background */
+  color: #ff9800; /* Neon Orange highlight */
+  border-color: rgba(255, 152, 0, 0.4);
+  transform: scale(1.1); /* Chota sa pop effect */
+  box-shadow: 0 0 12px rgba(255, 152, 0, 0.3);
+}
+
+.btn-eye-view svg {
+  stroke: currentColor;
+  pointer-events: none;
+}

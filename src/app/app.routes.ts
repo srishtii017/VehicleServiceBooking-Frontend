@@ -57,7 +57,7 @@ export const routes: Routes = [
   {path:"booking/showbookings",component:Showbookings,canActivate: [userGuard]},
   {path:"booking/updatebooking",component:Updatebooking,canActivate: [userGuard]},
   {path:"booking/createbooking/:id",component:AddBoking,canActivate : [userGuard]},
-  {path:"booking/details/:bookingId",component:BookingDetails,canActivate : [ownerGuard]},
+  {path:"booking/details/:bookingId",component:BookingDetails,canActivate : [anyRoleGuard]},
 
   // Unknown → home
   { path: '**', redirectTo: '' }

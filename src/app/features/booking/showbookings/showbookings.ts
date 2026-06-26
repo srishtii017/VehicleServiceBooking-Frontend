@@ -2,7 +2,7 @@ import { Component, inject, OnInit ,signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'
 import { GetBookings } from '../models/getbooking';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Bookingservice } from '../services/bookingservice';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,6 +20,8 @@ export class Showbookings implements OnInit{
    showCancelSuccess = false;
    private toastr = inject(ToastrService);
 
+   private router = inject(Router);
+
   constructor(private bookingservice: Bookingservice) {}
 
   ngOnInit(): void {
@@ -32,6 +34,10 @@ export class Showbookings implements OnInit{
         this.bookings.set([]);
       }
     });
+  }
+
+  goToDetails(bookingId: any){
+    this.router.navigate(['/booking/details', bookingId]);
   }
 
   goBack(): void {
