@@ -34,6 +34,10 @@ export class Showbookings implements OnInit{
     });
   }
 
+  goBack(): void {
+    window.history.back();
+  }
+
   openCancelPopup(booking: GetBookings): void {
     this.bookingToCancel = booking;
     this.showCancelSuccess = false;
