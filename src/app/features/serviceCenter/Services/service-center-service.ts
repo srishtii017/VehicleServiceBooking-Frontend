@@ -65,4 +65,10 @@ export class ServiceCenterService {
   GetAllServiceCenters(): Observable<ApiResponse<ServiceCenter[]>> {
     return this.client.get<ApiResponse<ServiceCenter[]>>(`${this.apiUrl}/get-centers`);
   }
+
+  DeleteServiceCenter(id: string): Observable<ApiResponse<string>> {
+    return this.client.delete<ApiResponse<string>>(`${this.apiUrl}/${id}`, { 
+      headers: this.getAuthHeaders() 
+    });
+  }
 }

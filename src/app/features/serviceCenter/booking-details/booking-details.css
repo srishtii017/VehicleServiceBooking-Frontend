@@ -1,0 +1,216 @@
+:host {
+  display: block;
+  background-color: #121212; /* Charcoal Black Background */
+  min-height: 100vh;
+  padding: 2.5rem 1rem;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #e0e0e0;
+}
+
+.details-container {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.header-actions {
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  background: #1e1e1e;
+  border: 1px solid #ff6600; /* Neon Orange Border */
+  padding: 0.65rem 1.3rem;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #ff6600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-btn:hover {
+  background: #ff6600;
+  color: #121212;
+  transform: translateX(-3px);
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
+}
+
+/* Main Card */
+.booking-card {
+  background: #1e1e1e; /* Card Base Grayish Black */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid #2d2d2d;
+}
+
+/* Header Defaults to Solid Orange Gradient */
+.card-header {
+  padding: 2.2rem;
+  color: #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6600, #cc5200); /* Core Orange Theme */
+  font-weight: 700;
+}
+
+/* Status variants text changes base on dynamic class names if required, keeping orange border glows */
+.card-header.pending { background: linear-gradient(135deg, #ff8800, #cc5200); }
+.card-header.confirmed { background: linear-gradient(135deg, #ff5500, #b33b00); }
+.card-header.completed { background: linear-gradient(135deg, #ff6600, #993d00); border-bottom: 3px solid #ff6600; }
+.card-header.cancelled { background: linear-gradient(135deg, #3d3d3d, #1f1f1f); color: #ff6600; }
+
+.header-main h2 {
+  margin: 0.4rem 0 0 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.badge-id {
+  background: rgba(0, 0, 0, 0.15);
+  color: #121212;
+  padding: 0.25rem 0.75rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status-badge {
+  background: #121212;
+  color: #ff6600;
+  padding: 0.55rem 1.4rem;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ff6600;
+}
+
+.card-body {
+  padding: 2.2rem;
+  background-color: #1e1e1e;
+}
+
+.info-section {
+  margin-bottom: 2.2rem;
+  border-bottom: 1px solid #2d2d2d;
+  padding-bottom: 1.8rem;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-section h3 {
+  color: #ff6600; /* Section Headings Orange */
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+@media (max-width: 640px) {
+  .info-grid { grid-template-columns: 1fr; }
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item.full-width {
+  grid-column: span 2;
+}
+
+@media (max-width: 640px) {
+  .info-item.full-width { grid-column: span 1; }
+}
+
+.info-item label {
+  font-size: 0.8rem;
+  color: #777777;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.info-item p {
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.val-highlight {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+}
+
+.plate-number {
+  background: #121212;
+  border: 1px solid #ff6600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  display: inline-block;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700 !important;
+  color: #ff6600 !important;
+  width: max-content;
+  box-shadow: inset 0 0 5px rgba(255, 102, 0, 0.2);
+}
+
+.address-text {
+  line-height: 1.6;
+  background: #121212;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  border-left: 4px solid #ff6600;
+  color: #cccccc;
+}
+
+.date-val {
+  color: #ff8800 !important;
+  font-weight: 600 !important;
+}
+
+.date-sub {
+  color: #777777 !important;
+}
+
+/* Loader Styling */
+.loading-state, .error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #1e1e1e;
+  border-radius: 16px;
+  color: #a0a0a0;
+  border: 1px solid #2d2d2d;
+}
+
+.spinner {
+  border: 4px solid #121212;
+  border-top: 4px solid #ff6600;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  animation: spin 0.85s linear infinite;
+  margin: 0 auto 1.2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

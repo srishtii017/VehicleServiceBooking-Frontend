@@ -51,4 +51,8 @@ export class Bookingservice {
     const body = { bookingId: bookingId, status: status };
     return this.client.patch(`${this.bookingUrl}/update-status`, body, { headers: this.getHeaders() });
   }
+
+  getBookingById(id: string): Observable<any> {
+  return this.client.get<any>(`${this.bookingUrl}/${id}`, { headers: this.getHeaders() });
+}
 }
