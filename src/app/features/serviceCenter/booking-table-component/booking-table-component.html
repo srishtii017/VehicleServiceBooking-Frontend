@@ -25,6 +25,7 @@
               [value]="booking.status" 
               (change)="onStatusChange(booking.bookingId, $event)"
               class="status-dropdown"
+              [disabled]="booking.status === 'Cancelled'"
               [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
               <option value="Pending">🕒 Pending</option>
               <option value="Confirmed">✅ Confirmed</option>
