@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Vehicles } from '../models/vehicles';
 import { Booking } from '../models/booking';
@@ -15,44 +15,36 @@ export class Bookingservice {
 
   constructor(private client: HttpClient) { }
 
-  private getHeaders(): HttpHeaders {
-    const isUser = localStorage.getItem('isUserLogged') === 'true';
-    const token = isUser ? localStorage.getItem('UserToken') : localStorage.getItem('OwnerToken');
-    return new HttpHeaders({
-      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-    });
-  }
-
   getUserVehicles(): Observable<Array<Vehicles>> {
-    return this.client.get<Array<Vehicles>>(this.vehicleUrl, { headers: this.getHeaders() });
+    return this.client.get<Array<Vehicles>>(this.vehicleUrl);
   }
 
   createBooking(bookingData: Booking): Observable<any> {
-    return this.client.post(`${this.bookingUrl}/CreateBooking`, bookingData, { headers: this.getHeaders() });
+    return this.client.post(`${this.bookingUrl}/CreateBooking`, bookingData);
   }
 
   getMyBookings(): Observable<Array<GetBookings>> {
-    return this.client.get<Array<GetBookings>>(`${this.bookingUrl}/my-bookings`, { headers: this.getHeaders() });
+    return this.client.get<Array<GetBookings>>(`${this.bookingUrl}/my-bookings`);
   }
 
   cancelBooking(bookingId: string): Observable<any> {
-    return this.client.delete(`${this.bookingUrl}/cancel-booking/${bookingId}`, { headers: this.getHeaders() });
+    return this.client.delete(`${this.bookingUrl}/cancel-booking/${bookingId}`);
   }
 
   updateBooking(updatedBooking: UpdatedBooking): Observable<any> {
-    return this.client.patch(`${this.bookingUrl}/update-booking`, updatedBooking, { headers: this.getHeaders() });
+    return this.client.patch(`${this.bookingUrl}/update-booking`, updatedBooking);
   }
 
   getAllBookings(): Observable<Array<any>> {
-    return this.client.get<Array<any>>(`${this.bookingUrl}/allbookings`, { headers: this.getHeaders() });
+    return this.client.get<Array<any>>(`${this.bookingUrl}/allbookings`);
   }
 
   updateBookingStatus(bookingId: string, status: string): Observable<any> {
     const body = { bookingId: bookingId, status: status };
-    return this.client.patch(`${this.bookingUrl}/update-status`, body, { headers: this.getHeaders() });
+    return this.client.patch(`${this.bookingUrl}/update-status`, body);
   }
 
   getBookingById(id: string): Observable<any> {
-  return this.client.get<any>(`${this.bookingUrl}/${id}`, { headers: this.getHeaders() });
-}
+    return this.client.get<any>(`${this.bookingUrl}/${id}`);
+  }
 }

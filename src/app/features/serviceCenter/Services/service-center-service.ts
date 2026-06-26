@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ServiceCenter } from '../Models/service-center';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ServiceCenterDTO } from '../Models/service-center-dto';
@@ -16,33 +16,16 @@ export interface ApiResponse<T> {
 })
 export class ServiceCenterService {
   private apiUrl = 'http://localhost:5000/servicecenter';
-
   private ServiceCenters = signal<Array<ServiceCenter>>([]);
 
   constructor(private client: HttpClient) { }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('OwnerToken');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-  }
-
   FetchCenters(): void {
     const isUserLogged = localStorage.getItem('isUserLogged') === 'true';
-    const isOwnerLogged = localStorage.getItem('isOwnerLogged') === 'true';
 
-    let targetUrl = this.apiUrl; 
-    let options = {};
+    const targetUrl = isUserLogged ? `${this.apiUrl}/get-centers` : this.apiUrl; 
 
-    if (isUserLogged) {
-      targetUrl = `${this.apiUrl}/get-centers`;
-    } else if (isOwnerLogged) {
-      targetUrl = this.apiUrl; 
-      options = { headers: this.getAuthHeaders() };
-    }
-
-    this.client.get<ApiResponse<ServiceCenter[]>>(targetUrl, options)
+    this.client.get<ApiResponse<ServiceCenter[]>>(targetUrl)
       .pipe(map(res => res.data))
       .subscribe({
         next: (centers) => this.ServiceCenters.set(centers),
@@ -55,11 +38,11 @@ export class ServiceCenterService {
   }
 
   AddServiceCenter(center: ServiceCenterDTO): Observable<ApiResponse<ServiceCenter>> {
-    return this.client.post<ApiResponse<ServiceCenter>>(this.apiUrl, center, { headers: this.getAuthHeaders() });
+    return this.client.post<ApiResponse<ServiceCenter>>(this.apiUrl, center);
   }
 
   GetServiceCenterByID(id: string): Observable<ApiResponse<ServiceCenter>> {
-    return this.client.get<ApiResponse<ServiceCenter>>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+    return this.client.get<ApiResponse<ServiceCenter>>(`${this.apiUrl}/${id}`);
   }
 
   GetAllServiceCenters(): Observable<ApiResponse<ServiceCenter[]>> {
@@ -67,8 +50,6 @@ export class ServiceCenterService {
   }
 
   DeleteServiceCenter(id: string): Observable<ApiResponse<string>> {
-    return this.client.delete<ApiResponse<string>>(`${this.apiUrl}/${id}`, { 
-      headers: this.getAuthHeaders() 
-    });
+    return this.client.delete<ApiResponse<string>>(`${this.apiUrl}/${id}`);
   }
 }
