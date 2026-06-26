@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Vehicle } from '../models/vehicle';
+import { AuthTs } from '../services/auth';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -17,6 +19,9 @@ export class AddVehicle {
   vehicle: Vehicle = new Vehicle();
   message: string = '';
   isLoading = false;
+
+  vehicleservice = inject(AuthTs)
+  private toastr = inject(ToastrService);
 
   constructor(
     private http: HttpClient,
@@ -35,16 +40,16 @@ export class AddVehicle {
 
   const token = localStorage.getItem('UserToken');
 
-  this.http.post('http://localhost:5000/vehicle', this.vehicle, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }).subscribe({
+  this.vehicleservice.addVehicle(this.vehicle).subscribe({
     next: (res) => {
       this.isLoading = false;
-      this.message = 'Vehicle added successfully';
-
-      this.vehicle = new Vehicle();
+      
+      this.toastr.success('Vehicle added successfully ✅', 'Success', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true 
+      });
+      
 
       setTimeout(() => {
         this.router.navigate(['/my-vehicles']);
@@ -52,11 +57,17 @@ export class AddVehicle {
     },
 
     error: (err) => {
-      console.log("ERROR:", err);
+      
       this.isLoading = false;
-      this.message = 'Failed to add vehicle ❌';
+      this.toastr.error('Vehicle already registered', 'Error', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
     }
   });
 
-}
+  this.vehicle = new Vehicle();
+
+  }
 }

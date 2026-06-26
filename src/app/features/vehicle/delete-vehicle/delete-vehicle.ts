@@ -14,7 +14,6 @@ import { AuthTs } from '../services/auth';
 export class DeleteVehicle implements OnInit {
 
   vehicles = signal<Vehicle[]>([]);
-
   constructor(
     private authService: AuthTs,
     private router: Router
