@@ -1,10 +1,11 @@
-import { Component, OnInit , signal} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Booking } from '../models/booking';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Vehicles } from '../models/vehicles';
 import { Bookingservice } from '../services/bookingservice';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-boking',
@@ -14,27 +15,35 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './createbooking.css',
 })
 export class AddBoking implements OnInit {
-
+  minServiceDate: string = '';
   booking: Booking = new Booking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle: any = undefined;
-  selectedDate: string = ''; // only date
+  selectedDate: string = '';
+  private toastr = inject(ToastrService);
 
-  constructor(private bookingservice :Bookingservice,private route:ActivatedRoute) {}
+  todayDate: string = new Date().toISOString().split('T')[0];
+
+  constructor(private bookingservice: Bookingservice, private route: ActivatedRoute) { 
+    this.calculateTomorrowDate();
+  }
 
   ngOnInit() {
     this.loadVehicles();
-    const serviceCenterId = this.route.snapshot.queryParamMap.get('id');
+    const serviceCenterId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.booking.serviceCenterId = serviceCenterId;
+  }
 
-    if(serviceCenterId){
-      this.booking.serviceCenterId = serviceCenterId;
-    }
+  calculateTomorrowDate() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
   loadVehicles() {
     this.bookingservice.getUserVehicles().subscribe({
       next: (data) => { this.vehicles.set(data); },
-      error: (err) => {alert("Failed to load vehicles: "+err);}
+      error: (err) => { alert("Failed to load vehicles: " + err); }
     });
   }
 
@@ -42,11 +51,9 @@ export class AddBoking implements OnInit {
     if (vehicle) {
       this.booking.vehicleNo = vehicle.registrationNumber;
       this.booking.vehicleName = vehicle.model;
-      this.booking.vehicleType = vehicle.type;
     } else {
       this.booking.vehicleNo = undefined;
       this.booking.vehicleName = undefined;
-      this.booking.vehicleType = undefined;
     }
   }
 
@@ -71,7 +78,7 @@ export class AddBoking implements OnInit {
       if (isNaN(dateObj.getTime())) return '';
 
       return `Scheduled on ${days[dateObj.getDay()]}, ${months[dateObj.getMonth()]} ${dateObj.getDate()}, ${year}`;
-    } 
+    }
     catch {
       return '';
     }
@@ -81,7 +88,6 @@ export class AddBoking implements OnInit {
     return !!(
       this.selectedDate &&
       this.selectedVehicle &&
-      // this.booking.vehicleType?.trim() &&
       this.booking.serviceType
     );
   }
@@ -89,20 +95,27 @@ export class AddBoking implements OnInit {
   createBooking() {
     this.bookingservice.createBooking(this.booking).subscribe({
       next: () => {
-        alert("Booking created successfully ✅");
+        this.toastr.success('Booking Created Successfully', 'success', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
         this.resetForm();
       },
-      error: (err) => {
-        console.error(err);
-        alert("Booking failed ❌");
+      error: () => {
+        this.toastr.error('Duplicate booking or booking cannot be in the past', 'Error', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
       }
     });
-    this.resetForm();
   }
 
   resetForm() {
+    const currentCenterId = this.booking.serviceCenterId;
     this.booking = new Booking();
-    // this.booking.serviceCenterId = 
+    this.booking.serviceCenterId = currentCenterId;
     this.selectedVehicle = undefined;
     this.selectedDate = '';
   }

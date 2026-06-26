@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght=400;500;700&family=Inter:wght=400;500;600&display=swap');
 
 :host {
   display: block;
@@ -12,14 +12,13 @@
 }
 
 .main-container {
-  max-width: 1200px; /* Un poco más ancho para albergar cómodamente la tabla */
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 40px; /* Separación entre la sección Detalles y la sección Bookings */
+  gap: 40px;
 }
 
-/* --- ESTILOS DE LA TARJETA ANTERIOR --- */
 .center-card {
   background-color: #141414;
   border: 1px solid #262626;
@@ -121,8 +120,6 @@
 .status-text.active { color: #00e676; font-weight: 600; }
 .status-text.inactive { color: #ff5252; font-weight: 600; }
 
-
-/* --- NUEVOS ESTILOS PARA LA TABLA DE BOOKINGS --- */
 .bookings-container {
   background-color: #141414;
   border: 1px solid #262626;
@@ -154,127 +151,15 @@
   border-radius: 6px;
 }
 
-.table-responsive {
-  overflow-x: auto;
-}
-
-.bookings-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-/* Encabezado Tabla */
-.bookings-table th {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 11px;
-  color: #f26d21;
-  padding: 16px;
-  border-bottom: 1px solid #262626;
-  letter-spacing: 0.5px;
-}
-
-.sort-icon {
-  font-size: 9px;
-  color: #555555;
-  margin-left: 4px;
-}
-
-/* Celdas Body */
-.bookings-table td {
-  padding: 16px;
-  font-size: 14px;
-  color: #cccccc;
-  border-bottom: 1px solid #1c1c1c;
-  vertical-align: middle;
-}
-
-.bookings-table tbody tr:hover {
-  background-color: #1a1a1a;
-}
-
-/* Tipografías específicas de celdas según la foto */
-.booking-id-cell {
-  color: #f26d21 !important;
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 600;
-}
-
-.customer-cell {
-  color: #ffffff !important;
-  font-weight: 600;
-}
-
-.vehicle-cell {
-  color: #8c8c8c;
-}
-
-.car-icon {
-  margin-right: 6px;
-  font-size: 12px;
-  opacity: 0.6;
-}
-
-.date-cell {
-  font-family: 'Roboto Mono', monospace;
-  color: #aaaaaa;
-}
-
-.empty-cell {
-  text-align: center;
-  padding: 32px !important;
-  color: #666666 !important;
-}
-
-/* Badges Dinámicos de Estado basados en la clase de Angular */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.status-badge .dot {
-  font-size: 8px;
-}
-
-/* 1. Completed -> Verde */
-.status-badge.completed {
-  background-color: rgba(0, 230, 118, 0.08);
-  color: #00e676;
-}
-
-/* 2. In Progress -> Amarillo/Naranja */
-.status-badge.in-progress {
-  background-color: rgba(255, 179, 0, 0.08);
-  color: #ffb300;
-}
-
-/* 3. Pending -> Marrón/Naranja Oscuro */
-.status-badge.pending {
-  background-color: rgba(242, 109, 33, 0.08);
-  color: #f26d21;
-}
-
-/* 4. Scheduled -> Azul */
-.status-badge.scheduled {
-  background-color: rgba(0, 176, 255, 0.08);
-  color: #00b0ff;
-}
-
-/* --- ESTILOS PARA EL BOTÓN DE RESERVA (BOOK APPOINTMENT) --- */
 .action-footer {
   display: flex;
-  justify-content: flex-end; /* Button ko right side me push karega */
+  justify-content: flex-end; 
   width: 100%;
   margin-top: 10px;
 }
 
 .book-now-btn {
-  background-color: #f26d21; /* Tumhara theme orange color */
+  background-color: #f26d21;
   color: #ffffff;
   font-family: 'Roboto Mono', monospace;
   font-size: 14px;
@@ -306,5 +191,61 @@
 }
 
 .book-now-btn:hover .arrow {
-  transform: translateX(4px); /* Hover par arrow thoda right khiskega */
+  transform: translateX(4px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keeps items aligned horizontally and restricts child scaling */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px; 
+}
+
+/* Updated Rounded Capsule Delete Button */
+.delete-pill-btn {
+  background-color: transparent;
+  color: #ff5252;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #ff5252;
+  border-radius: 50px; 
+  padding: 6px 16px;       /* Compact spacing inside the button */
+  width: fit-content;      /* 👈 CRUCIAL: Stops it from taking 100% width */
+  min-width: unset;        /* Reset any inherited grid/flex full sizing */
+  cursor: pointer;
+  display: inline-flex;    /* Inline layout so it wraps content nicely */
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.delete-pill-btn:hover {
+  background-color: #ff5252;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+  transform: translateY(-1px);
+}
+
+.delete-pill-btn:active {
+  transform: translateY(0);
+}
+
+.icon-trash {
+  font-size: 14px;
 }

@@ -1,8 +1,8 @@
 export class GetBookings {
     bookingId?:string;
     vehicleNo?:string;
-    vehicleType?:string;
-    serviceCenterId?:string;
+    vehicleName?:string;
+    serviceCenterId:string='';
     serviceType?:string;
     serviceDate?:string;
     status?:string;

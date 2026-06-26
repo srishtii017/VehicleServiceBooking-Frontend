@@ -4,8 +4,17 @@
     <div class="center-card">
       <div class="card-header">
         <h2 class="card-title">CENTER DETAILS</h2>
-        <div class="header-status-badge">
-          <span class="icon-check">✓</span> Active
+        
+        <div class="header-actions">
+          <div class="header-status-badge">
+            <span class="icon-check">✓</span> Active
+          </div>
+
+          @if (!isUser) {
+            <button class="delete-pill-btn" (click)="deleteCenter()">
+              <span class="icon-trash">🗑️</span> Delete
+            </button>
+          }
         </div>
       </div>
 
@@ -52,50 +61,17 @@
         </div>
       </div>
     </div>
-@if (!isUser){
-    <div class="bookings-container">
-      <div class="bookings-header">
-        <h2 class="bookings-title">BOOKINGS</h2>
-        <div class="records-badge">{{ bookings().length }} RECORDS</div>
-      </div>
 
-      <div class="table-responsive">
-        <table class="bookings-table">
-          <thead>
-            <tr>
-              <th>BOOKING ID <span class="sort-icon">▲▼</span></th>
-              <th>CUSTOMER <span class="sort-icon">▲▼</span></th>
-              <th>VEHICLE <span class="sort-icon">▲▼</span></th>
-              <th>DATE <span class="sort-icon">▲▼</span></th>
-              <th>STATUS <span class="sort-icon">▲▼</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (booking of bookings(); track booking.bookingId) {
-              <tr>
-                <td class="booking-id-cell">{{ booking.bookingId }}</td>
-                <td class="customer-cell">Customer Name</td> 
-                <td class="vehicle-cell">
-                  <span class="car-icon">🚗</span> 
-                  {{ booking.vehicleType || 'Vehicle' }} ({{ booking.vehicleNo || 'N/A' }})
-                </td>
-                <td class="date-cell">{{ booking.serviceDate | date:'mediumDate' }}</td>
-                <td>
-                  <span class="status-badge" [ngClass]="(booking.status || '').toLowerCase().replace(' ', '-')">
-                    <span class="dot">●</span> {{ booking.status }}
-                  </span>
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="5" class="empty-cell">No bookings found for this service center.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
+    @if (!isUser) {
+      <div class="bookings-container">
+        <div class="bookings-header">
+          <h2 class="bookings-title">BOOKINGS</h2>
+          <div class="records-badge">{{ bookings().length }} RECORDS</div>
+        </div>
+
+        <app-booking-table [bookings]="bookings()"></app-booking-table>
       </div>
-    </div>
-  }
+    }
 
     @if (isUser) {
       <div class="action-footer">

@@ -1,9 +1,10 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import{ UpdatedBooking } from '../models/updatebooking';
 import { ActivatedRoute } from '@angular/router';
 import { Bookingservice } from '../services/bookingservice';
 import { Vehicles } from '../models/vehicles';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-updatebooking',
@@ -12,12 +13,14 @@ import { Vehicles } from '../models/vehicles';
   styleUrl: './updatebooking.css',
 })
 export class Updatebooking implements OnInit {
+  minServiceDate: string = '';
   update:UpdatedBooking=new UpdatedBooking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle:any ='';
+  private toastr = inject(ToastrService);
 
   constructor(private route: ActivatedRoute,private bookingservice:Bookingservice) {
-
+    this.calculateTomorrowDate();
   }
 
   ngOnInit(): void {
@@ -27,6 +30,13 @@ export class Updatebooking implements OnInit {
     if (bookingId) {
       this.update.bookingId = bookingId;
     }
+  }
+
+  calculateTomorrowDate() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
   loadVehicles(){
@@ -41,11 +51,9 @@ export class Updatebooking implements OnInit {
     if (vehicle) {
       this.update.vehicleNo = vehicle.registrationNumber;
       this.update.vehicleName = vehicle.model;
-      this.update.vehicleType = vehicle.type;
     } else {
       this.update.vehicleNo = undefined;
       this.update.vehicleName = undefined;
-      this.update.vehicleType = undefined;
     }
   }
 
@@ -56,8 +64,20 @@ export class Updatebooking implements OnInit {
     }
 
     this.bookingservice.updateBooking(this.update).subscribe({
-      next:() => {alert("Booking updated Successfully")},
-      error:() => {alert("Booking not found or Duplicate ")}
+      next:() => {
+        this.toastr.success('Booking Updated Successfully', 'success', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
+      },
+      error:() => {
+        this.toastr.error('Duplicate booking or booking cannot be in the past', 'Error', {
+          timeOut: 2100,
+          progressBar: true,
+          closeButton: true
+        });
+      }
     });
     console.log(this.update.serviceDate);
     this.update = new UpdatedBooking();
