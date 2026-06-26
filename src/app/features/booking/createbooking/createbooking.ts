@@ -19,7 +19,7 @@ export class AddBoking implements OnInit {
   booking: Booking = new Booking();
   vehicles = signal<Array<Vehicles>>([]);
   selectedVehicle: any = undefined;
-  selectedDate: string = ''; // only date
+  selectedDate: string = '';
   private toastr = inject(ToastrService);
 
   todayDate: string = new Date().toISOString().split('T')[0];
@@ -30,17 +30,13 @@ export class AddBoking implements OnInit {
 
   ngOnInit() {
     this.loadVehicles();
-    const serviceCenterId = this.route.snapshot.paramMap.get('id');
-
-    if (serviceCenterId) {
-      this.booking.serviceCenterId = serviceCenterId;
-    }
+    const serviceCenterId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.booking.serviceCenterId = serviceCenterId;
   }
 
   calculateTomorrowDate() {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-
     this.minServiceDate = tomorrow.toISOString().split('T')[0];
   }
 
@@ -92,7 +88,6 @@ export class AddBoking implements OnInit {
     return !!(
       this.selectedDate &&
       this.selectedVehicle &&
-      // this.booking.vehicleType?.trim() &&
       this.booking.serviceType
     );
   }
@@ -100,7 +95,7 @@ export class AddBoking implements OnInit {
   createBooking() {
     this.bookingservice.createBooking(this.booking).subscribe({
       next: () => {
-        this.toastr.success('Booking Created Succesfully', 'success', {
+        this.toastr.success('Booking Created Successfully', 'success', {
           timeOut: 2100,
           progressBar: true,
           closeButton: true
@@ -115,12 +110,12 @@ export class AddBoking implements OnInit {
         });
       }
     });
-    this.resetForm();
   }
 
   resetForm() {
+    const currentCenterId = this.booking.serviceCenterId;
     this.booking = new Booking();
-    // this.booking.serviceCenterId = 
+    this.booking.serviceCenterId = currentCenterId;
     this.selectedVehicle = undefined;
     this.selectedDate = '';
   }
