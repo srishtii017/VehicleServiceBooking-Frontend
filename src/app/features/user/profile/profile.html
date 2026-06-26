@@ -1,114 +1,146 @@
-<div class="main-card">
-  <div class="card-header">
-    <h1>Vehicle Service</h1>
-    <p>Manage your profile</p>
-  </div>
+<div class="profile-page">
 
-  <div class="profile-container">
+  <div class="profile-banner"></div>
 
-    <div class="alert-error">{{ errorMessage }}</div>
-    <div class="alert-success">{{ successMessage }}</div>
+  <div class="profile-content">
 
-    <!-- View Mode -->
-    <div [style.display]="!isEditing ? 'block' : 'none'">
+    <div class="profile-card">
 
-      <div class="loading">{{ isLoading ? 'Loading...' : '' }}</div>
+      <!-- ✅ HEADER -->
+      <div class="profile-header">
+        <h1>My Profile</h1>
 
-      <div class="profile-info">
-        <div class="info-row">
-          <span class="info-label">Name</span>
-          <span class="info-value">{{ user?.name }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Email</span>
-          <span class="info-value">{{ user?.email }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Phone</span>
-          <span class="info-value">{{ user?.phone }}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Address</span>
-          <span class="info-value">{{ user?.address }}</span>
+        <div class="action-buttons">
+
+          <button class="btn-edit" (click)="toggleEdit()">
+            {{ isEditing ? 'Cancel Edit' : 'Edit Profile' }}
+          </button>
+
+          <button class="btn-password" (click)="goToChangePassword()">
+            Change Password
+          </button>
+
         </div>
       </div>
 
-      <div class="btn-group">
-        <button class="btn-edit" (click)="toggleEdit()">Edit Profile</button>
+      <p class="subtitle">View and manage your personal details</p>
+
+      <!-- ✅ WAIT FOR USER DATA -->
+      <div *ngIf="user as u; else loadingBlock">
+
+        <!-- ✅ VIEW MODE -->
+        <div *ngIf="!isEditing" class="profile-grid">
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input [value]="u.name" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input [value]="u.email" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Phone</label>
+            <input [value]="u.phone" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Flat / House No</label>
+            <input [value]="u.flatNumber" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Street</label>
+            <input [value]="u.street" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Landmark</label>
+            <input [value]="u.landmark" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>City</label>
+            <input [value]="u.city" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>State</label>
+            <input [value]="u.state" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Pincode</label>
+            <input [value]="u.pincode" disabled>
+          </div>
+
+        </div>
+
+        <!-- ✅ EDIT MODE -->
+        <form *ngIf="isEditing"
+              class="profile-grid"
+              (ngSubmit)="onUpdate()"
+              #form="ngForm">
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input name="name" [(ngModel)]="updateData.name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Phone</label>
+            <input name="phone" [(ngModel)]="updateData.phone">
+          </div>
+
+          <div class="form-group">
+            <label>Flat / House No</label>
+            <input name="flatNumber" [(ngModel)]="updateData.flatNumber">
+          </div>
+
+          <div class="form-group">
+            <label>Street</label>
+            <input name="street" [(ngModel)]="updateData.street">
+          </div>
+
+          <div class="form-group">
+            <label>Landmark</label>
+            <input name="landmark" [(ngModel)]="updateData.landmark">
+          </div>
+
+          <div class="form-group">
+            <label>City</label>
+            <input name="city" [(ngModel)]="updateData.city">
+          </div>
+
+          <div class="form-group">
+            <label>State</label>
+            <input name="state" [(ngModel)]="updateData.state">
+          </div>
+
+          <div class="form-group">
+            <label>Pincode</label>
+            <input name="pincode" [(ngModel)]="updateData.pincode">
+          </div>
+
+          <div class="full-width">
+            <button class="btn-save" type="submit">
+              Save Changes
+            </button>
+          </div>
+
+        </form>
+
       </div>
+
+      <!-- ✅ LOADING TEMPLATE -->
+      <ng-template #loadingBlock>
+        <div class="loading-text">
+          Loading profile...
+        </div>
+      </ng-template>
+
     </div>
-
-    <!-- Edit Mode -->
-    <div [style.display]="isEditing ? 'block' : 'none'">
-
-      <!-- Update Info Section -->
-      <div class="section-title">Update Your Info</div>
-      <div class="alert-success">{{ successMessage }}</div>
-      <form (ngSubmit)="onUpdate()" #updateForm="ngForm">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name"
-            [(ngModel)]="updateData.name"
-            minlength="2" maxlength="100"
-            placeholder="Update your name" />
-        </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="tel" name="phone"
-            [(ngModel)]="updateData.phone"
-            minlength="10" maxlength="13"
-            placeholder="Update your phone" />
-        </div>
-        <div class="form-group">
-          <label>Address</label>
-          <textarea name="address"
-            [(ngModel)]="updateData.address"
-            maxlength="500"
-            placeholder="Update your address"
-            rows="2"></textarea>
-        </div>
-        <button type="submit" class="btn-edit" [disabled]="isLoading">
-          {{ isLoading ? 'Saving...' : 'Save Changes' }}
-        </button>
-      </form>
-
-      <div class="divider"></div>
-
-      <!-- Change Password Section -->
-      <div class="section-title">Change Password</div>
-      <div class="alert-success">{{ passwordSuccess }}</div>
-      <div class="alert-error">{{ passwordError }}</div>
-      <form (ngSubmit)="onChangePassword()" #passwordForm="ngForm">
-        <div class="form-group">
-          <label>Current Password</label>
-          <input type="password" name="currentPassword"
-            [(ngModel)]="passwordData.currentPassword"
-            required
-            placeholder="Enter current password" />
-        </div>
-        <div class="form-group">
-          <label>New Password</label>
-          <input type="password" name="newPassword"
-            [(ngModel)]="passwordData.newPassword"
-            required minlength="6"
-            placeholder="Minimum 6 characters" />
-        </div>
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" name="confirmPassword"
-            [(ngModel)]="passwordData.confirmPassword"
-            required
-            placeholder="Re-enter new password" />
-        </div>
-        <button type="submit" class="btn-edit" [disabled]="isPasswordLoading">
-          {{ isPasswordLoading ? 'Changing...' : 'Change Password' }}
-        </button>
-      </form>
-
-      <div class="divider"></div>
-
-      <button class="btn-cancel" (click)="toggleEdit()">Cancel</button>
-    </div>
-
   </div>
 </div>

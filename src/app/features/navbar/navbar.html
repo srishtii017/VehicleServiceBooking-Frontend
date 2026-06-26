@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <span style="cursor:pointer">🚗 ServiceIt</span>
+  </div>
+
+  <div class="nav-links">
+    
+    @if (ls.getItem('isOwnerLogged')==='true') {
+      <a class="nav-link" routerLink="/main">Home</a>
+      <a class="nav-link" routerLink="/servicecenter/addservicecenter">Add Center</a>
+      <a class="nav-link" routerLink="/servicecenter/servicecentercards">My Centers</a>
+      <a class="nav-link" routerLink="/servicecenter/AllBookings">Bookings</a>
+      <button class="logout-btn" (click)="Logout()">Logout</button>
+    }
+    
+    @if (ls.getItem('isUserLogged')==='true') {
+      <a class="nav-link" routerLink="/main">Home</a>
+      <a class="nav-link" routerLink="/add-vehicle">Add Vehicle</a>
+      <a class="nav-link" routerLink="/my-vehicles">My Vehicles</a>
+      <a class="nav-link" routerLink="/booking/showbookings">My Bookings</a>
+      <a class="nav-link" routerLink="/servicecenter/servicecentercards">Create Booking</a>
+      <a class="nav-link" routerLink="/user/profile">Profile</a>
+      <button class="logout-btn" (click)="Logout()">Logout</button>
+    }
+
+  </div>
+</nav>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+:host {
+  display: block;
+  background-color: #0d0d0d;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.dashboard-header {
+  width: 80%;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.dashboard-tag {
+  font-family: 'Roboto Mono', monospace;
+  color: #f26d21;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 8px 0 4px 0;
+  color: #ffffff;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #555555;
+  margin: 0;
+}
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 80%;
+}
+
+.center-card {
+  background-color: #141414;
+  border: 1px solid #1f1f1f;
+  border-radius: 6px;
+  padding: 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.center-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.status-active-border { border-left: 4px solid #00e676; }
+.status-inactive-border { border-left: 4px solid #555555; }
+
+.card-top-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid #1c1c1c;
+  padding-bottom: 16px;
+}
+
+.id-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.center-id {
+  font-family: 'Roboto Mono', monospace;
+  color: #444444;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.divider-pipe {
+  color: #222222;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.status-badge.active {
+  background-color: rgba(0, 230, 118, 0.1);
+  color: #00e676;
+}
+
+.status-badge.inactive {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #888888;
+}
+
+.status-badge .dot { font-size: 8px; }
+
+.center-name {
+  color: #f26d21;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card-details-grid {
+  flex: 1;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.services-full-width {
+  grid-column: span 2;
+}
+
+.info-label {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f26d21;
+}
+
+.info-value {
+  margin: 0;
+  font-size: 14px;
+  color: #aaaaaa;
+  line-height: 1.5;
+}
+
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #888888;
+}
+
+.card-actions-area {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: center;
+}
+
+.details-btn {
+  background-color: #f26d21;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.details-btn:hover {
+  background-color: #d95a16;
+}
+
+.bookings-count {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: #444444;
+}
+
+.no-centers {
+  color: #555555;
+  text-align: center;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header, .cards-list {
+    width: 90%;
+  }
+  .card-bottom-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-full-width {
+    grid-column: span 1;
+  }
+  .card-actions-area {
+    width: 100%;
+  }
+}

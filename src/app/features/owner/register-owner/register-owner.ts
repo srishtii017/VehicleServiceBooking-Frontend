@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { OwnerRegister } from '../Models/register';
+import { OwnerRegisterService } from '../Services/owner-register-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-owner',
@@ -12,17 +13,13 @@ import { OwnerRegister } from '../Models/register';
   styleUrl: './register-owner.css',
 })
 export class RegisterOwner {
-  reg: OwnerRegister = {
-    Name: '',
-    Email: '',
-    Password: '',
-    Phone: ''
-  };
 
+  reg: OwnerRegister = new OwnerRegister();
   isLoading = false;
-  errorMessage = '';
 
-  constructor(private client: HttpClient, private router: Router) {}
+  private router = inject(Router);
+  private RegisterService = inject(OwnerRegisterService);
+  private toastr = inject(ToastrService);
 
   goToLogin(): void {
     this.router.navigate(['/owner/login']);
@@ -30,19 +27,30 @@ export class RegisterOwner {
 
   HandleRegister() {
     this.isLoading = true;
-    this.errorMessage = '';
 
-    this.client.post('http://localhost:5000/owner/register', this.reg)
-      .subscribe({
-        next: (data) => {
+    this.RegisterService.RegisterOwner(this.reg).subscribe({
+      next: () => {
+        this.isLoading = false;
+        
+        this.toastr.success('Account created successfully!', 'Success', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
+
+        this.router.navigate(['/owner/login']);
+      },
+      error: () => {
+        setTimeout(() => {
           this.isLoading = false;
-          alert('Registration successful!');
-          this.router.navigate(['/owner/login']);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = error.error?.message || 'Registration failed.';
-        }
-      });
+          
+          this.toastr.error('Please check your details.', 'Registration Failed', {
+            timeOut: 4000,
+            progressBar: true,
+            closeButton: true
+          });
+        });
+      }
+    });
   }
 }

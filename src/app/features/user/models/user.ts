@@ -11,7 +11,14 @@ export interface RegisterRequest {
   name: string;
   email: string;
   phone: string;
-  address: string;
+
+  flatNumber: string;
+  street: string;
+  landmark?: string;
+  city: string;
+  state: string;
+  pincode: string;
+
   password: string;
 }
 
@@ -25,7 +32,13 @@ export interface LoginRequest {
 export interface UpdateUserRequest {
   name?: string;
   phone?: string;
-  address?: string;
+
+  flatNumber?: string;
+  street?: string;
+  landmark?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
 }
 
 // Matches ChangePasswordDto.cs in backend
@@ -41,8 +54,15 @@ export interface User {
   name: string;
   email: string;
   phone: string;
-  address: string;
+
+  flatNumber: string;
+  street: string;
+  landmark?: string;
+  city: string;
+  state: string;
+  pincode: string;
 }
+
 
 // Matches ApiResponse<T> in backend
 export interface ApiResponse<T> {

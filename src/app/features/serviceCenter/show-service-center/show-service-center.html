@@ -1,0 +1,85 @@
+@if (center()) {
+  <div class="main-container">
+    
+    <div class="center-card">
+      <div class="card-header">
+        <h2 class="card-title">CENTER DETAILS</h2>
+        
+        <div class="header-actions">
+          <div class="header-status-badge">
+            <span class="icon-check">✓</span> Active
+          </div>
+
+          @if (!isUser) {
+            <button class="delete-pill-btn" (click)="deleteCenter()">
+              <span class="icon-trash">🗑️</span> Delete
+            </button>
+          }
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="details-body">
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-wrench">🔧</i> CENTER NAME</span>
+          <div class="value large-text">{{ center()?.centerName }}</div>
+        </div>
+
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-location">📍</i> FULL ADDRESS</span>
+          <div class="value">{{ center()?.fullAddress }}</div>
+        </div>
+
+        <div class="row-two-columns">
+          <div class="info-group">
+            <span class="label"><i class="icon-phone">📞</i> CONTACT</span>
+            <div class="value">{{ center()?.contact }}</div>
+          </div>
+          <div class="info-group">
+            <span class="label"><i class="icon-capacity">👥</i> CAPACITY</span>
+            <div class="value">{{ center()?.capacity }} vehicles / day</div>
+          </div>
+        </div>
+
+        <div class="row-two-columns">
+          <div class="info-group">
+            <span class="label"><i class="icon-calendar">📅</i> CREATED DATE</span>
+            <div class="value">{{ center()?.createdAt | date:'longDate' }}</div>
+          </div>
+          <div class="info-group">
+            <span class="label"><i class="icon-status">🕒</i> STATUS</span>
+            <div class="value status-text" [ngClass]="center()?.status === 1 ? 'active' : 'inactive'">
+              {{ center()?.status === 1 ? 'ACTIVE' : 'INACTIVE' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="info-group full-width">
+          <span class="label"><i class="icon-description">🔧</i> SERVICE DESCRIPTION</span>
+          <div class="value description-text">{{ center()?.serviceDescription }}</div>
+        </div>
+      </div>
+    </div>
+
+    @if (!isUser) {
+      <div class="bookings-container">
+        <div class="bookings-header">
+          <h2 class="bookings-title">BOOKINGS</h2>
+          <div class="records-badge">{{ bookings().length }} RECORDS</div>
+        </div>
+
+        <app-booking-table [bookings]="bookings()"></app-booking-table>
+      </div>
+    }
+
+    @if (isUser) {
+      <div class="action-footer">
+        <button class="book-now-btn" (click)="bookNow()">
+          Book Appointment <span class="arrow">→</span>
+        </button>
+      </div>
+    }
+
+  </div>
+}

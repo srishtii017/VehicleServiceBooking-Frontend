@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { OwnerLogin } from '../Models/login';
+import { OwnerLoginService } from '../Services/owner-login-service';
+import { OwnerAuthService } from '../Services/owner-auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-owner',
@@ -12,16 +14,13 @@ import { OwnerLogin } from '../Models/login';
   styleUrl: './login-owner.css',
 })
 export class LoginOwner {
-
-  login: OwnerLogin = {
-    Email: '',
-    Password: ''
-  };
-
+  login: OwnerLogin = new OwnerLogin();
   isLoading = false;
-  errorMessage = '';
 
-  constructor(private client: HttpClient, private router: Router) {}
+  private router = inject(Router);
+  private loginService = inject(OwnerLoginService);
+  private authService = inject(OwnerAuthService);
+  private toastr = inject(ToastrService);
 
   goToRegister(): void {
     this.router.navigate(['/owner/register']);
@@ -29,20 +28,31 @@ export class LoginOwner {
 
   HandleLogin() {
     this.isLoading = true;
-    this.errorMessage = '';
 
-    this.client.post('http://localhost:5000/owner/login', this.login)
-      .subscribe({
-        next: (res: any) => {
-          this.isLoading = false;
-          localStorage.setItem('token', res.data);
-          localStorage.setItem('role', 'owner');
-          this.router.navigate(['/owner/dashboard']);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = error.error?.message || 'Login failed.';
-        }
-      });
+    this.loginService.LoginOwner(this.login).subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+        this.authService.loginOwner(res.data);
+        
+        this.toastr.success('Welcome back, boss!', 'Login Successful', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
+
+        this.router.navigate(['/main']);
+        console.log(this.authService.isLoggedIn());
+      },
+      error: (error) => {
+        this.isLoading = false;
+        const msg = error.error?.message || 'Login failed.';
+        
+        this.toastr.error(msg, 'Auth Error', {
+          timeOut: 4000,
+          progressBar: true,
+          closeButton: true
+        });
+      }
+    });
   }
 }

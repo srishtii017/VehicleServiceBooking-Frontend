@@ -5,8 +5,17 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  background-image: url('assets/availableCenters.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f2f5;
   color: #333;
@@ -295,4 +304,74 @@ body {
 
 .link-text a:hover {
   text-decoration: underline;
+}
+
+/* NGX-TOASTR CUSTOM AESTHETIC STYLES */
+
+/* Main Toast Container */
+#toast-container .ngx-toastr {
+  background-image: none !important; /* Purana icon hatane ke liye */
+  padding: 12px 20px 12px 24px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important; /* Soft shadow */
+  border-radius: 12px !important; /* Perfect round corners */
+  font-family: 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px;
+  max-width: 350px !important; /* Patla rakhne ke liye width control */
+  border: 1px solid transparent !important;
+  opacity: 0.98 !important;
+  backdrop-filter: blur(8px); /* Modern glassy effect */
+}
+
+/* Success Toast (Green) - Premium Mint/Emerald Look */
+#toast-container .toast-success {
+  background-color: #ecfdf5 !important; /* Soft green tint */
+  color: #065f46 !important; /* Dark green text */
+  border-color: #a7f3d0 !important; /* Border for clean look */
+}
+
+/* Error Toast (Red) - Soft Rose/Coral Look */
+#toast-container .toast-error {
+  background-color: #fff5f5 !important;
+  color: #9b2c2c !important;
+  border-color: #feb2b2 !important;
+}
+
+/* Toast Title (Heading) */
+#toast-container .toast-title {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  margin-bottom: 3px !important;
+}
+
+/* Toast Message (Subtext) */
+#toast-container .toast-message {
+  color: inherit !important;
+  opacity: 0.85 !important;
+  font-size: 13px !important;
+}
+
+/* Close Button (X) customization */
+#toast-container .toast-close-button {
+  color: inherit !important;
+  opacity: 0.4 !important;
+  top: 0px !important;
+  right: -4px !important;
+  font-size: 18px !important;
+}
+#toast-container .toast-close-button:hover {
+  opacity: 0.8 !important;
+}
+
+/* Progress Bar adjustment */
+#toast-container .toast-progress {
+  height: 3px !important;
+  opacity: 0.3 !important;
+}
+#toast-container .toast-success .toast-progress {
+  background-color: #059669 !important;
+}
+#toast-container .toast-error .toast-progress {
+  background-color: #e53e3e !important;
 }

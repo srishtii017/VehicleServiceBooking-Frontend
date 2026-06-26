@@ -1,0 +1,72 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* 🟢 ISKO UNCOMMENT KARO AUR PADDING BHI DE SAKTE HO */
+.main-content {
+  margin-top: 60px; /* Navbar ki height 60px hai, toh content ko 60px niche dhaklo */
+}
+
+/* 🟢 PAGE CONTAINER KO NAVBAR KE HISAB SE ADJUST KARO */
+.page-container {
+  display: flex;
+  /* 100vh me se navbar ki 60px minus kar do taaki scrollbar faltu me na bane */
+  min-height: calc(100vh - 60px); 
+
+  background: linear-gradient(
+    135deg,
+    #121212,
+    #1a1a1a,
+    #202020,
+    #2a2a2a
+  );
+  color: white;
+}
+
+.nav-brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #ff6600;
+}
+
+.logout-btn {
+  background: #ff3333;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.logout-btn:hover {
+  background: #cc0000;
+}

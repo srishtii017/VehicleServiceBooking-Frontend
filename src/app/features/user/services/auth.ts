@@ -1,20 +1,34 @@
-
-
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginRequest, LoginResponse, User, ApiResponse, RegisterRequest, UpdateUserRequest, ChangePasswordRequest } from '../models/user';
+import {
+  LoginRequest,
+  LoginResponse,
+  User,
+  ApiResponse,
+  RegisterRequest,
+  UpdateUserRequest,
+  ChangePasswordRequest
+} from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
- private baseUrl = 'http://localhost:5000/user'; //  backend URL
+  private baseUrl = 'http://localhost:5000/user';
 
-  constructor(private http: HttpClient) {}
+  isLoggedIn = signal<boolean>(this.hasToken());
 
-  // ── Auth Headers ──
+  router = inject(Router);
+
+  constructor(private http: HttpClient) { }
+
+  private hasToken(): boolean {
+    return !!localStorage.getItem('UserToken');
+  }
+
   private getHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders({
@@ -25,11 +39,12 @@ export class AuthService {
 
   // ── Token Helpers ──
   saveToken(token: string): void {
-    localStorage.setItem('token', token);
+    localStorage.setItem('UserToken', token);
+    this.isLoggedIn.set(true);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('UserToken');
   }
 
   saveUser(user: LoginResponse): void {
@@ -41,52 +56,50 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  isLoggedIn(): boolean {
-    return this.getToken() !== null;
+  isUserLoggedIn(): boolean {
+    return this.isLoggedIn();
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('UserToken');
+    localStorage.removeItem('isUserLogged');
     localStorage.removeItem('user');
+    // this.isLoggedIn.set(false);
+    this.router.navigate(['']);
   }
 
   // ── API Calls ──
-
-  // POST /api/user/register
   register(data: RegisterRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(`${this.baseUrl}/register`, data);
   }
 
-  // POST /api/user/login
   login(data: LoginRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(`${this.baseUrl}/login`, data);
   }
 
-  // GET /api/user/{id}
   getUserById(id: number): Observable<ApiResponse<User>> {
     return this.http.get<ApiResponse<User>>(`${this.baseUrl}/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  // PATCH /api/user/{id}
   updateUser(id: number, data: UpdateUserRequest): Observable<ApiResponse<User>> {
     return this.http.patch<ApiResponse<User>>(`${this.baseUrl}/${id}`, data, {
       headers: this.getHeaders()
     });
   }
 
-  // DELETE /api/user/{id}
   deleteUser(id: number): Observable<ApiResponse<any>> {
     return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  // PATCH /api/user/{id}/change-password
   changePassword(id: number, data: ChangePasswordRequest): Observable<ApiResponse<any>> {
-    return this.http.patch<ApiResponse<any>>(`${this.baseUrl}/${id}/change-password`, data, {
-      headers: this.getHeaders()
-    });
+    return this.http.patch<ApiResponse<any>>(
+      `${this.baseUrl}/${id}/change-password`,
+      data,
+      { headers: this.getHeaders() }
+    );
   }
 }

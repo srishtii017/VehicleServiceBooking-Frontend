@@ -1,0 +1,29 @@
+<div class="delete-vehicle-card">
+
+  <div class="card-header">
+    <h1>My Vehicles</h1>
+    <p>Manage your vehicles</p>
+  </div>
+
+  <div class="profile-container">
+
+    @for (v of vehicles(); track v.vehicleId) {
+      <div class="info-row">
+        <div>
+          <b>{{ v.make }} {{ v.model }}</b><br>
+          {{ v.registrationNumber }}
+        </div>
+
+        <div>
+          <button class="btn-cancel" (click)="deleteVehicle(v.vehicleId)">
+            Delete
+          </button>
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

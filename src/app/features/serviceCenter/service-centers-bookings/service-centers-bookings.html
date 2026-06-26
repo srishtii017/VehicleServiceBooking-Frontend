@@ -1,0 +1,42 @@
+<div class="page-container">
+  
+  <div class="dashboard-header">
+    <span class="dashboard-tag">⊞ LIVE RECORDS</span>
+    <h1 class="page-title">Service Centers Bookings</h1>
+    <p class="page-subtitle">Quick look at ongoing bookings organized by center name</p>
+  </div>
+
+  <div class="master-stream">
+    
+    @for (center of serviceCenters(); track center.serviceCenterID; let idx = $index) {
+      <div class="center-segment-block">
+        
+        <div class="center-name-header" [ngClass]="center.status === 1 ? 'status-active-border' : 'status-inactive-border'">
+          <div class="name-left">
+            <span class="center-index">SC-00{{ idx + 1 }}</span>
+            <h2 class="center-title-text">{{ center.centerName }}</h2>
+          </div>
+          <span class="status-badge" [ngClass]="center.status === 1 ? 'active' : 'inactive'">
+            <span class="dot">●</span> {{ center.status === 1 ? 'ACTIVE' : 'INACTIVE' }}
+          </span>
+        </div>
+
+        <div class="nested-bookings-container">
+          <div class="bookings-header">
+            <h3 class="bookings-title">Live Bookings Log</h3>
+            <div class="records-badge">{{ getBookingsForCenter(center.serviceCenterID).length }} RECORDS</div>
+          </div>
+
+          <app-booking-table 
+            [bookings]="getBookingsForCenter(center.serviceCenterID)"
+            (statusChanged)="onTableStatusChange($event)">
+          </app-booking-table>
+        </div>
+
+      </div>
+    } @empty {
+      <div class="no-centers">No service centers found in the system topology.</div>
+    }
+
+  </div>
+</div>

@@ -1,4 +1,4 @@
-export interface OwnerLogin {
-  Email: string;
-  Password: string;
+export class OwnerLogin {
+  Email: string='';
+  Password: string='';
 }

@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Full background image */
+.user-main-page {
+  height: 100vh;
+  background: url('/assets/UserMainPage.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero section (overlay for search bar) */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* ✅ search bar neeche aayega */
+  align-items: center;
+  padding-bottom: 60px; /* space from bottom */
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  width: 60%;
+  max-width: 500px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.search-bar button {
+  background: #ff6a00;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: #ff8c1a;
+}
