@@ -21,10 +21,13 @@
 }
 
 .booking-page {
-  width: 100%;
-  max-width: 800px;
-  padding: 15px;
-  margin-bottom: 40px;           
+  width: 100vh;
+  /* max-width: 800px; */
+  overflow-y: auto;
+  /* padding-bottom: 40px; */
+  min-height: 100vh;
+  padding: 30px 5% 60px 5%;
+  /* margin-bottom: 40px;            */
   position: relative;
   z-index: 1;
   box-sizing: border-box;
@@ -49,6 +52,10 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   text-shadow: 0 0 24px rgba(226, 133, 9, 0.3);
+}
+
+.header-left{
+  margin-bottom: 25px;
 }
 
 .header-left p {
@@ -451,4 +458,30 @@
   .modal-card { padding: 24px 18px; }
   .modal-actions { flex-direction: column; }
   .btn-done { max-width: none; }
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05); /* Halka glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-bottom: 15px; /* Heading se thodi doori */
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ff9800; /* Hover karne par aapka theme orange color highlight hoga */
+  border-color: #ff9800;
+  transform: translateX(-3px); /* Chota sa backward animation effect */
+}
+
+.btn-back svg {
+  transition: transform 0.2s ease;
 }
