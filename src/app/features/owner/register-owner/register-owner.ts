@@ -48,6 +48,7 @@ export class RegisterOwner {
             timeOut: 4000,
             progressBar: true,
             closeButton: true
+           
           });
         });
       }
