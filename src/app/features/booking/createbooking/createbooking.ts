@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Vehicles } from '../models/vehicles';
 import { Bookingservice } from '../services/bookingservice';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,6 +21,7 @@ export class AddBoking implements OnInit {
   selectedVehicle: any = undefined;
   selectedDate: string = '';
   private toastr = inject(ToastrService);
+  private router= inject(Router);
 
   todayDate: string = new Date().toISOString().split('T')[0];
 
@@ -101,6 +102,7 @@ export class AddBoking implements OnInit {
           closeButton: true
         });
         this.resetForm();
+        this.router.navigate(['/booking/showbookings']);
       },
       error: () => {
         this.toastr.error('Duplicate booking or booking cannot be in the past', 'Error', {

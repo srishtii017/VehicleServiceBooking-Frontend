@@ -1,4 +1,4 @@
-import { Component, input, output, inject } from '@angular/core';
+import { Component, input, output, inject, computed } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Bookingservice } from '../../booking/services/bookingservice';
@@ -18,6 +18,22 @@ export class BookingTableComponent {
   bookings = input<any[]>([]);
   statusChanged = output<{ bookingId: string; newStatus: string }>();
 
+  private statusPriority: { [key: string]: number } = {
+    'Pending': 1,
+    'Confirmed': 2,
+    'Completed': 3,
+    'Cancelled': 4
+  };
+
+  sortedBookings = computed(() => {
+    const list = [...this.bookings()];
+    return list.sort((a, b) => {
+      const priorityA = this.statusPriority[a.status] || 99;
+      const priorityB = this.statusPriority[b.status] || 99;
+      return priorityA - priorityB;
+    });
+  });
+
   viewBooking(bookingId: string | undefined) {
     this.router.navigate(['booking/details', bookingId]);
   } 
@@ -30,12 +46,6 @@ export class BookingTableComponent {
 
     this.bookingService.updateBookingStatus(bookingId, newStatus).subscribe({
       next: () => {
-        const currentBookings = this.bookings();
-        const foundBooking = currentBookings.find(b => b.bookingId === bookingId);
-        if (foundBooking) {
-          foundBooking.status = newStatus;
-        }
-
         this.toastr.success(`Status updated to ${newStatus} successfully!`, 'Status Updated', {
           timeOut: 2500,
           progressBar: true,

@@ -28,35 +28,33 @@ export class RegisterOwner {
   }
 
   HandleRegister(form: NgForm) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
 
-  if (form.invalid) {
-    form.control.markAllAsTouched();
-    return;
-  }
+    this.isLoading = true;
 
-  this.isLoading = true;
-
-  this.RegisterService.RegisterOwner(this.reg).subscribe({
-    next: () => {
-      this.isLoading = false;
-
-      this.toastr.success('Account created successfully!', 'Success', {
-        timeOut: 2500,
-        progressBar: true,
-        closeButton: true
-      });
-
+    this.RegisterService.RegisterOwner(this.reg).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.toastr.success('Account created successfully!', 'Success', {
+          timeOut: 2500,
+          progressBar: true,
+          closeButton: true
+        });
         this.router.navigate(['/owner/login']);
       },
-      error: () => {
-        setTimeout(() => {
-          this.isLoading = false;
-          
-          this.toastr.error('Please check your details.', 'Registration Failed', {
-            timeOut: 4000,
-            progressBar: true,
-            closeButton: true
-          });
+      error: (err) => {
+        this.isLoading = false;
+        console.error(err);
+        
+        const errorMessage = err.error?.message || 'Please check your details.';
+        
+        this.toastr.error(errorMessage, 'Registration Failed', {
+          timeOut: 4000,
+          progressBar: true,
+          closeButton: true
         });
       }
     });

@@ -50,7 +50,6 @@ export class LoginOwner {
       });
 
       this.router.navigate(['/main']);
-      // console.log(this.authService.isLoggedIn());
     },
     error: (error) => {
       this.isLoading = false;

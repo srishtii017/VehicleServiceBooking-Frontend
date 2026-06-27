@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ServiceCenterDTO } from '../Models/service-center-dto';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-service-center',
@@ -18,6 +19,7 @@ export class AddServiceCenter {
 
   private centerService = inject(ServiceCenterService);
   private toastr = inject(ToastrService);
+  router = inject(Router);
 
   onSubmit(form: NgForm) {
     if (form.invalid) {
@@ -39,6 +41,7 @@ export class AddServiceCenter {
 
         this.center = new ServiceCenterDTO();
         form.resetForm();
+        this.router.navigate(['/servicecenter/servicecentercards']);
       },
       error: (err) => {
         this.isLoading = false;
