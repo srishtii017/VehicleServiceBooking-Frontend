@@ -25,6 +25,17 @@
   text-align: left;
 }
 
+/* Header Grid Row (Title + Search Bar) */
+.header-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
 .dashboard-tag {
   font-family: 'Roboto Mono', monospace;
   color: #f26d21;
@@ -46,6 +57,39 @@
   margin: 0;
 }
 
+/* --- CYBER-DARK SEARCH BAR --- */
+.search-box-container {
+  flex-grow: 1;
+  max-width: 360px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #ffffff;             /* Likha hua text white dikhega */
+  background-color: #1a1a1a;  /* Background thoda light dark kiya taaki alag se dikhe */
+  border: 1px solid #333333;   /* Border ko light grey kiya taaki visibility badhe */
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Isse search ke andar ka placeholder text sahi se visible hoga */
+.search-input::placeholder {
+  color: #aaaaaa;             /* Placeholder text ko thoda bright gray kiya */
+  opacity: 0.8;
+}
+
+.search-input:focus {
+  border-color: #f26d21;       /* Focus par clear orange border */
+  background-color: #222222;  /* Focus par thoda aur light hoga */
+  box-shadow: 0 0 12px rgba(242, 109, 33, 0.3); /* Glow badha diya */
+}
+
+/* --- CARDS LIST & DETAILS --- */
 .cards-list {
   display: flex;
   flex-direction: column;
@@ -221,20 +265,36 @@
   padding: 40px;
 }
 
+/* --- MEDIA QUERIES (RESPONSIVENESS) --- */
 @media (max-width: 768px) {
   .dashboard-header, .cards-list {
     width: 90%;
   }
+  
+  .header-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .search-box-container {
+    max-width: 100%;
+    width: 100%;
+  }
+
   .card-bottom-row {
     flex-direction: column;
     gap: 24px;
   }
+  
   .info-grid {
     grid-template-columns: 1fr;
   }
+  
   .services-full-width {
     grid-column: span 1;
   }
+  
   .card-actions-area {
     width: 100%;
   }

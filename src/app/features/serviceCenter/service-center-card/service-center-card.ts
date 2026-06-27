@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { ServiceCenterService } from '../Services/service-center-service';
 import { ServiceCenter } from '../Models/service-center';
 import { DatePipe, NgClass } from '@angular/common';
@@ -15,12 +15,36 @@ export class ServiceCenterCard {
   CenterServices = inject(ServiceCenterService);
   router = inject(Router);
 
-  serviceCenters = this.CenterServices.getServiceCenters();
+  readonly masterCenters = this.CenterServices.getServiceCenters();
+  serviceCenters = signal<Array<ServiceCenter>>([]);
+  searchQuery = signal<string>('');
+
+  constructor() {
+    effect(() => {
+      const query = this.searchQuery().toLowerCase().trim();
+      const allCenters = this.masterCenters();
+
+      if (!query) {
+        this.serviceCenters.set(allCenters);
+      } else {
+        const filtered = allCenters.filter(center => {
+          return (
+            center.centerName?.toLowerCase().includes(query) ||
+            center.city?.toLowerCase().includes(query) ||
+            center.state?.toLowerCase().includes(query) ||
+            center.pincode?.toLowerCase().includes(query) ||
+            center.fullAddress?.toLowerCase().includes(query)
+          );
+        });
+        this.serviceCenters.set(filtered);
+      }
+    });
+  }
 
   ngOnInit() {
     this.CenterServices.FetchCenters();
   }
-
+  
   viewDetails(center: ServiceCenter) {
     this.router.navigate(['/servicecenter', center.serviceCenterID]);
   }

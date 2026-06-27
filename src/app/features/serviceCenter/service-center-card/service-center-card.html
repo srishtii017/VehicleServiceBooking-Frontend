@@ -1,9 +1,24 @@
 <div class="page-container">
   <div class="dashboard-header">
-    <span class="dashboard-tag">⊞ DASHBOARD</span>
-    <h1 class="page-title">Your Service Centers</h1>
+    <div class="header-main-row">
+      <div>
+        <span class="dashboard-tag">⊞ DASHBOARD</span>
+        <h1 class="page-title">Your Service Centers</h1>
+      </div>
+      
+      <div class="search-box-container">
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search by name, city, state or pincode..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+        />
+      </div>
+    </div>
+    
     <p class="page-subtitle">
-      {{ serviceCenters().length }} of {{ serviceCenters().length }} centers · Click any card to view full details
+      {{ serviceCenters().length }} of {{ masterCenters().length }} centers · Click any card to view full details
     </p>
   </div>
 
@@ -23,7 +38,6 @@
         </div>
 
         <div class="card-bottom-row">
-          
           <div class="card-details-grid">
             <div class="info-grid">
               
@@ -59,14 +73,12 @@
             <button class="details-btn" (click)="viewDetails(center)">
               View Details <span class="arrow">›</span>
             </button>
-            <!-- <span class="bookings-count">8 bookings</span> -->
           </div>
-
         </div>
 
       </div>
     } @empty {
-      <div class="no-centers">No service centers available.</div>
+      <div class="no-centers">No service centers available matching your search.</div>
     }
   </div>
 </div>

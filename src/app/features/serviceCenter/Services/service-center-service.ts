@@ -28,7 +28,10 @@ export class ServiceCenterService {
     this.client.get<ApiResponse<ServiceCenter[]>>(targetUrl)
       .pipe(map(res => res.data))
       .subscribe({
-        next: (centers) => this.ServiceCenters.set(centers),
+        next: (centers) => {
+          this.ServiceCenters.set(centers);
+          console.log(centers)
+        },
         error: (err) => console.error('Error fetching service centers:', err)
       });
   }
