@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { OwnerRegister } from '../Models/register';
 import { OwnerRegisterService } from '../Services/owner-register-service';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register-owner',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register-owner.html',
   styleUrl: './register-owner.css',
 })
@@ -25,18 +27,24 @@ export class RegisterOwner {
     this.router.navigate(['/owner/login']);
   }
 
-  HandleRegister() {
-    this.isLoading = true;
+  HandleRegister(form: NgForm) {
 
-    this.RegisterService.RegisterOwner(this.reg).subscribe({
-      next: () => {
-        this.isLoading = false;
-        
-        this.toastr.success('Account created successfully!', 'Success', {
-          timeOut: 2500,
-          progressBar: true,
-          closeButton: true
-        });
+  if (form.invalid) {
+    form.control.markAllAsTouched();
+    return;
+  }
+
+  this.isLoading = true;
+
+  this.RegisterService.RegisterOwner(this.reg).subscribe({
+    next: () => {
+      this.isLoading = false;
+
+      this.toastr.success('Account created successfully!', 'Success', {
+        timeOut: 2500,
+        progressBar: true,
+        closeButton: true
+      });
 
         this.router.navigate(['/owner/login']);
       },
@@ -48,7 +56,6 @@ export class RegisterOwner {
             timeOut: 4000,
             progressBar: true,
             closeButton: true
-           
           });
         });
       }

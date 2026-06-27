@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 export class OwnerLoginService {
   private LoginUrl = 'http://localhost:5000/owner/login';
 
-
   constructor(private client: HttpClient) {}
 
   LoginOwner(login: OwnerLogin): Observable<any> {
