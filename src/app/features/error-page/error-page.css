@@ -1,4 +1,3 @@
-/* Container layout to center everything perfectly */
 .error-container {
   min-height: 100vh;
   display: flex;
@@ -10,7 +9,6 @@
   padding: 20px;
 }
 
-/* Glassmorphism Card Wrapper */
 .error-box {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
@@ -25,7 +23,6 @@
   position: relative;
 }
 
-/* Massive 404 Text styling with gradient */
 .error-code {
   font-size: 8rem;
   font-weight: 900;
@@ -37,7 +34,6 @@
   letter-spacing: -2px;
 }
 
-/* Gear Icon Wrapper & Animation */
 .gear-wrapper {
   margin: 20px 0;
 }
@@ -53,7 +49,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Message headings */
 .error-title {
   color: #ffffff;
   font-size: 1.8rem;
@@ -69,7 +64,6 @@
   margin-bottom: 30px;
 }
 
-/* CTA Button Styling */
 .back-home-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #ffffff;

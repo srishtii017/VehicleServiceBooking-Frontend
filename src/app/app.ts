@@ -17,7 +17,6 @@ import { ServiceCenterCard } from './features/serviceCenter/service-center-card/
 export class App {
   UserAuth = inject(AuthService);
   OwnerAuth = inject(OwnerAuthService);
-  // isLoggedIn:boolean = this.UserAuth.isUserLoggedIn() || this.OwnerAuth.isOwnerLoggedIn();
   ls=localStorage;
   protected readonly title = signal('frontend-main');
 }

@@ -1,4 +1,3 @@
-/* Reset margins and ensure full height */
 html,
 body {
   margin: 0px;
@@ -7,42 +6,33 @@ body {
   height: 100%;
 }
 
-/* Page container with background image */
 .page-container {
   display: flex;
   margin-top: 30px;
   width: 100%;
   height: 100%;
-  /* ✅ full viewport height */
   background: url('/assets/ServiceCenterTemplate.jpg') no-repeat center center;
   background-size: cover;
-  /* ✅ cover entire page */
 }
 
-/* Left section for form */
 .left-section {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* ✅ form left aligned */
   padding-left: 40px;
 }
 
-/* Right section just shows background */
 .right-section {
   flex: 1;
 }
 
-/* Card styling */
 .center-card {
   background: rgba(31, 31, 31, 0.92);
-  /* semi-transparent black */
   border: 1px solid #404040;
   border-radius: 12px;
   padding: 20px;
   width: 480px;
-  /* ✅ compact width */
   color: #fff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   transition: transform 0.2s ease;
@@ -61,7 +51,6 @@ body {
   text-align: center;
 }
 
-/* Labels */
 .form-label {
   margin-bottom: 4px;
   font-size: 12px;
@@ -69,7 +58,6 @@ body {
   color: #ff6600;
 }
 
-/* Inputs */
 .form-input {
   width: 100%;
   padding: 8px;
@@ -93,7 +81,6 @@ textarea.form-input {
   resize: vertical;
 }
 
-/* Two-column row */
 .form-row {
   display: flex;
   gap: 15px;
@@ -105,7 +92,6 @@ textarea.form-input {
   flex-direction: column;
 }
 
-/* Submit Button */
 .details-btn {
   padding: 10px 14px;
   background: #ff6600;

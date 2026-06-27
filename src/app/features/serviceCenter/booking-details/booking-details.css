@@ -1,6 +1,6 @@
 :host {
   display: block;
-  background-color: #121212; /* Charcoal Black Background */
+  background-color: #121212; 
   min-height: 100vh;
   padding: 2.5rem 1rem;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -18,7 +18,7 @@
 
 .back-btn {
   background: #1e1e1e;
-  border: 1px solid #ff6600; /* Neon Orange Border */
+  border: 1px solid #ff6600;
   padding: 0.65rem 1.3rem;
   border-radius: 10px;
   font-weight: 600;
@@ -34,16 +34,14 @@
   box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
 }
 
-/* Main Card */
 .booking-card {
-  background: #1e1e1e; /* Card Base Grayish Black */
+  background: #1e1e1e;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   border: 1px solid #2d2d2d;
 }
 
-/* Header Defaults to Solid Orange Gradient */
 .card-header {
   padding: 2.2rem;
   color: #121212;
@@ -54,7 +52,6 @@
   font-weight: 700;
 }
 
-/* Status variants text changes base on dynamic class names if required, keeping orange border glows */
 .card-header.pending { background: linear-gradient(135deg, #ff8800, #cc5200); }
 .card-header.confirmed { background: linear-gradient(135deg, #ff5500, #b33b00); }
 .card-header.completed { background: linear-gradient(135deg, #ff6600, #993d00); border-bottom: 3px solid #ff6600; }
@@ -106,7 +103,7 @@
 }
 
 .info-section h3 {
-  color: #ff6600; /* Section Headings Orange */
+  color: #ff6600;
   font-size: 1rem;
   margin-top: 0;
   margin-bottom: 1.4rem;

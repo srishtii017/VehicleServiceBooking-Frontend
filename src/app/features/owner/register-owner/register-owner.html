@@ -8,23 +8,11 @@
     <div class="register-box">
       <h2>Owner Registration</h2>
 
-      <!-- <div class="alert-error">{{ errorMessage }}</div> -->
-
       <form #regForm="ngForm" (ngSubmit)="HandleRegister(regForm)">
-
-        <!-- Name -->
         <div class="form-group">
           <label for="name">Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="Name"
-            [(ngModel)]="reg.Name"
-            #name="ngModel"
-            placeholder="Enter your full name"
-            required 
-            minlength="2"
-          />
+          <input type="text" id="name" name="Name" [(ngModel)]="reg.Name" #name="ngModel"
+            placeholder="Enter your full name" required minlength="2" />
 
           <div class="error" *ngIf="name.invalid && name.touched">
             <small *ngIf="name.errors?.['required']">Name is required</small>
@@ -32,19 +20,10 @@
           </div>
         </div>
 
-        <!-- Email -->
         <div class="form-group">
           <label for="email">Email</label>
-          <input 
-            type="text"
-            id="email" 
-            name="Email"
-            [(ngModel)]="reg.Email"
-            #email="ngModel"
-            placeholder="example@mail.com"
-            required
-            pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          />
+          <input type="text" id="email" name="Email" [(ngModel)]="reg.Email" #email="ngModel"
+            placeholder="example@mail.com" required pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
 
           <div class="error" *ngIf="email.invalid && email.touched">
             <small *ngIf="email.errors?.['required']">Email is required</small>
@@ -52,19 +31,10 @@
           </div>
         </div>
 
-        <!-- Phone -->
         <div class="form-group">
           <label for="phone">Phone (10 digits)</label>
-          <input 
-            type="tel" 
-            id="phone" 
-            name="Phone"
-            [(ngModel)]="reg.Phone"
-            #phone="ngModel"
-            placeholder="9876543210"
-            pattern="^[0-9]{10}$" 
-            required
-          />
+          <input type="tel" id="phone" name="Phone" [(ngModel)]="reg.Phone" #phone="ngModel" placeholder="9876543210"
+            pattern="^[0-9]{10}$" required />
 
           <div class="error" *ngIf="phone.invalid && phone.touched">
             <small *ngIf="phone.errors?.['required']">Phone is required</small>
@@ -72,19 +42,10 @@
           </div>
         </div>
 
-        <!-- Password -->
         <div class="form-group">
           <label for="password">Password</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="Password"
-            [(ngModel)]="reg.Password"
-            #password="ngModel"
-            placeholder="Enter a strong password"
-            required
-            minlength="6"
-          />
+          <input type="password" id="password" name="Password" [(ngModel)]="reg.Password" #password="ngModel"
+            placeholder="Enter a strong password" required minlength="6" />
 
           <div class="error" *ngIf="password.invalid && password.touched">
             <small *ngIf="password.errors?.['required']">Password is required</small>
@@ -92,7 +53,6 @@
           </div>
         </div>
 
-        <!-- Button -->
         <button type="submit" [disabled]="isLoading || regForm.invalid">
           {{ isLoading ? 'Registering...' : 'Register' }}
         </button>

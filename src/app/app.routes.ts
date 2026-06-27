@@ -24,7 +24,6 @@ import { BookingDetails } from './features/serviceCenter/booking-details/booking
 import { ErrorPage } from './features/error-page/error-page';
 
 export const routes: Routes = [
-  // Role selection — first screen
   { path: '', component: RoleSelect },
   { path: 'main', component: Main },
   {

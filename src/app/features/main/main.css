@@ -3,7 +3,6 @@ body {
   padding: 0;
 }
 
-/* Full background image */
 .user-main-page {
   height: 100vh;
   background: url('/assets/UserMainPage.jpg') no-repeat center center fixed;
@@ -16,12 +15,11 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* ✅ search bar neeche aayega */
+  justify-content: flex-end;
   align-items: center;
-  padding-bottom: 60px; /* space from bottom */
+  padding-bottom: 60px; 
 }
 
-/* Search bar */
 .search-bar {
   display: flex;
   gap: 10px;

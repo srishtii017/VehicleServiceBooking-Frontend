@@ -25,7 +25,6 @@
   text-align: left;
 }
 
-/* Header Grid Row (Title + Search Bar) */
 .header-main-row {
   display: flex;
   justify-content: space-between;
@@ -57,7 +56,6 @@
   margin: 0;
 }
 
-/* --- CYBER-DARK SEARCH BAR --- */
 .search-box-container {
   flex-grow: 1;
   max-width: 360px;
@@ -68,28 +66,26 @@
   padding: 12px 16px;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: #ffffff;             /* Likha hua text white dikhega */
-  background-color: #1a1a1a;  /* Background thoda light dark kiya taaki alag se dikhe */
-  border: 1px solid #333333;   /* Border ko light grey kiya taaki visibility badhe */
+  color: #ffffff;
+  background-color: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 6px;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Isse search ke andar ka placeholder text sahi se visible hoga */
 .search-input::placeholder {
-  color: #aaaaaa;             /* Placeholder text ko thoda bright gray kiya */
+  color: #aaaaaa;
   opacity: 0.8;
 }
 
 .search-input:focus {
-  border-color: #f26d21;       /* Focus par clear orange border */
-  background-color: #222222;  /* Focus par thoda aur light hoga */
-  box-shadow: 0 0 12px rgba(242, 109, 33, 0.3); /* Glow badha diya */
+  border-color: #f26d21;
+  background-color: #222222;
+  box-shadow: 0 0 12px rgba(242, 109, 33, 0.3);
 }
 
-/* --- CARDS LIST & DETAILS --- */
 .cards-list {
   display: flex;
   flex-direction: column;
@@ -265,7 +261,6 @@
   padding: 40px;
 }
 
-/* --- MEDIA QUERIES (RESPONSIVENESS) --- */
 @media (max-width: 768px) {
   .dashboard-header, .cards-list {
     width: 90%;

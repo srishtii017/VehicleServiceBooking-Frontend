@@ -194,29 +194,12 @@
   transform: translateX(4px);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Keeps items aligned horizontally and restricts child scaling */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 16px; 
 }
 
-/* Updated Rounded Capsule Delete Button */
 .delete-pill-btn {
   background-color: transparent;
   color: #ff5252;
@@ -225,11 +208,11 @@
   font-weight: 600;
   border: 1px solid #ff5252;
   border-radius: 50px; 
-  padding: 6px 16px;       /* Compact spacing inside the button */
-  width: fit-content;      /* 👈 CRUCIAL: Stops it from taking 100% width */
-  min-width: unset;        /* Reset any inherited grid/flex full sizing */
+  padding: 6px 16px;       
+  width: fit-content;      
+  min-width: unset;        
   cursor: pointer;
-  display: inline-flex;    /* Inline layout so it wraps content nicely */
+  display: inline-flex;    
   align-items: center;
   gap: 6px;
   transition: all 0.2s ease-in-out;
