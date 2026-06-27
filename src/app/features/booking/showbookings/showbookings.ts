@@ -1,4 +1,4 @@
-import { Component, inject, OnInit ,signal} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'
 import { GetBookings } from '../models/getbooking';
@@ -9,25 +9,32 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-showbookings',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './showbookings.html',
   styleUrl: './showbookings.css',
 })
-export class Showbookings implements OnInit{
-  
-   bookings = signal<Array<GetBookings>>([]);
-   bookingToCancel?: GetBookings;
-   showCancelSuccess = false;
-   private toastr = inject(ToastrService);
+export class Showbookings implements OnInit {
 
-   private router = inject(Router);
+  bookings = signal<Array<GetBookings>>([]);
+  bookingToCancel?: GetBookings;
+  showCancelSuccess = false;
+  private toastr = inject(ToastrService);
 
-  constructor(private bookingservice: Bookingservice) {}
+  private router = inject(Router);
+
+  constructor(private bookingservice: Bookingservice) { }
 
   ngOnInit(): void {
     this.bookingservice.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings.set(data);
+        const sortedBookings = data.sort((a, b) => {
+          const dateA = a.createdDate ? new Date(a.createdDate).getTime() : 0;
+          const dateB = b.createdDate ? new Date(b.createdDate).getTime() : 0;
+
+          return dateB - dateA;
+        });
+
+        this.bookings.set(sortedBookings);
       },
       error: (error) => {
         console.log("Error fetching bookings:", error);
@@ -36,7 +43,7 @@ export class Showbookings implements OnInit{
     });
   }
 
-  goToDetails(bookingId: any){
+  goToDetails(bookingId: any) {
     this.router.navigate(['/booking/details', bookingId]);
   }
 
@@ -65,7 +72,7 @@ export class Showbookings implements OnInit{
     }
 
     this.bookingservice.cancelBooking(bookingId).subscribe({
-       next: () => {
+      next: () => {
         this.bookings.update((oldBookings) =>
           oldBookings.map((booking) =>
             booking.bookingId === bookingId
