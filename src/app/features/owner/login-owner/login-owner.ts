@@ -32,7 +32,7 @@ export class LoginOwner {
  HandleLogin(form: NgForm) {
 
   if (form.invalid) {
-    form.control.markAllAsTouched(); // show errors
+    form.control.markAllAsTouched(); 
     return;
   }
 
@@ -50,7 +50,7 @@ export class LoginOwner {
       });
 
       this.router.navigate(['/main']);
-      console.log(this.authService.isLoggedIn());
+      // console.log(this.authService.isLoggedIn());
     },
     error: (error) => {
       this.isLoading = false;

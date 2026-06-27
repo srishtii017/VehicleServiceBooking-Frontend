@@ -123,3 +123,10 @@ textarea.form-input {
   background: #e65c00;
   transform: translateY(-2px);
 }
+
+.error small {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}

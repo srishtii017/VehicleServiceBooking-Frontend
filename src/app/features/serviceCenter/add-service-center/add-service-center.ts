@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { ServiceCenterService } from '../Services/service-center-service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ServiceCenterDTO } from '../Models/service-center-dto';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-service-center',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-service-center.html',
   styleUrl: './add-service-center.css',
 })
@@ -18,7 +19,12 @@ export class AddServiceCenter {
   private centerService = inject(ServiceCenterService);
   private toastr = inject(ToastrService);
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
     this.isLoading = true;
 
     this.centerService.AddServiceCenter(this.center).subscribe({
@@ -32,6 +38,7 @@ export class AddServiceCenter {
         });
 
         this.center = new ServiceCenterDTO();
+        form.resetForm(); // Form validation states clear karne ke liye
       },
       error: (err) => {
         this.isLoading = false;

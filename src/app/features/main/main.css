@@ -12,7 +12,6 @@ body {
   flex-direction: column;
 }
 
-/* Hero section (overlay for search bar) */
 .hero-section {
   flex: 1;
   display: flex;

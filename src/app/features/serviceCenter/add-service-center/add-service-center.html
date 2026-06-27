@@ -1,60 +1,115 @@
 <div class="page-container">
-  <!-- Left side: Add Service Center form -->
   <div class="left-section">
     <div class="center-card">
       <h2 class="center-name">Add Service Center</h2>
 
-      <form #centerForm="ngForm" (ngSubmit)="onSubmit()" class="center-form">
+      <form #centerForm="ngForm" (ngSubmit)="onSubmit(centerForm)" class="center-form" novalidate>
 
-        <label class="form-label">Center Name</label>
-        <input [(ngModel)]="center.centerName" name="centerName" class="form-input" placeholder="Enter center name" required />
-
-        <label class="form-label">Flat Number</label>
-        <input [(ngModel)]="center.flatNumber" name="flatNumber" class="form-input" placeholder="Flat / Door No." required />
-
-        <!-- ✅ Street + Nearest Landmark in one row -->
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Street</label>
-            <input [(ngModel)]="center.street" name="street" class="form-input" placeholder="Street name" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Nearest Landmark</label>
-            <input [(ngModel)]="center.nearestLandmark" name="nearestLandmark" class="form-input" placeholder="Nearby landmark" required />
+        <div class="form-group">
+          <label class="form-label">Center Name</label>
+          <input [(ngModel)]="center.centerName" name="centerName" #centerName="ngModel" class="form-input"
+            placeholder="Enter center name" required />
+          <div class="error" *ngIf="centerName.invalid && centerName.touched">
+            <small *ngIf="centerName.errors?.['required']">Center name is required</small>
           </div>
         </div>
 
-        <!-- ✅ City + State in one row -->
+        <div class="form-group">
+          <label class="form-label">Shop / Plot / Suite No.</label>
+          <input [(ngModel)]="center.flatNumber" name="flatNumber" #flatNumber="ngModel" class="form-input"
+            placeholder="Shop / Plot / Door No." required />
+          <div class="error" *ngIf="flatNumber.invalid && flatNumber.touched">
+            <small *ngIf="flatNumber.errors?.['required']">Address line 1 / Shop number is required</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Street / Area</label>
+            <input [(ngModel)]="center.street" name="street" #street="ngModel" class="form-input"
+              placeholder="Street or locality" required />
+            <div class="error" *ngIf="street.invalid && street.touched">
+              <small *ngIf="street.errors?.['required']">Street/Area is required</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nearest Landmark</label>
+            <input [(ngModel)]="center.nearestLandmark" name="nearestLandmark" #landmark="ngModel" class="form-input"
+              placeholder="Nearby landmark" required />
+            <div class="error" *ngIf="landmark.invalid && landmark.touched">
+              <small *ngIf="landmark.errors?.['required']">Landmark is required</small>
+            </div>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">City</label>
-            <input [(ngModel)]="center.city" name="city" class="form-input" placeholder="City" required />
+            <input [(ngModel)]="center.city" name="city" #city="ngModel" class="form-input" placeholder="City"
+              required />
+            <div class="error" *ngIf="city.invalid && city.touched">
+              <small *ngIf="city.errors?.['required']">City is required</small>
+            </div>
           </div>
+
           <div class="form-group">
             <label class="form-label">State</label>
-            <input [(ngModel)]="center.state" name="state" class="form-input" placeholder="State" required />
+            <input [(ngModel)]="center.state" name="state" #state="ngModel" class="form-input" placeholder="State"
+              required />
+            <div class="error" *ngIf="state.invalid && state.touched">
+              <small *ngIf="state.errors?.['required']">State is required</small>
+            </div>
           </div>
         </div>
 
-        <label class="form-label">Pincode</label>
-        <input [(ngModel)]="center.pincode" name="pincode" class="form-input" placeholder="6-digit pincode" required pattern="^\d{6}$" />
+        <div class="form-group">
+          <label class="form-label">Pincode</label>
+          <input [(ngModel)]="center.pincode" name="pincode" #pincode="ngModel" class="form-input"
+            placeholder="6-digit pincode" required pattern="^\d{6}$" />
+          <div class="error" *ngIf="pincode.invalid && pincode.touched">
+            <small *ngIf="pincode.errors?.['required']">Pincode is required</small>
+            <small *ngIf="pincode.errors?.['pattern']">Enter a valid 6-digit pincode</small>
+          </div>
+        </div>
 
-        <label class="form-label">Contact Number</label>
-        <input [(ngModel)]="center.contact" name="contact" class="form-input" placeholder="10-digit mobile number" required pattern="^\d{10}$" />
+        <div class="form-group">
+          <label class="form-label">Center Contact Number</label>
+          <input [(ngModel)]="center.contact" name="contact" #contact="ngModel" class="form-input"
+            placeholder="10-digit mobile number" required pattern="^\d{10}$" />
+          <div class="error" *ngIf="contact.invalid && contact.touched">
+            <small *ngIf="contact.errors?.['required']">Contact number is required</small>
+            <small *ngIf="contact.errors?.['pattern']">Enter a valid 10-digit number</small>
+          </div>
+        </div>
 
-        <label class="form-label">Service Description</label>
-        <textarea [(ngModel)]="center.serviceDescription" name="serviceDescription" class="form-input" placeholder="Services you provide" required></textarea>
+        <div class="form-group">
+          <label class="form-label">Services Offered (Description)</label>
+          <textarea [(ngModel)]="center.serviceDescription" name="serviceDescription" #description="ngModel"
+            class="form-input" placeholder="Describe the services you provide..." required>
+          </textarea>
+          <div class="error" *ngIf="description.invalid && description.touched">
+            <small *ngIf="description.errors?.['required']">Service description is required</small>
+          </div>
+        </div>
 
-        <label class="form-label">Capacity</label>
-        <input type="number" [(ngModel)]="center.capacity" name="capacity" class="form-input" placeholder="Capacity (1-500)" required min="1" max="500" />
+        <div class="form-group">
+          <label class="form-label">Daily Vehicles/Orders Capacity</label>
+          <input type="number" [(ngModel)]="center.capacity" name="capacity" #capacity="ngModel" class="form-input"
+            placeholder="Capacity (1-500)" required min="1" max="500" />
+          <div class="error" *ngIf="capacity.invalid && capacity.touched">
+            <small *ngIf="capacity.errors?.['required']">Capacity is required</small>
+            <small *ngIf="capacity.errors?.['min'] || capacity.errors?.['max']">Capacity must be between 1 and
+              500</small>
+          </div>
+        </div>
 
-        <button type="submit" class="details-btn" >
-          Add Center
+        <button type="submit" class="details-btn" [disabled]="isLoading || centerForm.invalid">
+          {{ isLoading ? 'Adding Center...' : 'Add Center' }}
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Right side: background image only -->
   <div class="right-section"></div>
 </div>

@@ -1,0 +1,101 @@
+/* Container layout to center everything perfectly */
+.error-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1e1e2f 0%, #0f0f15 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Glassmorphism Card Wrapper */
+.error-box {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 50px 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Massive 404 Text styling with gradient */
+.error-code {
+  font-size: 8rem;
+  font-weight: 900;
+  margin: 0;
+  line-height: 1;
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -2px;
+}
+
+/* Gear Icon Wrapper & Animation */
+.gear-wrapper {
+  margin: 20px 0;
+}
+
+.gear-icon {
+  font-size: 3.5rem;
+  display: inline-block;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Message headings */
+.error-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.error-message {
+  color: #a0a0b0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* CTA Button Styling */
+.back-home-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-home-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.45);
+  background: linear-gradient(135deg, #5a73e8 0%, #6b3fa0 100%);
+}
+
+.back-home-btn:active {
+  transform: translateY(-1px);
+}
+
+.back-home-btn .icon {
+  font-size: 1.1rem;
+}

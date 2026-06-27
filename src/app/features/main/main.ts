@@ -10,15 +10,4 @@ import { AuthService } from '../user/services/auth';
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
-export class Main {
-
-  userName = '';
-  UserAuth:AuthService = inject(AuthService);
-  router = inject(Router);
-  ls=localStorage;
-  UserLoginIn: boolean = false;
-  ngOnInit(): void {
-    this.userName = localStorage.getItem('name') || 'User';
-    this.UserLoginIn = this.UserAuth.isUserLoggedIn();
-  }
-}
+export class Main {}
