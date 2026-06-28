@@ -3,7 +3,7 @@ body {
   background: #0d0d0d;
 }
 
-/* CARD */
+
 .main-card {
   background: #141414;
   border-radius: 14px;
@@ -14,7 +14,7 @@ body {
   box-shadow: 0 20px 40px rgba(0,0,0,0.7);
 }
 
-/* HEADER */
+
 .card-header {
   text-align: center;
   margin-bottom: 20px;
@@ -29,14 +29,14 @@ body {
   color: #aaa;
 }
 
-/* LAYOUT */
+
 .container {
   display: flex;
   gap: 25px;
   align-items: stretch;
 }
 
-/* FORM SIDE */
+
 .register-box {
   width: 55%;
 }
@@ -46,14 +46,14 @@ body {
 }
 
 
-/* GRID FIX (REPLACES BAD ROW DESIGN) */
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px 14px;
 }
 
-/* FORM */
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@ label {
   margin-bottom: 4px;
 }
 
-/* INPUT STYLE (FIX GREY ISSUE) */
+
 input {
   padding: 9px 12px;
   background: #1e1e1e;
@@ -83,7 +83,7 @@ input:focus {
   outline: none;
 }
 
-/* BUTTON */
+
 button {
   width: 100%;
   margin-top: 15px;
@@ -96,7 +96,7 @@ button {
   cursor: pointer;
 }
 
-/* IMAGE SIDE */
+
 .image-box {
   width: 45%;
 }
@@ -108,7 +108,7 @@ button {
   border-radius: 10px;
 }
 
-/* LINKS */
+
 .links {
   margin-top: 10px;
   text-align: center;
@@ -124,7 +124,7 @@ button {
   cursor: pointer;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 900px) {
   .container {
     flex-direction: column;

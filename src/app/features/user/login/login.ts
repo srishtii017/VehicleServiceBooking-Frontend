@@ -35,7 +35,7 @@ export class Login {
     this.router.navigate(['/user/register']);
   }
 
-  // ✅ ONLY FIX: added form parameter
+  
   onLogin(form: NgForm): void {
 
   if (form.invalid) {

@@ -1,4 +1,4 @@
-// Matches LoginResponse.cs in backend
+
 export interface LoginResponse {
   userID: number;
   name: string;
@@ -6,7 +6,7 @@ export interface LoginResponse {
   token: string;
 }
 
-// Matches RegisterDto.cs in backend
+
 export interface RegisterRequest {
   name: string;
   email: string;
@@ -22,13 +22,12 @@ export interface RegisterRequest {
   password: string;
 }
 
-// Matches LoginDto.cs in backend
+
 export interface LoginRequest {
   email: string;
   password: string;
 }
 
-// Matches UpdateUserDto.cs in backend
 export interface UpdateUserRequest {
   name?: string;
   phone?: string;
@@ -41,14 +40,14 @@ export interface UpdateUserRequest {
   pincode?: string;
 }
 
-// Matches ChangePasswordDto.cs in backend
+
 export interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 }
 
-// Matches User.cs in backend
+
 export interface User {
   userID: number;
   name: string;
@@ -64,7 +63,7 @@ export interface User {
 }
 
 
-// Matches ApiResponse<T> in backend
+
 export interface ApiResponse<T> {
   success: boolean;
   message: string;

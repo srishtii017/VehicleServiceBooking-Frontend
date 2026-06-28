@@ -10,7 +10,7 @@
 
       <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
 
-        <!-- EMAIL -->
+       
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <!-- PASSWORD -->
+   
         <div class="form-group">
           <label for="password">Password</label>
           <input
@@ -58,14 +58,14 @@
           </div>
         </div>
 
-        <!-- BUTTON -->
+  
         <button type="submit" [disabled]="loginForm.invalid || isLoading">
           {{ isLoading ? 'Logging in...' : 'Login' }}
         </button>
 
       </form>
 
-      <!-- SUCCESS -->
+ 
       <div *ngIf="successMessage" style="color:green;">
         {{ successMessage }}
       </div>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <!-- ✅ YOUR IMAGE (KEPT) -->
+    
     <div class="image-box">
       <img src="assets/service-center.png" alt="Service Center" />
     </div>

@@ -6,7 +6,7 @@
 
   <div class="container">
 
-    <!-- LEFT FORM -->
+    
     <div class="register-box">
       <h2>Customer Register</h2>
 
@@ -14,7 +14,7 @@
 
         <div class="grid">
 
-          <!-- NAME -->
+          
           <div class="form-group">
             <label>Full Name</label>
             <input type="text" name="name"
@@ -29,7 +29,7 @@
             </div>
           </div>
 
-          <!-- EMAIL -->
+         
           <div class="form-group">
             <label>Email</label>
             <input type="email" name="email"
@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <!-- PHONE -->
+          
           <div class="form-group">
             <label>Phone</label>
             <input type="tel" name="phone"
@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <!-- PASSWORD -->
+        
           <div class="form-group">
             <label>Password</label>
             <input type="password" name="password"
@@ -85,7 +85,7 @@
             </div>
           </div>
 
-          <!-- FLAT -->
+          
           <div class="form-group">
             <label>Flat / House No</label>
             <input type="text" name="flatNumber"
@@ -98,7 +98,7 @@
             </div>
           </div>
 
-          <!-- STREET -->
+         
           <div class="form-group">
             <label>Street</label>
             <input type="text" name="street"
@@ -111,7 +111,7 @@
             </div>
           </div>
 
-          <!-- LANDMARK (optional – no validation added) -->
+          
           <div class="form-group">
             <label>Landmark</label>
             <input type="text" name="landmark"
@@ -119,7 +119,7 @@
               placeholder="Optional">
           </div>
 
-          <!-- CITY -->
+        
           <div class="form-group">
             <label>City</label>
             <input type="text" name="city"
@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <!-- STATE -->
+          
           <div class="form-group">
             <label>State</label>
             <input type="text" name="state"
@@ -145,7 +145,7 @@
             </div>
           </div>
 
-          <!-- PINCODE -->
+         
           <div class="form-group">
             <label>Pincode</label>
             <input type="text" name="pincode"
@@ -166,13 +166,13 @@
 
         </div>
 
-        <!-- BUTTON -->
+       
         <button type="submit" [disabled]="registerForm.invalid || isLoading">
           {{ isLoading ? 'Registering...' : 'Register' }}
         </button>
       </form>
 
-      <!-- MESSAGES (UNCHANGED) -->
+    
       <div *ngIf="successMessage" style="color:green;">
         {{ successMessage }}
       </div>
@@ -188,7 +188,6 @@
       </div>
     </div>
 
-    <!-- IMAGE (UNCHANGED) -->
     <div class="image-box">
       <img src="assets/service-center.png" alt="service">
     </div>

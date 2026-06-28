@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';   // ✅ IMPORTANT FIX
+import { CommonModule } from '@angular/common';   
 import { AuthService } from '../services/auth';
 import { User, UpdateUserRequest } from '../models/user';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, CommonModule],  // ✅ ADD THIS
+  imports: [FormsModule, CommonModule],  
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })

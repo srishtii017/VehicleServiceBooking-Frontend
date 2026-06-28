@@ -3,13 +3,13 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* PAGE */
+
 .profile-page {
   min-height: 100vh;
   position: relative;
 }
 
-/* BACKGROUND */
+
 .profile-banner {
   position: fixed;
   width: 100%;
@@ -24,7 +24,7 @@ body {
   z-index: -1;
 }
 
-/* CONTENT */
+
 .profile-content {
   position: relative;
   z-index: 2;
@@ -33,7 +33,6 @@ body {
   justify-content: center;
 }
 
-/* CARD */
 .profile-card {
   width: 85%;
   max-width: 1000px;
@@ -42,7 +41,7 @@ body {
   border-radius: 16px;
 }
 
-/* HEADER */
+
 .profile-header {
   display: flex;
   justify-content: space-between;
@@ -53,7 +52,7 @@ body {
   color: #ff7a00;
 }
 
-/* BUTTONS */
+
 .action-buttons {
   display: flex;
   gap: 10px;
@@ -75,20 +74,20 @@ body {
   border-radius: 6px;
 }
 
-/* SUBTITLE */
+
 .subtitle {
   color: #aaa;
   margin-bottom: 20px;
 }
 
-/* GRID */
+
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-/* FORM */
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -107,7 +106,6 @@ input {
   color: white;
 }
 
-/* SAVE */
 .btn-save {
   width: 100%;
   padding: 12px;
@@ -121,13 +119,13 @@ input {
   grid-column: span 2;
 }
 
-/* LOADING */
+
 .loading-text {
   color: #aaa;
   margin-top: 20px;
 }
 
-/* MOBILE */
+
 @media (max-width: 768px) {
   .profile-grid {
     grid-template-columns: 1fr;

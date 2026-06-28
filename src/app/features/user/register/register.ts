@@ -34,7 +34,7 @@ export class Register {
   errorMessage = '';
   successMessage = '';
 
-  private toastr = inject(ToastrService); // ✅ same as login
+  private toastr = inject(ToastrService); 
 
   constructor(
     private authService: AuthService,
@@ -65,7 +65,7 @@ export class Register {
 
         if (response.success) {
 
-          // ✅ SUCCESS TOAST
+          
           this.toastr.success(
             'Account created successfully!',
             'Registration Successful',
@@ -84,7 +84,7 @@ export class Register {
 
         } else {
 
-          // ✅ ERROR TOAST (backend message)
+          
           this.toastr.error(
             response?.message || 'Registration failed',
             'Error',
@@ -102,7 +102,7 @@ export class Register {
       error: (err) => {
         this.isLoading = false;
 
-        // ✅ ERROR TOAST (API failure)
+        
         this.toastr.error(
           err?.error?.message || 'Registration failed. Please try again.',
           'Error',
