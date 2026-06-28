@@ -6,7 +6,7 @@
 
     <div class="profile-card">
 
-      <!-- ✅ HEADER -->
+     
       <div class="profile-header">
         <h1>My Profile</h1>
 
@@ -25,10 +25,10 @@
 
       <p class="subtitle">View and manage your personal details</p>
 
-      <!-- ✅ WAIT FOR USER DATA -->
+      
       <div *ngIf="user as u; else loadingBlock">
 
-        <!-- ✅ VIEW MODE -->
+    
         <div *ngIf="!isEditing" class="profile-grid">
 
           <div class="form-group">
@@ -78,7 +78,7 @@
 
         </div>
 
-        <!-- ✅ EDIT MODE -->
+  
         <form *ngIf="isEditing"
               class="profile-grid"
               (ngSubmit)="onUpdate()"
@@ -134,7 +134,7 @@
 
       </div>
 
-      <!-- ✅ LOADING TEMPLATE -->
+      
       <ng-template #loadingBlock>
         <div class="loading-text">
           Loading profile...
