@@ -5,6 +5,13 @@ import { GetBookings } from '../models/getbooking';
 import { Router, RouterLink } from '@angular/router';
 import { Bookingservice } from '../services/bookingservice';
 import { ToastrService } from 'ngx-toastr';
+import { ServiceCenterService } from '../../serviceCenter/Services/service-center-service';
+import { forkJoin, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
+interface BookingWithCenterName extends GetBookings {
+  serviceCenterName?: string;
+}
 
 @Component({
   selector: 'app-showbookings',
@@ -15,26 +22,51 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class Showbookings implements OnInit {
 
-  bookings = signal<Array<GetBookings>>([]);
-  bookingToCancel?: GetBookings;
+  bookings = signal<Array<BookingWithCenterName>>([]);
+  bookingToCancel?: BookingWithCenterName;
   showCancelSuccess = false;
+  
   private toastr = inject(ToastrService);
-
+  private CenterService = inject(ServiceCenterService);
   private router = inject(Router);
 
   constructor(private bookingservice: Bookingservice) { }
 
   ngOnInit(): void {
-    this.bookingservice.getMyBookings().subscribe({
-      next: (data) => {
+    this.bookingservice.getMyBookings().pipe(
+      switchMap((data) => {
         const sortedBookings = data.sort((a, b) => {
           const dateA = a.createdDate ? new Date(a.createdDate).getTime() : 0;
           const dateB = b.createdDate ? new Date(b.createdDate).getTime() : 0;
-
           return dateB - dateA;
         });
 
-        this.bookings.set(sortedBookings);
+        if (sortedBookings.length === 0) {
+          return of([]);
+        }
+
+        const requests = sortedBookings.map((booking) => {
+          if (booking.serviceCenterId) {
+            return this.CenterService.GetServiceCenterByID(booking.serviceCenterId).pipe(
+              switchMap((res: any) => {
+                const centerData = res?.data;
+                const name = centerData?.name || centerData?.centerName || centerData?.serviceCenterName || 'Unknown Center';
+                return of({ ...booking, serviceCenterName: name });
+              }),
+              catchError(() => {
+                return of({ ...booking, serviceCenterName: 'Unknown Center' });
+              })
+            );
+          } else {
+            return of({ ...booking, serviceCenterName: 'Not Assigned' });
+          }
+        });
+
+        return forkJoin(requests);
+      })
+    ).subscribe({
+      next: (enrichedBookings) => {
+        this.bookings.set(enrichedBookings);
       },
       error: (error) => {
         console.log("Error fetching bookings:", error);
@@ -51,7 +83,7 @@ export class Showbookings implements OnInit {
     window.history.back();
   }
 
-  openCancelPopup(booking: GetBookings): void {
+  openCancelPopup(booking: BookingWithCenterName): void {
     this.bookingToCancel = booking;
     this.showCancelSuccess = false;
   }

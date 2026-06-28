@@ -1,5 +1,4 @@
 <div class="page">
-
   <div class="delete-vehicle-card">
 
     <!-- HEADER -->
@@ -9,52 +8,38 @@
 
     <!-- LIST -->
     <div class="profile-container">
-
       @if (vehicles().length === 0) {
-        <p class="empty">No vehicles found</p>
+        <div class="empty">
+          <p>No vehicles found</p>
+        </div>
       }
       @else {
-
         @for (v of vehicles(); track v.vehicleId) {
-
           <div class="info-row">
-
-            <!-- LEFT SIDE -->
+            
+            <!-- TOP SECTION: Vehicle details -->
             <div class="vehicle-info">
-              <b>{{ v.make }} {{ v.model }}</b><br>
-              Year: {{ v.year }} <br>
-              {{ v.registrationNumber }}
+              <h3 class="vehicle-title">{{ v.make }} {{ v.model }}</h3>
+              <p class="vehicle-meta">Year: <span>{{ v.year }}</span></p>
+              <div class="reg-number-badge">{{ v.registrationNumber }}</div>
             </div>
 
-            <!-- RIGHT SIDE BUTTONS -->
+            <!-- BOTTOM SECTION: Action buttons -->
             <div class="action-buttons">
-
-              <!-- <button
-                type="button"
-                class="btn-edit"
-                [routerLink]="['/update-vehicle', v.vehicleId]">
-                Update
-              </button> -->
-
+              <!-- Un-comment if needed later, layout won't break -->
+              <!-- <button type="button" class="btn-edit" [routerLink]="['/update-vehicle', v.vehicleId]">Update</button> -->
+              
               @if (v.vehicleId) {
-                <button
-                  type="button"
-                  class="btn-delete"
-                  (click)="deleteVehicle(v.vehicleId!)">
-                  Delete
+                <button type="button" class="btn-delete" (click)="deleteVehicle(v.vehicleId!)">
+                  Delete Vehicle
                 </button>
               }
-
             </div>
 
           </div>
-
         }
-
       }
-
     </div>
 
   </div>
-
 </div>

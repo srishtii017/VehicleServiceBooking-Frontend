@@ -18,20 +18,19 @@
 
 .back-btn {
   background: #1e1e1e;
-  border: 1px solid #ff6600;
+  border: 1px solid #444;
   padding: 0.65rem 1.3rem;
   border-radius: 10px;
   font-weight: 600;
-  color: #ff6600;
+  color: #cccccc;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 .back-btn:hover {
-  background: #ff6600;
-  color: #121212;
+  background: #2d2d2d;
+  color: #ffffff;
   transform: translateX(-3px);
-  box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
 }
 
 .booking-card {
@@ -42,47 +41,69 @@
   border: 1px solid #2d2d2d;
 }
 
+/* Base Header Properties */
 .card-header {
   padding: 2.2rem;
-  color: #121212;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #ff6600, #cc5200); /* Core Orange Theme */
   font-weight: 700;
 }
 
-.card-header.pending { background: linear-gradient(135deg, #ff8800, #cc5200); }
-.card-header.confirmed { background: linear-gradient(135deg, #ff5500, #b33b00); }
-.card-header.completed { background: linear-gradient(135deg, #ff6600, #993d00); border-bottom: 3px solid #ff6600; }
-.card-header.cancelled { background: linear-gradient(135deg, #3d3d3d, #1f1f1f); color: #ff6600; }
+/* ⏳ Pending: Same as Cancelled (Soft Slate Gray - No Eye Strain) */
+.card-header.pending { 
+  background: linear-gradient(135deg, #f4f4f5, #e4e4e7) !important; 
+  color: #52525b !important;
+}
+.card-header.pending .badge-id { background: rgba(0, 0, 0, 0.08); color: #52525b; }
+.card-header.pending .status-badge { background: #3f3f46; color: #f4f4f5; border-color: #71717a; }
 
+/* ✅ Confirmed: Premium Light Pastel Blue */
+.card-header.confirmed { 
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important; 
+  color: #0369a1 !important;
+}
+.card-header.confirmed .badge-id { background: rgba(0, 0, 0, 0.08); color: #0369a1; }
+.card-header.confirmed .status-badge { background: #075985; color: #e0f2fe; border-color: #0369a1; }
+
+/* 🎉 Completed: Premium Light Pastel Green */
+.card-header.completed { 
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0) !important; 
+  color: #166534 !important;
+}
+.card-header.completed .badge-id { background: rgba(0, 0, 0, 0.08); color: #166534; }
+.card-header.completed .status-badge { background: #14532d; color: #dcfce7; border-color: #166534; }
+
+/* ❌ Cancelled: Soft Muted Light Grey */
+.card-header.cancelled { 
+  background: linear-gradient(135deg, #f4f4f5, #e4e4e7) !important; 
+  color: #52525b !important;
+}
+.card-header.cancelled .badge-id { background: rgba(0, 0, 0, 0.08); color: #52525b; }
+.card-header.cancelled .status-badge { background: #3f3f46; color: #f4f4f5; border-color: #71717a; }
+
+/* Rest of the styles */
 .header-main h2 {
   margin: 0.4rem 0 0 0;
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
 .badge-id {
-  background: rgba(0, 0, 0, 0.15);
-  color: #121212;
   padding: 0.25rem 0.75rem;
   border-radius: 30px;
   font-size: 0.85rem;
   font-weight: 700;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .status-badge {
-  background: #121212;
-  color: #ff6600;
   padding: 0.55rem 1.4rem;
   border-radius: 30px;
   font-weight: 800;
   font-size: 0.95rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border: 1px solid #ff6600;
+  border: 1px solid;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
@@ -103,7 +124,7 @@
 }
 
 .info-section h3 {
-  color: #ff6600;
+  color: #a0aec0;
   font-size: 1rem;
   margin-top: 0;
   margin-bottom: 1.4rem;
@@ -137,7 +158,7 @@
 
 .info-item label {
   font-size: 0.8rem;
-  color: #777777;
+  color: #718096;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
   font-weight: 700;
@@ -151,22 +172,21 @@
 }
 
 .val-highlight {
-  font-size: 1.2rem !important;
+  font-size: 1.15rem !important;
   font-weight: 600 !important;
   color: #ffffff !important;
 }
 
 .plate-number {
   background: #121212;
-  border: 1px solid #ff6600;
+  border: 1px solid #444;
   padding: 0.25rem 0.6rem;
   border-radius: 6px;
   display: inline-block;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: monospace;
   font-weight: 700 !important;
-  color: #ff6600 !important;
+  color: #e2e8f0 !important;
   width: max-content;
-  box-shadow: inset 0 0 5px rgba(255, 102, 0, 0.2);
 }
 
 .address-text {
@@ -174,20 +194,20 @@
   background: #121212;
   padding: 0.9rem 1.2rem;
   border-radius: 10px;
-  border-left: 4px solid #ff6600;
+  border-left: 4px solid #444;
   color: #cccccc;
 }
 
 .date-val {
-  color: #ff8800 !important;
+  color: #e0e0e0 !important;
   font-weight: 600 !important;
 }
 
 .date-sub {
-  color: #777777 !important;
+  color: #718096 !important;
 }
 
-/* Loader Styling */
+/* Loader Styles */
 .loading-state, .error-state {
   text-align: center;
   padding: 4rem 2rem;
@@ -199,7 +219,7 @@
 
 .spinner {
   border: 4px solid #121212;
-  border-top: 4px solid #ff6600;
+  border-top: 4px solid #ffffff;
   border-radius: 50%;
   width: 45px;
   height: 45px;

@@ -1,93 +1,137 @@
 <div class="details-container">
   <div class="header-actions">
+    @if (!isUserLogged){
     <button class="back-btn" (click)="goBack()">
       ⬅️ Back to Logs
     </button>
+    }
   </div>
 
   @if (isLoading()) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Fetching card details from station...</p>
-    </div>
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Fetching card details from station...</p>
+  </div>
   } @else if (booking()) {
-    <div class="booking-card">
-      
-      <div class="card-header" [class]="(booking().status || '').toLowerCase().replace(' ', '-')">
-        <div class="header-main">
-          <span class="badge-id">#{{ booking().bookingId }}</span>
-          <h2>{{ booking().serviceType }}</h2>
-        </div>
-        <div class="status-badge">
-          {{ booking().status }}
-        </div>
+  <div class="booking-card">
+
+    <!-- FIXED LINE: Ab browser ko card-header class bhi milegi aur state bhi -->
+    <div class="card-header" [ngClass]="(booking().status || '').toLowerCase().replace(' ', '-')">
+      <div class="header-main">
+        <span class="badge-id">#{{ booking().bookingId }}</span>
+        <h2>{{ booking().serviceType}}...</h2>
       </div>
-
-      <div class="card-body">
-        
-        <div class="info-section">
-          <h3>👤 Customer Information</h3>
-          <div class="info-grid">
-            <div class="info-item">
-              <label>Full Name</label>
-              <p class="val-highlight">{{ booking().customerName }}</p>
-            </div>
-            <div class="info-item">
-              <label>Contact Number</label>
-              <p>📞 {{ booking().phone_No }}</p>
-            </div>
-            <div class="info-item full-width">
-              <label>Registered Email</label>
-              <p>{{ booking().email }}</p>
-            </div>
-            <div class="info-item full-width">
-              <label>Service / Pickup Address</label>
-              <p class="address-text">📍 {{ booking().address }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-section">
-          <h3>🚗 Vehicle & Operations</h3>
-          <div class="info-grid">
-            <div class="info-item">
-              <label>Vehicle Model</label>
-              <p class="val-highlight">🚗 {{ booking().vehicleName || 'Standard Car' }}</p>
-            </div>
-            <div class="info-item">
-              <label>Registration Plate</label>
-              <p class="plate-number">{{ booking().vehicleNo | uppercase }}</p>
-            </div>
-            <div class="info-item">
-              <label>Service Center ID</label>
-              <p>🏢 {{ booking().serviceCenterId }}</p>
-            </div>
-            <div class="info-item">
-              <label>System Client ID</label>
-              <p>User Sequence #{{ booking().userId }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-section timeline-section">
-          <h3>📅 Service Timeline</h3>
-          <div class="info-grid">
-            <div class="info-item">
-              <label>Execution Target Date</label>
-              <p class="date-val">📆 {{ booking().serviceDate | date:'fullDate' }}</p>
-            </div>
-            <div class="info-item">
-              <label>Database Registration Instance</label>
-              <p class="date-sub">{{ booking().createdDate | date:'medium' }}</p>
-            </div>
-          </div>
-        </div>
-
+      <div class="status-badge">
+        {{ booking().status }}
       </div>
     </div>
+
+    <div class="card-body">
+
+      @if (isUserLogged) {
+      <div class="info-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4rem;">
+          <h3 style="margin: 0;">🏢 Service Center Station Details</h3>
+
+          <a [routerLink]="['/servicecenter', booking().serviceCenterDetails?.serviceCenterID || booking().serviceCenterId]"
+            class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.9rem;">
+            👁️ View Center Profile
+          </a>
+        </div>
+
+        @if (booking().serviceCenterDetails) {
+        <div class="info-grid">
+          <div class="info-item full-width">
+            <label>Workshop / Center Name</label>
+            <p class="val-highlight">🛠️ {{ booking().serviceCenterDetails.centerName || 'Unnamed Station' }}</p>
+          </div>
+          <div class="info-item">
+            <label>Service Center ID</label>
+            <p>🔢 {{ booking().serviceCenterDetails.serviceCenterID || booking().serviceCenterId }}</p>
+          </div>
+          <div class="info-item">
+            <label>Nearest Landmark</label>
+            <p>🏢 {{ booking().serviceCenterDetails.nearestLandmark || 'N/A' }}</p>
+          </div>
+          <div class="info-item full-width">
+            <label>Workshop Location Address</label>
+            <p class="address-text">
+              📍 {{ booking().serviceCenterDetails.fullAddress }}
+            </p>
+          </div>
+        </div>
+        } @else {
+        <p style="color: #777; font-size: 0.95rem; margin: 0;">⚠️ Service center details could not be resolved for ID:
+          {{ booking().serviceCenterId }}</p>
+        }
+      </div>
+      }
+
+      <div class="info-section">
+        <h3>👤 Customer Information</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Full Name</label>
+            <p class="val-highlight">{{ booking().customerName }}</p>
+          </div>
+          <div class="info-item">
+            <label>Contact Number</label>
+            <p>📞 {{ booking().phone_No }}</p>
+          </div>
+          <div class="info-item full-width">
+            <label>Registered Email</label>
+            <p>{{ booking().email }}</p>
+          </div>
+          <div class="info-item full-width">
+            <label>Service / Pickup Address</label>
+            <p class="address-text">📍 {{ booking().address }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>🚗 Vehicle & Operations</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Vehicle Model</label>
+            <p class="val-highlight">🚗 {{ booking().vehicleName }}</p>
+          </div>
+          <div class="info-item">
+            <label>Registration Plate</label>
+            <p class="plate-number">{{ booking().vehicleNo | uppercase }}</p>
+          </div>
+          <div class="info-item full-width">
+            <label>Service Requirement Details</label>
+            <p style="line-height: 1.5; color: #cccccc; background: #1a1a1a; padding: 10px; border-radius: 8px;">
+              {{ booking().serviceType }}
+            </p>
+          </div>
+          <div class="info-item">
+            <label>System Client ID</label>
+            <p>User Sequence #{{ booking().userId }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section timeline-section">
+        <h3>📅 Service Timeline</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Execution Target Date</label>
+            <p class="date-val">📆 {{ booking().serviceDate | date:'fullDate' }}</p>
+          </div>
+          <div class="info-item">
+            <label>Database Registration Instance</label>
+            <p class="date-sub">{{ booking().createdDate | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
   } @else {
-    <div class="error-state">
-      ❌ Data record configuration could not resolve the specified parameters.
-    </div>
+  <div class="error-state">
+    ❌ Data record configuration could not resolve the specified parameters.
+  </div>
   }
 </div>
